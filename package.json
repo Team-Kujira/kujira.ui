@@ -1,0 +1,21 @@
+{
+  "name": "kujira.ui",
+  "description": "UI Components for building apps on the Kujira Blockchain",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "files": [
+    "lib/",
+    "src/"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  }
+}

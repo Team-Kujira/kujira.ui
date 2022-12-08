@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "lib": ["ES2021", "DOM"],
+    "module": "ES2020",
+    "declaration": true,
+    "outDir": "./lib/esm",
+    "strict": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
