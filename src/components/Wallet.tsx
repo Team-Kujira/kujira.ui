@@ -16,7 +16,7 @@ import { IconKado } from "../icons/IconKado";
 import { IconWallet } from "../icons/IconWallet";
 import { IconWarning } from "../icons/IconWarning";
 import { useNetwork } from "../providers/network";
-import { useWallet, Wallets } from "../providers/walletss";
+import { useWallet, Wallets } from "../providers/wallet";
 import KadoModal from "./KadoModal";
 import { Select } from "./Select";
 

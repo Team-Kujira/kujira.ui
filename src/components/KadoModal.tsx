@@ -1,4 +1,4 @@
-import { useWallet } from "../providers/walletss";
+import { useWallet } from "../providers/wallet";
 import { Modal } from "./Modal";
 
 export default function ({ onClose }: { onClose: () => void }) {
