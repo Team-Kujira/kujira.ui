@@ -8,7 +8,7 @@ import {
 } from "@cosmjs/stargate";
 import { Decimal } from "@cosmjs/math";
 import { registry, aminoTypes, CHAIN_INFO, MAINNET, NETWORK } from "kujira.js";
-import { useNetwork } from "../../hooks/useNetwork";
+import { useNetwork } from "../network";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface

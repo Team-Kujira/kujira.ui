@@ -14,7 +14,7 @@ import { useKeplr } from "./useKeplr";
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 import { Denom } from "kujira.js";
 import { useKujiraWebView } from "./useKujiraWebView";
-import { useNetwork } from "../../hooks/useNetwork";
+import { useNetwork } from "../network";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { Modal } from "../../components/Modal";
 

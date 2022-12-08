@@ -1,4 +1,4 @@
-import { useLocalStorage } from "./useLocalStorage";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 import { ChainInfo } from "@keplr-wallet/types";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { Tendermint34Client, HttpBatchClient } from "@cosmjs/tendermint-rpc";

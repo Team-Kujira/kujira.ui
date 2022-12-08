@@ -12,7 +12,7 @@ import {
   Denom,
 } from "kujira.js";
 import { useWallet, Wallets } from "../providers/wallet";
-import { useNetwork } from "../hooks/useNetwork";
+import { useNetwork } from "../providers/network";
 import { IconWarning } from "../icons/IconWarning";
 import { IconCopy } from "../icons/IconCopy";
 import { IconKado } from "../icons/IconKado";

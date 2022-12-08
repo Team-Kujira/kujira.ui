@@ -4,7 +4,7 @@ import { DeliverTxResponse } from "@cosmjs/stargate";
 import WalletConnect from "@walletconnect/client";
 import { useLocation } from "react-router-dom";
 import { MAINNET, registry } from "kujira.js";
-import { useNetwork } from "../../hooks/useNetwork";
+import { useNetwork } from "../network";
 import { useWindowSize } from "../../hooks/useWindowSize";
 
 export type UseKujiraWallet = {
