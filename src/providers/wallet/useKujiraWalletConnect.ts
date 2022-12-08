@@ -1,10 +1,8 @@
-import { useEffect, useState, useMemo } from "react";
 import { AccountData, EncodeObject } from "@cosmjs/proto-signing";
 import { DeliverTxResponse } from "@cosmjs/stargate";
 import WalletConnect from "@walletconnect/client";
-import { useLocation } from "react-router-dom";
 import { MAINNET, registry } from "kujira.js";
-import { useNetwork } from "../network";
+import { useEffect, useMemo, useState } from "react";
 import { useWindowSize } from "../../hooks/useWindowSize";
 
 export type UseKujiraWallet = {
@@ -23,9 +21,6 @@ export const useKujiraWalletConnect = ({
   setModal: (b: boolean) => void;
   setLink: (b: string) => void;
 }): UseKujiraWallet => {
-  const [{ chainInfo }] = useNetwork();
-  const location = useLocation();
-
   const [accounts, setAccounts] = useState<null | readonly AccountData[]>(null);
 
   const connect = (network: string = MAINNET) => {

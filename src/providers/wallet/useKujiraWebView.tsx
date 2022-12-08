@@ -2,7 +2,6 @@ import { AccountData, EncodeObject } from "@cosmjs/proto-signing";
 import { DeliverTxResponse } from "@cosmjs/stargate";
 import { registry } from "kujira.js";
 import { useMemo } from "react";
-import { useLocation } from "react-router-dom";
 
 interface WebViewWindow {
   onSignAndBroadcastSuccess?: (res: string) => void;
@@ -23,9 +22,7 @@ export const useKujiraWebView = (): null | {
   disconnect: () => void;
   signAndBroadcast: (msgs: EncodeObject[]) => Promise<DeliverTxResponse>;
 } => {
-  const { search } = useLocation();
-
-  const params = useMemo(() => new URLSearchParams(search), []);
+  const params = useMemo(() => new URLSearchParams(window.location.search), []);
   const address = useMemo(() => params.get("walletAddress"), [params]);
 
   const signAndBroadcast = async (
