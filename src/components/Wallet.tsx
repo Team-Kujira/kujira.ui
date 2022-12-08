@@ -1,24 +1,24 @@
-import { toast } from "react-hot-toast";
-import { useEffect, useState } from "react";
-import ReactTooltip from "react-tooltip";
-import KadoModal from "./KadoModal";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import {
-  TESTNET,
-  MAINNET,
+  Denom,
   LOCALNET,
+  MAINNET,
   NETWORK,
   NETWORKS,
-  Denom,
+  TESTNET,
 } from "kujira.js";
-import { useWallet, Wallets } from "../providers/wallet";
-import { useNetwork } from "../providers/network";
-import { IconWarning } from "../icons/IconWarning";
+import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import ReactTooltip from "react-tooltip";
+import * as i18n from "../i18n";
 import { IconCopy } from "../icons/IconCopy";
 import { IconKado } from "../icons/IconKado";
 import { IconWallet } from "../icons/IconWallet";
+import { IconWarning } from "../icons/IconWarning";
+import { useNetwork } from "../providers/network";
+import { useWallet, Wallets } from "../providers/walletss";
+import KadoModal from "./KadoModal";
 import { Select } from "./Select";
-import * as i18n from "../i18n";
 
 const names = {
   [TESTNET]: "Testnet",
