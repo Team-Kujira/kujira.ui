@@ -65,7 +65,7 @@ const Context = createContext<Wallets>({
   chainInfo: {} as ChainInfo,
 });
 
-const WalletContext: FC = ({ children }) => {
+export const WalletContext: FC = ({ children }) => {
   const kujiraWebView = useKujiraWebView();
   const [adapter, setAdapter] = useState(
     kujiraWebView ? Adapter.KujiraWebview : Adapter.Keplr

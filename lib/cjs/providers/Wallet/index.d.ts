@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { ChainInfo } from "@keplr-wallet/types";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { AccountData, EncodeObject } from "@cosmjs/proto-signing";
@@ -28,4 +29,5 @@ export declare type Wallets = {
     setFeeDenom: (denom: string) => void;
     chainInfo: ChainInfo;
 };
+export declare const WalletContext: FC;
 export declare function useWallet(): Wallets;
