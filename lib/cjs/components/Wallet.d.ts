@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { NETWORK } from "kujira.js";
 import { Wallets } from "../providers/wallet";
 export declare const NetworkSelect: ({ onChange, }: {

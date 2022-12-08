@@ -1,3 +1,4 @@
+/// <reference types="react" />
 declare type OptionType<T> = {
     label: string;
     value: T;
