@@ -12,10 +12,24 @@
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json"
   },
-  "devDependencies": {
+  "dependencies": {
+    "@cosmjs/proto-signing": "^0.29.5",
+    "@cosmjs/stargate": "^0.29.5",
+    "@keplr-wallet/types": "^0.11.22",
+    "@types/react": "^17.0.19",
+    "@types/react-dom": "^17.0.9",
+    "@types/react-router-dom": "^5.3.3",
+    "@walletconnect/client": "^1.8.0",
+    "clsx": "^1.2.1",
+    "ethers": "^5.7.2",
+    "kujira.js": "Team-Kujira/kujira.js#c5edae82a33d598f723c7f49c2afbca6af00cb82",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "react-hot-toast": "^2.1.1",
+    "react-is": "^17.0.2",
+    "react-qr-code": "^2.0.8",
+    "react-router-dom": "^5.3.0",
+    "react-tooltip": "^4.2.21",
     "typescript": "^4.7.4"
-  },
-  "peerDependencies": {
-    "react": "^18.2.0"
   }
 }
