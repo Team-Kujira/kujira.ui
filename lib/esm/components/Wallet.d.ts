@@ -1,5 +1,5 @@
 import { NETWORK } from "kujira.js";
-import { Wallets } from "../providers/Wallet";
+import { Wallets } from "../providers/wallet";
 export declare const NetworkSelect: ({ onChange, }: {
     onChange: (network: NETWORK) => void;
 }) => JSX.Element;

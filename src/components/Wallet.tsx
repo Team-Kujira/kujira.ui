@@ -11,7 +11,7 @@ import {
   NETWORKS,
   Denom,
 } from "kujira.js";
-import { useWallet, Wallets } from "../providers/Wallet";
+import { useWallet, Wallets } from "../providers/wallet";
 import { useNetwork } from "../hooks/useNetwork";
 import { IconWarning } from "../icons/IconWarning";
 import { IconCopy } from "../icons/IconCopy";
