@@ -234,7 +234,7 @@ export function Wallet({
               setAdapter(Adapter.Keplr);
               connect && connect();
             }}>
-            <img src="https://assets.website-files.com/62dbc9b6b1444851f065c74a/62dbc9b6b144486e7b65c7ff_Keplr_logo_ver.1.3_Keplr_logo_white-p-800.png" />
+            <img src="https://github.com/chainapsis/keplr-wallet/blob/master/packages/mobile/src/assets/logo/keplr-logo-dark-mode.png?raw=true" />
           </button>
         </div>
       )}
