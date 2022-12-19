@@ -21,16 +21,14 @@ import { Modal } from "../../components/Modal";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useNetwork } from "../network";
 import { useKeplr } from "./useKeplr";
-import { useKujiraWalletConnect } from "./useKujiraWalletConnect";
-import { useKujiraWebView } from "./useKujiraWebView";
+import { useSonar } from "./useSonar";
 
 export enum Adapter {
-  KujiraWebview = "kujira-webview",
-  KujiraWalletConnect = "kujira-walletconnect",
+  Sonar = "sonar",
   Keplr = "keplr",
 }
 
-export type Wallets = {
+export type IWallet = {
   adapter: Adapter;
   setAdapter: (a: Adapter) => void;
   connect: null | ((chain?: string) => void);
@@ -54,8 +52,8 @@ export type Wallets = {
   chainInfo: ChainInfo;
 };
 
-const Context = createContext<Wallets>({
-  adapter: Adapter.KujiraWalletConnect,
+const Context = createContext<IWallet>({
+  adapter: Adapter.Sonar,
   setAdapter: () => {},
   account: null,
   getBalance: async () => BigNumber.from(0),
@@ -77,10 +75,7 @@ const Context = createContext<Wallets>({
 });
 
 export const WalletContext: FC = ({ children }) => {
-  const kujiraWebView = useKujiraWebView();
-  const [adapter, setAdapter] = useState(
-    kujiraWebView ? Adapter.KujiraWebview : Adapter.Keplr
-  );
+  const [adapter, setAdapter] = useState(Adapter.Keplr);
   const [feeDenom, setFeeDenom] = useLocalStorage(
     "feeDenom",
     "ukuji"
@@ -95,9 +90,7 @@ export const WalletContext: FC = ({ children }) => {
     document.onkeyup = function (e) {
       if (e.ctrlKey && e.shiftKey && e.key == "W") {
         setAdapter(
-          adapter === Adapter.KujiraWalletConnect
-            ? Adapter.Keplr
-            : Adapter.KujiraWalletConnect
+          adapter === Adapter.Sonar ? Adapter.Keplr : Adapter.Sonar
         );
       }
     };
@@ -115,7 +108,7 @@ export const WalletContext: FC = ({ children }) => {
     null | DelegationResponse[]
   >(null);
 
-  const kujiraWalletConnect = useKujiraWalletConnect({
+  const sonar = useSonar({
     feeDenom,
     setLink,
     setModal,
@@ -123,11 +116,7 @@ export const WalletContext: FC = ({ children }) => {
 
   const keplr = useKeplr({ feeDenom });
 
-  const connector = kujiraWebView
-    ? kujiraWebView
-    : adapter === Adapter.KujiraWalletConnect
-    ? kujiraWalletConnect
-    : keplr;
+  const connector = adapter === Adapter.Sonar ? sonar : keplr;
   const { account } = connector;
 
   const refreshBalances = () => {

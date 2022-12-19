@@ -5,7 +5,7 @@ import { MAINNET, registry } from "kujira.js";
 import { useEffect, useMemo, useState } from "react";
 import { useWindowSize } from "../../hooks/useWindowSize";
 
-export type UseKujiraWallet = {
+export type Sonar = {
   connect: null | ((chain?: string) => void);
   disconnect: () => void;
   account: AccountData | null;
@@ -14,7 +14,7 @@ export type UseKujiraWallet = {
   ) => Promise<DeliverTxResponse>;
 };
 
-export const useKujiraWalletConnect = ({
+export const useSonar = ({
   feeDenom,
   setModal,
   setLink,
@@ -22,7 +22,7 @@ export const useKujiraWalletConnect = ({
   feeDenom: string;
   setModal: (b: boolean) => void;
   setLink: (b: string) => void;
-}): UseKujiraWallet => {
+}): Sonar => {
   const [accounts, setAccounts] = useState<
     null | readonly AccountData[]
   >(null);

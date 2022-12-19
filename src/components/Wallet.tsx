@@ -16,7 +16,8 @@ import { IconKado } from "../icons/IconKado";
 import { IconWallet } from "../icons/IconWallet";
 import { IconWarning } from "../icons/IconWarning";
 import { useNetwork } from "../providers/network";
-import { useWallet, Wallets } from "../providers/wallet";
+import { IWallet, useWallet } from "../providers/wallet";
+import { coinSort } from "../utils";
 import KadoModal from "./KadoModal";
 import { Select } from "./Select";
 
@@ -123,7 +124,7 @@ export function Wallet({
   adapter = useWallet,
 }: {
   adapter?: () => Pick<
-    Wallets,
+    IWallet,
     | "balance"
     | "account"
     | "connect"
@@ -172,7 +173,7 @@ export function Wallet({
           </span>
           <table className="balances">
             <tbody>
-              {balances?.map((b) => (
+              {balances?.sort(coinSort).map((b) => (
                 <Balance balance={b} key={b.denom} />
               ))}
             </tbody>
