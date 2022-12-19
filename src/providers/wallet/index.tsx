@@ -218,7 +218,10 @@ export const WalletContext: FC = ({ children }) => {
         chainInfo,
       }}>
       {children}
-      <Modal show={modal} close={() => setModal(false)}>
+      <Modal
+        show={modal}
+        close={() => setModal(false)}
+        className="modal--auto">
         <QRCode value={link} />
       </Modal>
     </Context.Provider>

@@ -44,6 +44,7 @@ export * from "./IconSave";
 export * from "./IconSearch";
 export * from "./IconSKuji";
 export * from "./IconSolana";
+export * from "./IconSonar";
 export * from "./IconSort";
 export * from "./IconSortAsc";
 export * from "./IconSortDesc";

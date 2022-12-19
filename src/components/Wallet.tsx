@@ -11,12 +11,13 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import ReactTooltip from "react-tooltip";
 import * as i18n from "../i18n";
+import { IconSonar } from "../icons";
 import { IconCopy } from "../icons/IconCopy";
 import { IconKado } from "../icons/IconKado";
 import { IconWallet } from "../icons/IconWallet";
 import { IconWarning } from "../icons/IconWarning";
 import { useNetwork } from "../providers/network";
-import { IWallet, useWallet } from "../providers/wallet";
+import { Adapter, IWallet, useWallet } from "../providers/wallet";
 import { coinSort } from "../utils";
 import KadoModal from "./KadoModal";
 import { Select } from "./Select";
@@ -135,7 +136,14 @@ export function Wallet({
 }) {
   const { account, connect, disconnect, balances, chainInfo } =
     adapter();
+  const { setAdapter } = useWallet();
   const [showKado, setShowKado] = useState(false);
+  const [showWalletSelect, setShowWalletSelect] = useState(false);
+
+  const showWalletConnection = () => {
+    // connect && connect()
+    setAdapter(Adapter.Sonar);
+  };
 
   if (account) {
     return (
@@ -204,12 +212,32 @@ export function Wallet({
   return (
     <>
       <button
-        onClick={() => connect && connect()}
+        onClick={() => setShowWalletSelect(!showWalletSelect)}
         className="md-button md-button--grey md-button--nowrap">
         <IconWallet />
         <i18n.span>Connect Wallet</i18n.span>
       </button>
       {/* <NetworkSelect onChange={(n) => connect && connect(n)} /> */}
+      {showWalletSelect && (
+        <div className="wallet__connections">
+          <button
+            className="transparent block pointer"
+            onClick={() => {
+              setAdapter(Adapter.Sonar);
+              connect && connect();
+            }}>
+            <IconSonar />
+          </button>
+          <button
+            className="transparent block pointer"
+            onClick={() => {
+              setAdapter(Adapter.Keplr);
+              connect && connect();
+            }}>
+            <img src="https://assets.website-files.com/62dbc9b6b1444851f065c74a/62dbc9b6b144486e7b65c7ff_Keplr_logo_ver.1.3_Keplr_logo_white-p-800.png" />
+          </button>
+        </div>
+      )}
     </>
   );
 }
