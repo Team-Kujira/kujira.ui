@@ -20,10 +20,18 @@ export const useKujiraWebView = (): null | {
   account: AccountData;
   connect: () => void;
   disconnect: () => void;
-  signAndBroadcast: (msgs: EncodeObject[]) => Promise<DeliverTxResponse>;
+  signAndBroadcast: (
+    msgs: EncodeObject[]
+  ) => Promise<DeliverTxResponse>;
 } => {
-  const params = useMemo(() => new URLSearchParams(window.location.search), []);
-  const address = useMemo(() => params.get("walletAddress"), [params]);
+  const params = useMemo(
+    () => new URLSearchParams(window.location.search),
+    []
+  );
+  const address = useMemo(
+    () => params.get("walletAddress"),
+    [params]
+  );
 
   const signAndBroadcast = async (
     msgs: EncodeObject[]

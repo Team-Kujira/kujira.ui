@@ -33,14 +33,12 @@ export const Modal = ({
                 "modal--large": large,
                 [`${className}`]: className,
               })}
-              onClick={() => (backgroundClose ? close() : null)}
-            >
+              onClick={() => (backgroundClose ? close() : null)}>
               <div
                 className="modal__window"
                 onClick={(e) => {
                   e.stopPropagation();
-                }}
-              >
+                }}>
                 {title && (
                   <div className="modal__header">
                     <h2>{title}</h2>
@@ -50,10 +48,14 @@ export const Modal = ({
                 {children}
                 {confirm && (
                   <div className="modal__footer text-right mt-4">
-                    <button className="button--outline-blue" onClick={close}>
+                    <button
+                      className="button--outline-blue"
+                      onClick={close}>
                       Cancel
                     </button>
-                    <button className="button--gradient ml-1" onClick={confirm}>
+                    <button
+                      className="button--gradient ml-1"
+                      onClick={confirm}>
                       Confirm
                     </button>
                   </div>

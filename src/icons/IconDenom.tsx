@@ -41,9 +41,11 @@ const IconDenomInner: React.FC<{ denom: Denom }> = ({ denom }) => {
     return (
       <>
         <IconDenom denom={denom.underlying[0]} />
-        {denom.underlying.slice(1, denom.underlying.length).map((d, idx) => (
-          <IconDenom key={idx} denom={d} />
-        ))}
+        {denom.underlying
+          .slice(1, denom.underlying.length)
+          .map((d, idx) => (
+            <IconDenom key={idx} denom={d} />
+          ))}
       </>
     );
   }
@@ -295,7 +297,10 @@ const IconDenomInner: React.FC<{ denom: Denom }> = ({ denom }) => {
 };
 
 const IconCalc = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
     <path
       d="M23.5 12C23.5 18.3513 18.3513 23.5 12 23.5C5.64873 23.5 0.5 18.3513 0.5 12C0.5 5.64873 5.64873 0.5 12 0.5C18.3513 0.5 23.5 5.64873 23.5 12Z"
       fill="#191C25"
@@ -328,32 +333,26 @@ const SHD = () => (
     viewBox="0 0 36 33"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    data-v-5477215f=""
-  >
+    data-v-5477215f="">
     <path
       d="M14.9681 0.751949C21.1905 0.44129 25.3433 3.29338 29.2393 9.83998C34.0335 17.8956 31.5382 26.0359 26.4043 30.8452C29.6505 24.0412 28.9705 21.3013 21.8092 15.4524C14.6478 9.60341 14.1687 4.69824 14.9681 0.751949Z"
-      fill="url(#paint0_linear_4159_2622)"
-    ></path>
+      fill="url(#paint0_linear_4159_2622)"></path>
     <path
       d="M36 16.1128C36 22.6871 32.0546 28.3419 26.398 30.8474C30.0228 27.4974 34.409 18.7763 29.4135 10.5476C24.9961 3.27135 18.4678 1.44061 14.9656 0.752001C16.5078 0.263534 18.1504 0 19.8547 0C28.7715 0 36 7.21394 36 16.1128Z"
-      fill="url(#paint1_linear_4159_2622)"
-    ></path>
+      fill="url(#paint1_linear_4159_2622)"></path>
     <path
       d="M25.0319 31.2449C20.7797 31.9864 15.6627 29.311 10.7606 22.1568C5.46125 14.4228 8.46176 5.96094 13.5957 1.15155C10.3495 7.95552 11.0295 10.6955 18.1908 16.5445C25.3522 22.3935 25.8313 27.2986 25.0319 31.2449Z"
-      fill="url(#paint2_linear_4159_2622)"
-    ></path>
+      fill="url(#paint2_linear_4159_2622)"></path>
     <path
       d="M4 15.884C4 9.30966 7.94534 3.65496 13.602 1.14935C9.97724 4.49932 5.59092 13.2204 10.5865 21.4491C15.0039 28.7254 21.5322 30.5562 25.0344 31.2448C23.4922 31.7333 21.8496 31.9968 20.1453 31.9968C11.2285 31.9968 4 24.7828 4 15.884Z"
-      fill="url(#paint3_linear_4159_2622)"
-    ></path>
+      fill="url(#paint3_linear_4159_2622)"></path>
     <linearGradient
       id="paint0_linear_4159_2622"
       x1="14.9788"
       y1="0.75195"
       x2="26.5622"
       y2="30.8558"
-      gradientUnits="userSpaceOnUse"
-    >
+      gradientUnits="userSpaceOnUse">
       <stop stopColor="#3A447C"></stop>
       <stop offset="0.523958" stopColor="#252945"></stop>
       <stop offset="1" stopColor="#121114"></stop>
@@ -364,8 +363,7 @@ const SHD = () => (
       y1="0.827123"
       x2="26.6915"
       y2="30.8667"
-      gradientUnits="userSpaceOnUse"
-    >
+      gradientUnits="userSpaceOnUse">
       <stop stopColor="#7387F6"></stop>
       <stop offset="0.473958" stopColor="#4B548D"></stop>
       <stop offset="1" stopColor="#1F1D23"></stop>
@@ -376,8 +374,7 @@ const SHD = () => (
       y1="31.2449"
       x2="13.4378"
       y2="1.14102"
-      gradientUnits="userSpaceOnUse"
-    >
+      gradientUnits="userSpaceOnUse">
       <stop stopColor="#53347A"></stop>
       <stop offset="0.523958" stopColor="#37244D"></stop>
       <stop offset="1" stopColor="#16141B"></stop>
@@ -388,8 +385,7 @@ const SHD = () => (
       y1="31.1696"
       x2="13.3085"
       y2="1.13013"
-      gradientUnits="userSpaceOnUse"
-    >
+      gradientUnits="userSpaceOnUse">
       <stop stopColor="#A868F5"></stop>
       <stop offset="0.473958" stopColor="#684692"></stop>
       <stop offset="1" stopColor="#25222A"></stop>
@@ -427,16 +423,14 @@ const KAR = () => (
   <svg
     className="icon-denom"
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 48 48"
-  >
+    viewBox="0 0 48 48">
     <defs>
       <linearGradient
         x1="73.344%"
         y1="-15.068%"
         x2="126.199%"
         y2="59.951%"
-        id="kar"
-      >
+        id="kar">
         <stop stopColor="#5D6F84" offset="0%" />
         <stop stopColor="#354252" offset="100%" />
       </linearGradient>
@@ -456,16 +450,14 @@ const IconOSMO = () => (
   <svg
     className="icon-denom"
     viewBox="0 0 100 100"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+    xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient
         x1="42.265%"
         y1="99.291%"
         x2="58.243%"
         y2=".72%"
-        id="osmo_c"
-      >
+        id="osmo_c">
         <stop stopColor="#81FFFF" offset="0%" />
         <stop stopColor="#FFF" stopOpacity="0" offset="62.02%" />
       </linearGradient>
@@ -474,8 +466,7 @@ const IconOSMO = () => (
         y1="25.17%"
         x2="34.596%"
         y2="65.27%"
-        id="osmo_d"
-      >
+        id="osmo_d">
         <stop stopColor="#FFF" offset="28.88%" />
         <stop stopColor="#FFF" stopOpacity="0" offset="77.96%" />
       </linearGradient>
@@ -484,8 +475,7 @@ const IconOSMO = () => (
         y1="49.942%"
         x2="99.976%"
         y2="49.942%"
-        id="osmo_e"
-      >
+        id="osmo_e">
         <stop stopColor="#0002E9" offset="0%" />
         <stop stopColor="#FF00C7" offset="99.52%" />
       </linearGradient>
@@ -494,8 +484,7 @@ const IconOSMO = () => (
         y1="10.442%"
         x2="2.525%"
         y2="107.296%"
-        id="osmo_f"
-      >
+        id="osmo_f">
         <stop stopColor="#FFF" offset="28.88%" />
         <stop stopColor="#FFF" stopOpacity="0" offset="77.96%" />
       </linearGradient>
@@ -504,8 +493,7 @@ const IconOSMO = () => (
         y1="49.942%"
         x2="100.136%"
         y2="49.942%"
-        id="osmo_g"
-      >
+        id="osmo_g">
         <stop stopColor="#000292" offset="0%" />
         <stop stopColor="#7D00C7" offset="99.52%" />
       </linearGradient>
@@ -514,8 +502,7 @@ const IconOSMO = () => (
         y1="50.104%"
         x2="100.003%"
         y2="50.104%"
-        id="osmo_h"
-      >
+        id="osmo_h">
         <stop stopColor="#000292" offset="0%" />
         <stop stopColor="#BE00C7" offset="99.52%" />
       </linearGradient>
@@ -524,8 +511,7 @@ const IconOSMO = () => (
         y1="-.897%"
         x2="24.631%"
         y2="110.724%"
-        id="osmo_i"
-      >
+        id="osmo_i">
         <stop stopColor="#FFF" offset="28.88%" />
         <stop stopColor="#FFF" stopOpacity="0" offset="77.96%" />
       </linearGradient>
@@ -534,8 +520,7 @@ const IconOSMO = () => (
         y1="51.182%"
         x2="100.072%"
         y2="51.182%"
-        id="osmo_j"
-      >
+        id="osmo_j">
         <stop stopColor="#FFF" offset="28.88%" />
         <stop stopColor="#FFF" stopOpacity="0" offset="77.96%" />
       </linearGradient>
@@ -544,8 +529,7 @@ const IconOSMO = () => (
         y1="50.829%"
         x2="99.832%"
         y2="50.829%"
-        id="osmo_k"
-      >
+        id="osmo_k">
         <stop stopColor="#FFF" offset="28.88%" />
         <stop stopColor="#FFF" stopOpacity="0" offset="77.96%" />
       </linearGradient>
@@ -554,8 +538,7 @@ const IconOSMO = () => (
         y1="49.214%"
         x2="96.326%"
         y2="49.214%"
-        id="osmo_l"
-      >
+        id="osmo_l">
         <stop stopColor="#FFF" offset="28.88%" />
         <stop stopColor="#FFF" stopOpacity="0" offset="77.96%" />
       </linearGradient>
@@ -564,8 +547,7 @@ const IconOSMO = () => (
         y1="49.12%"
         x2="95.036%"
         y2="49.12%"
-        id="osmo_m"
-      >
+        id="osmo_m">
         <stop stopColor="#FFF" offset="28.88%" />
         <stop stopColor="#FFF" stopOpacity="0" offset="77.96%" />
       </linearGradient>
@@ -574,8 +556,7 @@ const IconOSMO = () => (
         y1="49.851%"
         x2="98.752%"
         y2="49.851%"
-        id="osmo_n"
-      >
+        id="osmo_n">
         <stop stopColor="#FFF" offset="28.88%" />
         <stop stopColor="#FFF" stopOpacity="0" offset="77.96%" />
       </linearGradient>
@@ -584,8 +565,7 @@ const IconOSMO = () => (
         y1="49.812%"
         x2="99.306%"
         y2="49.812%"
-        id="osmo_o"
-      >
+        id="osmo_o">
         <stop stopColor="#FFF" offset="28.88%" />
         <stop stopColor="#FFF" stopOpacity="0" offset="77.96%" />
       </linearGradient>
@@ -596,8 +576,7 @@ const IconOSMO = () => (
         fy="41.12%"
         r="116.934%"
         gradientTransform="matrix(.95748 0 0 1 .04 0)"
-        id="osmo_a"
-      >
+        id="osmo_a">
         <stop stopColor="#FFEAFF" stopOpacity=".6" offset="0%" />
         <stop stopColor="#A087C9" offset="68.07%" />
         <stop stopColor="#10002F" offset="100%" />
@@ -609,8 +588,7 @@ const IconOSMO = () => (
         fy="15.529%"
         r="97.809%"
         gradientTransform="matrix(1 0 0 .98202 0 .003)"
-        id="osmo_b"
-      >
+        id="osmo_b">
         <stop stopColor="#FFEAFF" stopOpacity=".6" offset="0%" />
         <stop stopColor="#A087C9" offset="68.07%" />
         <stop stopColor="#10002F" offset="100%" />
@@ -698,7 +676,10 @@ const IconOSMO = () => (
         fill="#FFF"
         opacity=".2"
       />
-      <g opacity=".4" transform="translate(42.476 82.99)" fill="url(#osmo_j)">
+      <g
+        opacity=".4"
+        transform="translate(42.476 82.99)"
+        fill="url(#osmo_j)">
         <path
           d="M.89 3.328A2.126 2.126 0 0 1 .89.37c.145-.148.29-.222.435-.37C1.035.074.817.222.6.444a2.125 2.125 0 0 0 0 2.958c.654.666 1.67.814 2.47.37a2.003 2.003 0 0 1-2.18-.444Z"
           opacity=".6"
@@ -714,7 +695,10 @@ const IconOSMO = () => (
         fill="#FFF"
         opacity=".2"
       />
-      <g opacity=".4" transform="translate(53.08 81.955)" fill="url(#osmo_k)">
+      <g
+        opacity=".4"
+        transform="translate(53.08 81.955)"
+        fill="url(#osmo_k)">
         <path
           d="M.89 3.328A2.125 2.125 0 0 1 .89.37c.145-.148.29-.222.435-.37C1.035.074.817.222.6.444a2.125 2.125 0 0 0 0 2.958c.654.666 1.67.814 2.47.37a2.003 2.003 0 0 1-2.18-.444Z"
           opacity=".6"
@@ -730,7 +714,10 @@ const IconOSMO = () => (
         fill="#FFF"
         opacity=".2"
       />
-      <g opacity=".4" transform="translate(48.314 87.798)" fill="url(#osmo_l)">
+      <g
+        opacity=".4"
+        transform="translate(48.314 87.798)"
+        fill="url(#osmo_l)">
         <path
           d="M.717 2.44C.136 1.85.136.815.717.223.79.148.935.074 1.007 0 .79.074.645.222.5.37c-.581.592-.581 1.627 0 2.219.509.518 1.235.592 1.889.222a1.56 1.56 0 0 1-1.67-.37Z"
           opacity=".6"
@@ -746,7 +733,10 @@ const IconOSMO = () => (
         fill="#FFF"
         opacity=".2"
       />
-      <g opacity=".4" transform="translate(57.685 86.688)" fill="url(#osmo_m)">
+      <g
+        opacity=".4"
+        transform="translate(57.685 86.688)"
+        fill="url(#osmo_m)">
         <path
           d="M.717 2.44C.136 1.85.136.814.717.223.79.148.935.074 1.007 0 .79.074.645.222.5.37c-.581.592-.581 1.627 0 2.219.509.518 1.235.591 1.889.222a1.56 1.56 0 0 1-1.67-.37Z"
           opacity=".6"
@@ -762,7 +752,10 @@ const IconOSMO = () => (
         fill="#FFF"
         opacity=".2"
       />
-      <g opacity=".4" transform="translate(32.581 79.734)" fill="url(#osmo_n)">
+      <g
+        opacity=".4"
+        transform="translate(32.581 79.734)"
+        fill="url(#osmo_n)">
         <path
           d="M1.416 5.325a3.437 3.437 0 0 1 0-4.807c.218-.222.436-.37.727-.518-.436.148-.8.444-1.162.74a3.437 3.437 0 0 0 0 4.807c1.09 1.11 2.76 1.332 4.067.518-1.235.518-2.687.296-3.632-.74Z"
           opacity=".6"
@@ -778,7 +771,10 @@ const IconOSMO = () => (
         fill="#FFF"
         opacity=".2"
       />
-      <g opacity=".4" transform="translate(62.36 71.376)" fill="url(#osmo_o)">
+      <g
+        opacity=".4"
+        transform="translate(62.36 71.376)"
+        fill="url(#osmo_o)">
         <path
           d="M1.416 5.325a3.437 3.437 0 0 1 0-4.807c.218-.222.436-.37.727-.518-.436.148-.8.444-1.162.74a3.437 3.437 0 0 0 0 4.808c1.089 1.109 2.76 1.33 4.067.517-1.235.518-2.615.296-3.632-.74Z"
           opacity=".6"
@@ -797,8 +793,7 @@ const IconDEMO = () => (
   <svg
     className="icon-denom"
     viewBox="0 0 100 100"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+    xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="demo_a">
         <stop stopColor="#FDFC47" offset="0%" />
@@ -817,8 +812,7 @@ const IconEVMOS = () => (
   <svg
     className="icon-denom"
     viewBox="0 0 40 40"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+    xmlns="http://www.w3.org/2000/svg">
     <g fill="none" fillRule="evenodd">
       <circle fill="#ED4E33" cx="20" cy="20" r="20" />
       <path
@@ -834,22 +828,19 @@ const IconAXL = () => (
     className="icon-denom"
     viewBox="0 0 300 300"
     version="1.1"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+    xmlns="http://www.w3.org/2000/svg">
     <rect
       id="Rectangle"
       fill="#000000"
       x="0"
       y="0"
       width="300"
-      height="300"
-    ></rect>
+      height="300"></rect>
     <path
       d="M161.686172,134.209181 L223.075503,73.1593001 L199.785536,50 L150.042609,99.4688104 L100.299682,50 L77.0111351,73.1593001 L138.399046,134.209181 C141.614589,137.406261 145.828599,139.005511 150.042609,139.005511 C154.256619,139.005511 158.470628,137.407681 161.686172,134.209181 Z M250.553914,199.427622 L200.810987,149.958811 L250.553914,100.488581 L227.265368,77.3292808 L165.878877,138.379161 C159.44921,144.774742 159.44921,155.142881 165.878877,161.538462 L227.265368,222.588342 L250.553914,199.429042 L250.553914,199.429042 L250.553914,199.427622 Z M149.957391,200.53119 L199.700318,250 L222.987445,226.8407 L161.600954,165.790819 C155.168447,159.395239 144.744915,159.395239 138.312408,165.790819 L76.9259175,226.8407 L100.214464,250 L149.957391,200.53119 L149.957391,200.53119 Z M134.121123,161.622259 C137.21026,158.550165 138.944438,154.385865 138.944438,150.042609 C138.944438,145.699352 137.21026,141.533633 134.121123,138.462959 L72.7346324,77.4130781 L49.4460857,100.573798 L99.1890126,150.042609 L49.4460857,199.512839 L72.7346324,222.67214 L134.122543,161.622259 L134.122543,161.622259 L134.121123,161.622259 Z"
       id="Shape"
       fill="#FFFFFF"
-      fillRule="nonzero"
-    ></path>
+      fillRule="nonzero"></path>
   </svg>
 );
 
@@ -882,8 +873,7 @@ const IconUSDC = () => (
     className="icon-denom"
     xmlns="http://www.w3.org/2000/svg"
     data-name="86977684-12db-4850-8f30-233a7c267d11"
-    viewBox="0 0 2000 2000"
-  >
+    viewBox="0 0 2000 2000">
     <path
       d="M1000 2000c554.17 0 1000-445.83 1000-1000S1554.17 0 1000 0 0 445.83 0 1000s445.83 1000 1000 1000z"
       fill="#2775ca"
@@ -903,8 +893,7 @@ const IconETH = () => (
   <svg
     className="icon-denom"
     viewBox="0 0 100 100"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+    xmlns="http://www.w3.org/2000/svg">
     <g fill="none" fillRule="evenodd">
       <circle fill="#FFF" cx="49.938" cy="50.063" r="49.938" />
       <path
@@ -940,8 +929,7 @@ const IconAtom = () => (
   <svg
     className="icon-denom"
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 2500 2500"
-  >
+    viewBox="0 0 2500 2500">
     <circle cx="1250" cy="1250" r="1250" fill="#2e3148" />
     <circle cx="1250" cy="1250" r="725.31" fill="#1b1e36" />
     <path
@@ -957,9 +945,27 @@ const IconAtom = () => (
       fill="#6f7390"
     />
     <circle cx="1250" cy="1250" r="128.6" fill="#b7b9c8" />
-    <ellipse cx="1777.26" cy="756.17" rx="74.59" ry="77.16" fill="#b7b9c8" />
-    <ellipse cx="552.98" cy="1018.52" rx="74.59" ry="77.16" fill="#b7b9c8" />
-    <ellipse cx="1098.25" cy="1965.02" rx="74.59" ry="77.16" fill="#b7b9c8" />
+    <ellipse
+      cx="1777.26"
+      cy="756.17"
+      rx="74.59"
+      ry="77.16"
+      fill="#b7b9c8"
+    />
+    <ellipse
+      cx="552.98"
+      cy="1018.52"
+      rx="74.59"
+      ry="77.16"
+      fill="#b7b9c8"
+    />
+    <ellipse
+      cx="1098.25"
+      cy="1965.02"
+      rx="74.59"
+      ry="77.16"
+      fill="#b7b9c8"
+    />
   </svg>
 );
 
@@ -967,8 +973,7 @@ const IconSCRT = () => (
   <svg
     className="icon-denom"
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 122 122"
-  >
+    viewBox="0 0 122 122">
     <circle
       cx="61"
       cy="61"
@@ -997,8 +1002,7 @@ const IconWFTM = () => (
   <svg
     className="icon-denom"
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 96 96"
-  >
+    viewBox="0 0 96 96">
     <circle
       cx="48"
       cy="48"
@@ -1030,10 +1034,21 @@ const IconDot = () => (
     id="Logo"
     x="0"
     y="0"
-    viewBox="0 0 1326.1 1410.3"
-  >
-    <ellipse fill="#E6007A" cx="663" cy="147.9" rx="254.3" ry="147.9" />
-    <ellipse fill="#E6007A" cx="663" cy="1262.3" rx="254.3" ry="147.9" />
+    viewBox="0 0 1326.1 1410.3">
+    <ellipse
+      fill="#E6007A"
+      cx="663"
+      cy="147.9"
+      rx="254.3"
+      ry="147.9"
+    />
+    <ellipse
+      fill="#E6007A"
+      cx="663"
+      cy="1262.3"
+      rx="254.3"
+      ry="147.9"
+    />
     <ellipse
       transform="rotate(-60 180.499 426.56)"
       fill="#E6007A"
@@ -1075,8 +1090,7 @@ const IconAUSD = () => (
     height="128"
     viewBox="0 0 128 128"
     fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+    xmlns="http://www.w3.org/2000/svg">
     <path
       d="M64 128C99.3462 128 128 99.3462 128 64C128 28.6538 99.3462 0 64 0C28.6538 0 0 28.6538 0 64C0 99.3462 28.6538 128 64 128Z"
       fill="#E40C5B"
@@ -1113,8 +1127,7 @@ const IconLocal = () => (
     height="24"
     viewBox="0 0 24 24"
     fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+    xmlns="http://www.w3.org/2000/svg">
     <path
       d="M24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12Z"
       fill="#161721"
@@ -1172,8 +1185,7 @@ const IconLocal = () => (
         y1="6.03639"
         x2="18.0406"
         y2="17.0788"
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <stop stopColor="#FBA367" />
         <stop offset="1" stopColor="#EF6100" />
       </linearGradient>

@@ -1,13 +1,19 @@
-import { useEffect, useState } from "react";
-import { Window as KeplrWindow } from "@keplr-wallet/types";
+import { Decimal } from "@cosmjs/math";
 import { AccountData, EncodeObject } from "@cosmjs/proto-signing";
 import {
-  SigningStargateClient,
-  GasPrice,
   DeliverTxResponse,
+  GasPrice,
+  SigningStargateClient,
 } from "@cosmjs/stargate";
-import { Decimal } from "@cosmjs/math";
-import { registry, aminoTypes, CHAIN_INFO, MAINNET, NETWORK } from "kujira.js";
+import { Window as KeplrWindow } from "@keplr-wallet/types";
+import {
+  aminoTypes,
+  CHAIN_INFO,
+  MAINNET,
+  NETWORK,
+  registry,
+} from "kujira.js";
+import { useEffect, useState } from "react";
 import { useNetwork } from "../network";
 
 declare global {
@@ -19,13 +25,21 @@ export type UseKeplr = {
   connect: null | ((chain?: string) => void);
   disconnect: () => void;
   account: AccountData | null;
-  signAndBroadcast: (msgs: EncodeObject[]) => Promise<DeliverTxResponse>;
+  signAndBroadcast: (
+    msgs: EncodeObject[]
+  ) => Promise<DeliverTxResponse>;
 };
 
-export const useKeplr = ({ feeDenom }: { feeDenom: string }): UseKeplr => {
+export const useKeplr = ({
+  feeDenom,
+}: {
+  feeDenom: string;
+}): UseKeplr => {
   const [{ network, chainInfo }, setNetwork] = useNetwork();
 
-  const [accounts, setAccounts] = useState<null | readonly AccountData[]>(null);
+  const [accounts, setAccounts] = useState<
+    null | readonly AccountData[]
+  >(null);
   const keplr = window.keplr;
 
   const connect = (network: string = MAINNET) => {
@@ -91,7 +105,8 @@ export const useKeplr = ({ feeDenom }: { feeDenom: string }): UseKeplr => {
       cb: (total: number, remaining: number) => void;
     }
   ): Promise<DeliverTxResponse> => {
-    if (!window.keplr || !account) throw new Error("No Wallet Connected");
+    if (!window.keplr || !account)
+      throw new Error("No Wallet Connected");
 
     const signer = await window.keplr.getOfflineSignerAuto(network);
     const gasPrice = new GasPrice(
@@ -121,14 +136,22 @@ export const useKeplr = ({ feeDenom }: { feeDenom: string }): UseKeplr => {
 
       let res: DeliverTxResponse;
       for (const chunk of chunks) {
-        res = await client.signAndBroadcast(account.address, chunk, 1.5);
+        res = await client.signAndBroadcast(
+          account.address,
+          chunk,
+          1.5
+        );
         remaining -= 1;
         batch.cb(chunks.length, remaining);
       }
       // @ts-expect-error this is fine
       return res;
     } else {
-      return await client.signAndBroadcast(account.address, msgs, 1.5);
+      return await client.signAndBroadcast(
+        account.address,
+        msgs,
+        1.5
+      );
     }
   };
 

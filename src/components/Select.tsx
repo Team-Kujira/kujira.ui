@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 //import { motion, AnimatePresence } from "framer-motion";
-import { IconArrow } from "../icons/IconArrow";
 import clsx from "clsx";
+import { IconArrow } from "../icons/IconArrow";
 
 type OptionType<T> = {
   label: string;
@@ -65,8 +65,7 @@ export function Select<T>({
         "select--open": open,
         [`${className}`]: className,
       })}
-      onClick={() => setOpen(!open)}
-    >
+      onClick={() => setOpen(!open)}>
       {selected.label}
       <IconArrow />
       {/* <AnimatePresence>
@@ -103,8 +102,7 @@ export function Select<T>({
             <li
               onClick={() => handleChange(m.value)}
               key={m.label}
-              className={m === selected ? "current" : ""}
-            >
+              className={m === selected ? "current" : ""}>
               {m.label}
             </li>
           ))}

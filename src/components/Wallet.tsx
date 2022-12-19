@@ -106,8 +106,7 @@ export const NetworkWarning = () => {
             height="1em"
             className="block mr-q1"
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 640 512"
-          >
+            viewBox="0 0 640 512">
             <path
               fill="currentColor"
               d="M160 442.5C149.1 446.1 139.2 448 128 448C74.98 448 32 405 32 352V48H24C10.75 48 0 37.25 0 24C0 10.75 10.75 0 24 0H232C245.3 0 256 10.75 256 24C256 37.25 245.3 48 232 48H224V309.9L175 389.4C165.2 405.4 160 423.8 160 442.5zM80 160H176V48H80V160zM80 208V352C80 378.5 101.5 400 128 400C154.5 400 176 378.5 176 352V208H80zM520 0C533.3 0 544 10.75 544 24C544 37.25 533.3 48 520 48H512V217.2L629.1 408.9C636.5 419.6 640 431.8 640 444.4C640 481.7 609.7 512 572.4 512H259.6C222.3 512 191.1 481.7 191.1 444.4C191.1 431.8 195.5 419.6 202 408.9L319.1 217.2V48H311.1C298.7 48 287.1 37.25 287.1 24C287.1 10.75 298.7 0 311.1 0H520zM464 48H368V224C368 228.4 366.8 232.8 364.4 236.6L313.1 320H518.9L467.6 236.6C465.2 232.8 464 228.4 464 224V48zM240 444.4C240 455.2 248.8 464 259.6 464H572.4C583.2 464 592 455.2 592 444.4C592 440.7 590.1 437.2 589.1 434.1L548.4 368H283.6L242.9 434.1C241 437.2 240 440.7 240 444.4H240z"
@@ -125,10 +124,16 @@ export function Wallet({
 }: {
   adapter?: () => Pick<
     Wallets,
-    "balance" | "account" | "connect" | "disconnect" | "balances" | "chainInfo"
+    | "balance"
+    | "account"
+    | "connect"
+    | "disconnect"
+    | "balances"
+    | "chainInfo"
   >;
 }) {
-  const { account, connect, disconnect, balances, chainInfo } = adapter();
+  const { account, connect, disconnect, balances, chainInfo } =
+    adapter();
   const [showKado, setShowKado] = useState(false);
 
   if (account) {
@@ -150,7 +155,9 @@ export function Wallet({
           {Object.keys(NETWORKS).includes(chainInfo.chainId) && (
             <NetworkSelect onChange={(n) => connect && connect(n)} />
           )}
-          <small className="network">Network: {chainInfo.chainId}</small>
+          <small className="network">
+            Network: {chainInfo.chainId}
+          </small>
           <span className="address mb-2">
             {account.address.substr(0, 16)}...
             {account.address.substr(-16)}
@@ -159,8 +166,7 @@ export function Wallet({
               onClick={() => {
                 navigator.clipboard.writeText(account.address || "");
                 toast.success(i18n.t("Copied address to clipboard"));
-              }}
-            >
+              }}>
               <IconCopy />
             </div>
           </span>
@@ -175,8 +181,7 @@ export function Wallet({
           <div className="md-flex jc-e mb-1 pr-1">
             <button
               className="transparent md-flex ai-c jc-e mr-0 ml-a pointer"
-              onClick={() => setShowKado(true)}
-            >
+              onClick={() => setShowKado(true)}>
               <IconKado />
               <span className="fs-12 color-white ml-1 fw-600">
                 Fund with Kado
@@ -187,8 +192,7 @@ export function Wallet({
             className="md-button md-button--grey md-button--outline disconnect"
             onClick={() => {
               disconnect();
-            }}
-          >
+            }}>
             Disconnect Wallet
           </i18n.button>
         </div>
@@ -200,8 +204,7 @@ export function Wallet({
     <>
       <button
         onClick={() => connect && connect()}
-        className="md-button md-button--grey md-button--nowrap"
-      >
+        className="md-button md-button--grey md-button--nowrap">
         <IconWallet />
         <i18n.span>Connect Wallet</i18n.span>
       </button>
@@ -238,8 +241,7 @@ const Balance: React.FC<{ balance: Coin }> = ({ balance }) => {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
             width="1em"
-            height="1em"
-          >
+            height="1em">
             <path
               fill="currentColor"
               d="M32 64C32 28.65 60.65 0 96 0H256C291.3 0 320 28.65 320 64V256H328C376.6 256 416 295.4 416 344V376C416 389.3 426.7 400 440 400C453.3 400 464 389.3 464 376V221.1C436.4 214.9 416 189.8 416 160V96L384 64C375.2 55.16 375.2 40.84 384 32C392.8 23.16 407.2 23.16 416 32L493.3 109.3C505.3 121.3 512 137.5 512 154.5V376C512 415.8 479.8 448 440 448C400.2 448 368 415.8 368 376V344C368 321.9 350.1 303.1 328 303.1H320V448C337.7 448 352 462.3 352 480C352 497.7 337.7 512 320 512H32C14.33 512 0 497.7 0 480C0 462.3 14.33 448 32 448V64zM96 176C96 184.8 103.2 192 112 192H240C248.8 192 256 184.8 256 176V80C256 71.16 248.8 64 240 64H112C103.2 64 96 71.16 96 80V176z"
@@ -249,14 +251,14 @@ const Balance: React.FC<{ balance: Coin }> = ({ balance }) => {
           <button
             data-tip="Use for gas payment"
             className="transparent color-grey pointer"
-            onClick={() => balance.denom && setFeeDenom(balance.denom)}
-          >
+            onClick={() =>
+              balance.denom && setFeeDenom(balance.denom)
+            }>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
               width="1em"
-              height="1em"
-            >
+              height="1em">
               <path
                 fill="currentColor"
                 d="M96 0H256C291.3 0 320 28.65 320 64V256H328C376.6 256 416 295.4 416 344V376C416 389.3 426.7 400 440 400C453.3 400 464 389.3 464 376V221.1C436.4 214.9 416 189.8 416 160V97.94L383 64.97C373.7 55.6 373.7 40.4 383 31.03C392.4 21.66 407.6 21.66 416.1 31.03L490.9 104.1C504.4 118.5 512 136.8 512 155.9V376C512 415.8 479.8 448 440 448C400.2 448 368 415.8 368 376V344C368 321.9 350.1 304 328 304H320V464H328C341.3 464 352 474.7 352 488C352 501.3 341.3 512 328 512H24C10.75 512 0 501.3 0 488C0 474.7 10.75 464 24 464H32V64C32 28.65 60.65 0 96 0zM256 48H96C87.16 48 80 55.16 80 64V192H272V64C272 55.16 264.8 48 256 48zM272 240H80V464H272V240z"
@@ -298,8 +300,7 @@ export const KujiConnected = () => (
   <svg
     viewBox="0 0 81 80"
     xmlns="http://www.w3.org/2000/svg"
-    className="completed"
-  >
+    className="completed">
     <defs>
       <clipPath id="a">
         <path d="M40 0c22.091 0 40 17.909 40 40S62.091 80 40 80 0 62.091 0 40 17.909 0 40 0Zm22.764 29.148H40.681V45.2h9.083v15.148c0 1.413-.567 2.148-1.703 2.148-1.306 0-2.668-.113-4.03-.283L44.825 66h4.599c2.838 0 4.314-1.583 4.314-4.691V45.2h9.026V29.148Zm-45.926 24.36c-.283 4.07-1.078 7.688-2.327 10.853l3.122.96c1.192-3.334 1.93-7.121 2.27-11.417l-3.065-.395Zm7.721.17-2.725.34c.284 2.486.454 6.047.568 10.625l2.952-.339c-.114-4.465-.398-8.026-.795-10.626Zm17.825-4.748c-1.76 5.087-3.86 9.496-6.244 13.227l3.065 2.204c2.498-3.9 4.655-8.535 6.472-13.848l-3.293-1.583Zm-12.83 4.353-2.838.339c.908 2.374 1.476 5.765 1.76 10.174l2.952-.34c-.34-4.295-.965-7.686-1.873-10.173Zm29.918-4.579-3.01 1.809c2.726 4.691 4.94 8.987 6.53 12.887L66 61.309c-1.533-3.618-3.69-7.8-6.528-12.605Zm-24.695 4.013-2.668.792a67.812 67.812 0 0 1 2.384 7.008l2.782-.678c-.795-2.713-1.59-5.087-2.498-7.122Zm-12.83-38.604c-1.702 5.54-4.37 10.004-7.947 13.452l.852 4.013c.738-.678 1.476-1.356 2.157-2.091v21.874h18.677V27.904h-5.734c1.192-1.752 2.384-3.9 3.576-6.5v-2.713h-9.366c.51-1.13.965-2.26 1.419-3.448l-3.633-1.13Zm10.219 27.13v6.727h-4.144v-6.727h4.144Zm-7.437 0v6.727h-4.2v-6.727h4.2Zm34.175-8.478v8.874H44.54v-8.874h14.363ZM24.729 31.24v6.726h-4.2V31.24h4.2Zm7.437 0v6.726h-4.144V31.24h4.144Zm-2.441-9.326c-1.249 2.26-2.441 4.296-3.69 5.991h-7.607a46.652 46.652 0 0 0 4.144-5.991h7.153ZM51.92 14l-3.917.678a66.216 66.216 0 0 1 1.987 5.709H37.672v3.674H65.49v-3.674H53.852c-.625-2.374-1.25-4.465-1.93-6.387Z" />
@@ -316,8 +317,7 @@ export const Network = ({ onClick }: { onClick: () => void }) => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 512 512"
     className="wallet__network"
-    onClick={onClick}
-  >
+    onClick={onClick}>
     <path
       fill="currentColor"
       d="M373.3 361.2C398.7 374.6 416 401.3 416 432C416 476.2 380.2 512 336 512C291.8 512 255.1 476.2 255.1 432C255.1 420.5 258.4 409.6 262.7 399.8L121.6 276.3C109.5 283.7 95.25 288 80 288C35.82 288 0 252.2 0 208C0 163.8 35.82 128 80 128C104.1 128 127.3 139.4 141.9 157.4L320.2 86.06C320.1 84.06 320 82.04 320 80C320 35.82 355.8 0 400 0C444.2 0 480 35.82 480 80C480 120.8 449.4 154.5 409.1 159.4L373.3 361.2zM400 48C382.3 48 368 62.33 368 80C368 97.67 382.3 112 400 112C417.7 112 432 97.67 432 80C432 62.33 417.7 48 400 48zM159.8 201.9C159.9 203.9 159.1 205.1 159.1 208C159.1 219.5 157.6 230.4 153.3 240.2L294.4 363.7C303.8 357.9 314.5 354 326 352.6L362.7 150.8C353.2 145.8 344.8 138.9 338.1 130.6L159.8 201.9zM336 400C318.3 400 304 414.3 304 432C304 449.7 318.3 464 336 464C353.7 464 368 449.7 368 432C368 414.3 353.7 400 336 400zM79.1 240C97.67 240 111.1 225.7 111.1 208C111.1 190.3 97.67 176 79.1 176C62.33 176 47.1 190.3 47.1 208C47.1 225.7 62.33 240 79.1 240z"

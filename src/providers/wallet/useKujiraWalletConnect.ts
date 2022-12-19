@@ -9,7 +9,9 @@ export type UseKujiraWallet = {
   connect: null | ((chain?: string) => void);
   disconnect: () => void;
   account: AccountData | null;
-  signAndBroadcast: (msgs: EncodeObject[]) => Promise<DeliverTxResponse>;
+  signAndBroadcast: (
+    msgs: EncodeObject[]
+  ) => Promise<DeliverTxResponse>;
 };
 
 export const useKujiraWalletConnect = ({
@@ -21,7 +23,9 @@ export const useKujiraWalletConnect = ({
   setModal: (b: boolean) => void;
   setLink: (b: string) => void;
 }): UseKujiraWallet => {
-  const [accounts, setAccounts] = useState<null | readonly AccountData[]>(null);
+  const [accounts, setAccounts] = useState<
+    null | readonly AccountData[]
+  >(null);
 
   const connect = (network: string = MAINNET) => {
     connector.createSession();

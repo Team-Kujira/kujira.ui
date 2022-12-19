@@ -1,22 +1,28 @@
-import { useContext, useEffect, useState, createContext, FC } from "react";
-import { ChainInfo } from "@keplr-wallet/types";
-import { Any } from "cosmjs-types/google/protobuf/any";
 import { AccountData, EncodeObject } from "@cosmjs/proto-signing";
 import {
-  DeliverTxResponse,
   assertIsDeliverTxSuccess,
   Coin,
+  DeliverTxResponse,
 } from "@cosmjs/stargate";
-import { BigNumber } from "ethers";
-import QRCode from "react-qr-code";
-import { useKujiraWalletConnect } from "./useKujiraWalletConnect";
-import { useKeplr } from "./useKeplr";
+import { ChainInfo } from "@keplr-wallet/types";
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
+import { Any } from "cosmjs-types/google/protobuf/any";
+import { BigNumber } from "ethers";
 import { Denom } from "kujira.js";
-import { useKujiraWebView } from "./useKujiraWebView";
-import { useNetwork } from "../network";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+import {
+  createContext,
+  FC,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import QRCode from "react-qr-code";
 import { Modal } from "../../components/Modal";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { useNetwork } from "../network";
+import { useKeplr } from "./useKeplr";
+import { useKujiraWalletConnect } from "./useKujiraWalletConnect";
+import { useKujiraWebView } from "./useKujiraWebView";
 
 export enum Adapter {
   KujiraWebview = "kujira-webview",
@@ -32,9 +38,14 @@ export type Wallets = {
   account: AccountData | null;
   kujiraAccount: Any | null;
   balances: Coin[];
-  getBalance: (denom: Denom, refresh?: boolean) => Promise<BigNumber | null>;
+  getBalance: (
+    denom: Denom,
+    refresh?: boolean
+  ) => Promise<BigNumber | null>;
   balance: (denom: Denom) => BigNumber;
-  signAndBroadcast: (msgs: EncodeObject[]) => Promise<DeliverTxResponse>;
+  signAndBroadcast: (
+    msgs: EncodeObject[]
+  ) => Promise<DeliverTxResponse>;
   delegations: null | DelegationResponse[];
   refreshBalances: () => void;
   refreshDelegations: () => void;
@@ -70,8 +81,13 @@ export const WalletContext: FC = ({ children }) => {
   const [adapter, setAdapter] = useState(
     kujiraWebView ? Adapter.KujiraWebview : Adapter.Keplr
   );
-  const [feeDenom, setFeeDenom] = useLocalStorage("feeDenom", "ukuji");
-  const [balances, setBalances] = useState<Record<string, BigNumber>>({});
+  const [feeDenom, setFeeDenom] = useLocalStorage(
+    "feeDenom",
+    "ukuji"
+  );
+  const [balances, setBalances] = useState<Record<string, BigNumber>>(
+    {}
+  );
 
   const [kujiraBalances, setKujiraBalances] = useState<Coin[]>([]);
 
@@ -91,11 +107,13 @@ export const WalletContext: FC = ({ children }) => {
   const [link, setLink] = useState("");
   const [modal, setModal] = useState(false);
 
-  const [kujiraAccount, setKujiraAccount] = useState<null | Any>(null);
-
-  const [delegations, setDelegations] = useState<null | DelegationResponse[]>(
+  const [kujiraAccount, setKujiraAccount] = useState<null | Any>(
     null
   );
+
+  const [delegations, setDelegations] = useState<
+    null | DelegationResponse[]
+  >(null);
 
   const kujiraWalletConnect = useKujiraWalletConnect({
     feeDenom,
@@ -209,8 +227,7 @@ export const WalletContext: FC = ({ children }) => {
         feeDenom,
         setFeeDenom,
         chainInfo,
-      }}
-    >
+      }}>
       {children}
       <Modal show={modal} close={() => setModal(false)}>
         <QRCode value={link} />

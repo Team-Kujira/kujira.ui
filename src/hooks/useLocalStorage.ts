@@ -5,7 +5,9 @@ type T = string | object;
 export const useLocalStorage = (key: string, def: T) => {
   const initial = useMemo(() => localStorage.getItem(key), [key]);
 
-  const [val, setLocalVal] = useState(initial ? JSON.parse(initial) : def);
+  const [val, setLocalVal] = useState(
+    initial ? JSON.parse(initial) : def
+  );
 
   const setVal = (v: any) => {
     setLocalVal(v);

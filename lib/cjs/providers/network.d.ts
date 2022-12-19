@@ -1,6 +1,6 @@
 /// <reference types="react" />
-import { ChainInfo } from "@keplr-wallet/types";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { ChainInfo } from "@keplr-wallet/types";
 import { KujiraQueryClient, NETWORK } from "kujira.js";
 export declare type NetworkContext = {
     network: NETWORK;

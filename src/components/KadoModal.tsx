@@ -9,8 +9,7 @@ export default function ({ onClose }: { onClose: () => void }) {
       show={true}
       close={() => {
         onClose();
-      }}
-    >
+      }}>
       <iframe
         src={`https://app.kado.money?${new URLSearchParams({
           apiKey: "8b1e6d84-c305-4d91-b1e4-a928a441317d",

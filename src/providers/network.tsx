@@ -1,7 +1,8 @@
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import {
+  HttpBatchClient,
+  Tendermint34Client,
+} from "@cosmjs/tendermint-rpc";
 import { ChainInfo } from "@keplr-wallet/types";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { Tendermint34Client, HttpBatchClient } from "@cosmjs/tendermint-rpc";
 import {
   CHAIN_INFO,
   KujiraQueryClient,
@@ -9,6 +10,14 @@ import {
   MAINNET,
   NETWORK,
 } from "kujira.js";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export type NetworkContext = {
   network: NETWORK;
@@ -26,13 +35,18 @@ const Context = createContext<NetworkContext>({
 
 export const NetworkContext: React.FC = ({ children }) => {
   const [network, setNetwork] = useLocalStorage("network", MAINNET);
-  const [tmClient, setTmClient] = useState<null | Tendermint34Client>(null);
+  const [tmClient, setTmClient] = useState<null | Tendermint34Client>(
+    null
+  );
 
   useEffect(() => {
-    const httpClient = new HttpBatchClient(CHAIN_INFO[network as NETWORK].rpc, {
-      dispatchInterval: 100,
-      batchSizeLimit: 200,
-    });
+    const httpClient = new HttpBatchClient(
+      CHAIN_INFO[network as NETWORK].rpc,
+      {
+        dispatchInterval: 100,
+        batchSizeLimit: 200,
+      }
+    );
     Tendermint34Client.create(httpClient).then(setTmClient);
   }, [network]);
 
@@ -44,8 +58,7 @@ export const NetworkContext: React.FC = ({ children }) => {
   return (
     <Context.Provider
       key={network}
-      value={{ network, setNetwork, tmClient, query }}
-    >
+      value={{ network, setNetwork, tmClient, query }}>
       {children}
     </Context.Provider>
   );
@@ -60,7 +73,8 @@ export const useNetwork = (): [
   },
   (n: NETWORK) => void
 ] => {
-  const { network, setNetwork, tmClient, query } = useContext(Context);
+  const { network, setNetwork, tmClient, query } =
+    useContext(Context);
 
   return [
     { network, chainInfo: CHAIN_INFO[network], tmClient, query },
