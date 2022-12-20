@@ -136,14 +136,8 @@ export function Wallet({
 }) {
   const { account, connect, disconnect, balances, chainInfo } =
     adapter();
-  const { setAdapter } = useWallet();
   const [showKado, setShowKado] = useState(false);
   const [showWalletSelect, setShowWalletSelect] = useState(false);
-
-  const showWalletConnection = () => {
-    // connect && connect()
-    setAdapter(Adapter.Sonar);
-  };
 
   if (account) {
     return (
@@ -162,7 +156,9 @@ export function Wallet({
         </div>
         <div className="wallet__popup">
           {Object.keys(NETWORKS).includes(chainInfo.chainId) && (
-            <NetworkSelect onChange={(n) => connect && connect(n)} />
+            <NetworkSelect
+              onChange={(n) => connect && connect(Adapter.Keplr, n)}
+            />
           )}
           <small className="network">
             Network: {chainInfo.chainId}
@@ -223,16 +219,14 @@ export function Wallet({
           <button
             className="transparent block pointer"
             onClick={() => {
-              setAdapter(Adapter.Sonar);
-              connect && connect();
+              connect && connect(Adapter.Sonar);
             }}>
             <IconSonar />
           </button>
           <button
             className="transparent block pointer"
             onClick={() => {
-              setAdapter(Adapter.Keplr);
-              connect && connect();
+              connect && connect(Adapter.Keplr);
             }}>
             <img src="https://github.com/chainapsis/keplr-wallet/blob/master/packages/mobile/src/assets/logo/keplr-logo-dark-mode.png?raw=true" />
           </button>

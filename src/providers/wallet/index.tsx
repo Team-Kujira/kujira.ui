@@ -8,7 +8,7 @@ import { ChainInfo } from "@keplr-wallet/types";
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { BigNumber } from "ethers";
-import { Denom } from "kujira.js";
+import { Denom, NETWORK } from "kujira.js";
 import {
   createContext,
   FC,
@@ -19,9 +19,10 @@ import {
 import QRCode from "react-qr-code";
 import { Modal } from "../../components/Modal";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { useWindowSize } from "../../hooks/useWindowSize";
 import { useNetwork } from "../network";
-import { useKeplr } from "./useKeplr";
-import { useSonar } from "./useSonar";
+import { Keplr } from "./keplr";
+import { Sonar } from "./sonar";
 
 export enum Adapter {
   Sonar = "sonar",
@@ -29,9 +30,7 @@ export enum Adapter {
 }
 
 export type IWallet = {
-  adapter: Adapter;
-  setAdapter: (a: Adapter) => void;
-  connect: null | ((chain?: string) => void);
+  connect: null | ((adapter: Adapter, chain?: NETWORK) => void);
   disconnect: () => void;
   account: AccountData | null;
   kujiraAccount: Any | null;
@@ -53,8 +52,6 @@ export type IWallet = {
 };
 
 const Context = createContext<IWallet>({
-  adapter: Adapter.Sonar,
-  setAdapter: () => {},
   account: null,
   getBalance: async () => BigNumber.from(0),
   balance: () => BigNumber.from(0),
@@ -75,7 +72,8 @@ const Context = createContext<IWallet>({
 });
 
 export const WalletContext: FC = ({ children }) => {
-  const [adapter, setAdapter] = useState(Adapter.Keplr);
+  const [stored, setStored] = useLocalStorage("wallet", "");
+  const [wallet, setWallet] = useState<Sonar | Keplr | null>(null);
   const [feeDenom, setFeeDenom] = useLocalStorage(
     "feeDenom",
     "ukuji"
@@ -85,16 +83,6 @@ export const WalletContext: FC = ({ children }) => {
   );
 
   const [kujiraBalances, setKujiraBalances] = useState<Coin[]>([]);
-
-  useEffect(() => {
-    document.onkeyup = function (e) {
-      if (e.ctrlKey && e.shiftKey && e.key == "W") {
-        setAdapter(
-          adapter === Adapter.Sonar ? Adapter.Keplr : Adapter.Sonar
-        );
-      }
-    };
-  }, [adapter]);
 
   const [{ network, chainInfo, query }] = useNetwork();
   const [link, setLink] = useState("");
@@ -108,20 +96,15 @@ export const WalletContext: FC = ({ children }) => {
     null | DelegationResponse[]
   >(null);
 
-  const sonar = useSonar({
-    feeDenom,
-    setLink,
-    setModal,
-  });
+  useEffect(() => {
+    console.log({ stored });
 
-  const keplr = useKeplr({ feeDenom });
-
-  const connector = adapter === Adapter.Sonar ? sonar : keplr;
-  const { account } = connector;
+    stored && connect(stored);
+  }, []);
 
   const refreshBalances = () => {
-    if (!account) return;
-    query?.bank.allBalances(account.address).then((x) => {
+    if (!wallet) return;
+    query?.bank.allBalances(wallet.account.address).then((x) => {
       x && setKujiraBalances(x);
       x?.map((b) => {
         setBalances((prev) =>
@@ -140,20 +123,20 @@ export const WalletContext: FC = ({ children }) => {
     setKujiraBalances([]);
     setBalances({});
     refreshBalances();
-  }, [account, query]);
+  }, [wallet, query]);
 
   useEffect(() => {
-    if (!account) return;
+    if (!wallet) return;
     query?.auth
-      .account(account.address)
+      .account(wallet.account.address)
       .then((account) => account && setKujiraAccount(account));
-  }, [account, query]);
+  }, [wallet, query]);
 
   const refreshDelegations = () => {
-    if (!account) return;
+    if (!wallet) return;
     setDelegations(null);
     query?.staking
-      .delegatorDelegations(account.address)
+      .delegatorDelegations(wallet.account.address)
       .then(
         ({ delegationResponses }) =>
           delegationResponses && setDelegations(delegationResponses)
@@ -162,16 +145,16 @@ export const WalletContext: FC = ({ children }) => {
 
   useEffect(() => {
     refreshDelegations();
-  }, [account, query]);
+  }, [wallet, query]);
 
   const balance = (denom: Denom): BigNumber =>
     balances[denom.reference] || BigNumber.from(0);
 
   const fetchBalance = async (denom: Denom): Promise<BigNumber> => {
-    if (!account) return BigNumber.from(0);
+    if (!wallet) return BigNumber.from(0);
     if (!query) return BigNumber.from(0);
     return query.bank
-      .balance(account?.address || "", denom.reference)
+      .balance(wallet.account.address, denom.reference)
       .then((resp) => BigNumber.from(resp?.amount || 0))
       .then((balance) => {
         setBalances((prev) => ({
@@ -190,22 +173,65 @@ export const WalletContext: FC = ({ children }) => {
   const signAndBroadcast = async (
     msgs: EncodeObject[]
   ): Promise<DeliverTxResponse> => {
-    if (!account) throw new Error("No Wallet Connected");
-    const res = await connector.signAndBroadcast(msgs);
+    if (!wallet) throw new Error("No Wallet Connected");
+    const res = await wallet.signAndBroadcast(msgs);
     assertIsDeliverTxSuccess(res);
     return res;
   };
 
+  const size = useWindowSize();
+
+  const sonarRequest = (uri: string) => {
+    if (size?.width && size?.width < 768) {
+      window.location.assign(
+        `kujira://ws?uri=${encodeURIComponent(uri)}`
+      );
+    } else {
+      setLink(uri);
+      setModal(true);
+    }
+  };
+
+  const connect = (adapter: Adapter, chain?: NETWORK) => {
+    switch (adapter) {
+      case Adapter.Keplr:
+        Keplr.connect(chain || network, { feeDenom }).then((x) => {
+          setStored(adapter);
+          setWallet(x);
+        });
+
+        break;
+
+      case Adapter.Sonar:
+        Sonar.connect(network, {
+          request: sonarRequest,
+        }).then((x) => {
+          setModal(false);
+          setStored(adapter);
+          setWallet(x);
+        });
+        break;
+    }
+  };
+
+  useEffect(() => {
+    wallet && wallet.onChange(setWallet);
+  }, [wallet]);
+
+  const disconnect = () => {
+    setStored("");
+    setWallet(null);
+    wallet?.disconnect();
+  };
+
   return (
     <Context.Provider
-      key={network + account?.address}
+      key={network + wallet?.account.address}
       value={{
-        adapter,
-        setAdapter,
-        account,
+        account: wallet?.account || null,
         delegations,
-        connect: connector.connect,
-        disconnect: connector.disconnect,
+        connect,
+        disconnect,
         kujiraAccount,
         balances: kujiraBalances,
         getBalance,

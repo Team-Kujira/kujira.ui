@@ -13,109 +13,88 @@ import {
   NETWORK,
   registry,
 } from "kujira.js";
-import { useEffect, useState } from "react";
-import { useNetwork } from "../network";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface Window extends KeplrWindow {}
 }
 
-export type UseKeplr = {
-  connect: null | ((chain?: string) => void);
-  disconnect: () => void;
-  account: AccountData | null;
-  signAndBroadcast: (
-    msgs: EncodeObject[]
-  ) => Promise<DeliverTxResponse>;
-};
+type Options = { feeDenom: string };
 
-export const useKeplr = ({
-  feeDenom,
-}: {
-  feeDenom: string;
-}): UseKeplr => {
-  const [{ network, chainInfo }, setNetwork] = useNetwork();
+export class Keplr {
+  private constructor(
+    public account: AccountData,
+    private network: NETWORK,
+    private options: Options
+  ) {}
 
-  const [accounts, setAccounts] = useState<
-    null | readonly AccountData[]
-  >(null);
-  const keplr = window.keplr;
+  static connect = (
+    network: NETWORK = MAINNET,
+    opts: { feeDenom: string }
+  ): Promise<Keplr> => {
+    const keplr = window.keplr;
 
-  const connect = (network: string = MAINNET) => {
-    if (!keplr) return;
+    if (!keplr) throw new Error("Keplr Not Detected");
 
-    const config = CHAIN_INFO[network as NETWORK];
-    keplr
+    const config = CHAIN_INFO[network];
+    return keplr
       .experimentalSuggestChain({
         ...config,
         // Keplr is bullshti and defaults to the first of these provided as the fee denom
         feeCurrencies: config.feeCurrencies.filter(
-          (x) => x.coinMinimalDenom === feeDenom
+          (x) => x.coinMinimalDenom === opts.feeDenom
         ),
       })
       .then(() => keplr.enable(network))
       .then(() => keplr.getOfflineSignerAuto(network))
       .then((signer) => signer.getAccounts())
       .then((as) => {
-        document.cookie = "keplr=connected; path=/";
-        setNetwork(network as NETWORK);
-        setAccounts(as);
+        if (as.length) {
+          return new Keplr(as[0], network, opts);
+        } else {
+          throw new Error("No Accounts");
+        }
       });
   };
 
-  useEffect(() => {
-    const stored = document.cookie.includes("keplr=connected");
-
-    if (stored && connect) connect(network);
-  }, [keplr]);
-
-  const account = accounts ? accounts[0] : null;
-
-  useEffect(() => {
+  public onChange = (fn: (k: Keplr) => void) => {
     window.addEventListener("keplr_keystorechange", () => {
       const keplr = window.keplr;
       if (!keplr) return;
 
-      account &&
-        keplr
-          .getOfflineSignerAuto(network)
-          .then((signer) => signer.getAccounts())
-          .then(setAccounts);
+      keplr
+        .getOfflineSignerAuto(this.network)
+        .then((signer) => signer.getAccounts())
+        .then((as) => {
+          if (as.length) {
+            this.account = as[0];
+            fn(this);
+          }
+        });
     });
-  }, [account]);
+  };
 
-  useEffect(() => {
-    if (!account) return;
-    const keplr = window.keplr;
-    keplr
-      ?.experimentalSuggestChain({
-        ...chainInfo,
-        feeCurrencies: chainInfo.feeCurrencies.filter(
-          (x) => x.coinMinimalDenom === feeDenom
-        ),
-      })
-      .then(() => keplr.enable(network));
-  }, [account, network, chainInfo]);
+  public disconnect = () => {};
 
-  const signAndBroadcast = async (
+  public signAndBroadcast = async (
     msgs: EncodeObject[],
     batch?: {
       size: number;
       cb: (total: number, remaining: number) => void;
     }
   ): Promise<DeliverTxResponse> => {
-    if (!window.keplr || !account)
-      throw new Error("No Wallet Connected");
+    if (!window.keplr) throw new Error("No Wallet Connected");
 
-    const signer = await window.keplr.getOfflineSignerAuto(network);
+    const signer = await window.keplr.getOfflineSignerAuto(
+      this.network
+    );
     const gasPrice = new GasPrice(
       Decimal.fromUserInput("0.00125", 18),
-      feeDenom
+      this.options.feeDenom
     );
 
     const client = await SigningStargateClient.connectWithSigner(
-      chainInfo.rpc,
+      CHAIN_INFO[this.network].rpc,
       signer,
       {
         registry,
@@ -137,7 +116,7 @@ export const useKeplr = ({
       let res: DeliverTxResponse;
       for (const chunk of chunks) {
         res = await client.signAndBroadcast(
-          account.address,
+          this.account.address,
           chunk,
           1.5
         );
@@ -148,20 +127,10 @@ export const useKeplr = ({
       return res;
     } else {
       return await client.signAndBroadcast(
-        account.address,
+        this.account.address,
         msgs,
         1.5
       );
     }
   };
-
-  return {
-    account,
-    connect,
-    disconnect: () => {
-      document.cookie = "keplr=disconnected;";
-      setAccounts(null);
-    },
-    signAndBroadcast,
-  };
-};
+}
