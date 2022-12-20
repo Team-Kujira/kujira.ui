@@ -20,6 +20,7 @@ import QRCode from "react-qr-code";
 import { Modal } from "../../components/Modal";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { IconSonar } from "../../icons";
 import { useNetwork } from "../network";
 import { Keplr } from "./keplr";
 import { Sonar } from "./sonar";
@@ -251,7 +252,23 @@ export const WalletContext: FC = ({ children }) => {
         show={modal}
         close={() => setModal(false)}
         className="modal--auto">
-        <QRCode value={link} />
+        <div className="md-flex ai-c">
+          <QRCode
+            value={link}
+            fgColor="transparent"
+            className="no-shrink"
+          />
+          <div className="ml-2">
+            <IconSonar
+              style={{
+                display: "block",
+                height: "3rem",
+                marginBottom: "1.5rem",
+              }}
+            />
+            <h3>Scan this code using the Sonar Mobile App.</h3>
+          </div>
+        </div>
       </Modal>
     </Context.Provider>
   );
