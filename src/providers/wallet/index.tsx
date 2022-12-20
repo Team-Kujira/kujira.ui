@@ -255,6 +255,7 @@ export const WalletContext: FC = ({ children }) => {
         <div className="md-flex ai-c">
           <QRCode
             value={link}
+            bgColor="#607d8b"
             fgColor="transparent"
             className="no-shrink"
           />
