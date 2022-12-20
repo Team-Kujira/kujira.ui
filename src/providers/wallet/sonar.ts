@@ -5,7 +5,7 @@ import {
 } from "@cosmjs/proto-signing";
 import { DeliverTxResponse } from "@cosmjs/stargate";
 import WalletConnect from "@walletconnect/client";
-import { MAINNET, registry } from "kujira.js";
+import { Denom, MAINNET, registry } from "kujira.js";
 
 export class Sonar {
   private constructor(
@@ -77,18 +77,26 @@ export class Sonar {
   };
 
   signAndBroadcast = async (
-    msgs: EncodeObject[]
+    msgs: EncodeObject[],
+    gas: Denom,
+    memo?: string
   ): Promise<DeliverTxResponse> => {
     const x = await this.connector.sendCustomRequest({
       id: 0,
       jsonrpc: "2.0",
       method: "sign_tx",
-      params: msgs
-        .map((m) => registry.encodeAsAny(m))
-        .map((x) => ({
-          ...x,
-          value: Buffer.from(x.value).toString("base64"),
-        })),
+      params: [
+        {
+          gas: gas.reference,
+          memo,
+          msgs: msgs
+            .map((m) => registry.encodeAsAny(m))
+            .map((x) => ({
+              ...x,
+              value: Buffer.from(x.value).toString("base64"),
+            })),
+        },
+      ],
     });
 
     return x;

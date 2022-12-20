@@ -42,7 +42,8 @@ export type IWallet = {
   ) => Promise<BigNumber | null>;
   balance: (denom: Denom) => BigNumber;
   signAndBroadcast: (
-    msgs: EncodeObject[]
+    msgs: EncodeObject[],
+    memo?: string
   ) => Promise<DeliverTxResponse>;
   delegations: null | DelegationResponse[];
   refreshBalances: () => void;
@@ -170,10 +171,11 @@ export const WalletContext: FC = ({ children }) => {
       : BigNumber.from(0);
 
   const signAndBroadcast = async (
-    msgs: EncodeObject[]
+    msgs: EncodeObject[],
+    memo?: string
   ): Promise<DeliverTxResponse> => {
     if (!wallet) throw new Error("No Wallet Connected");
-    const res = await wallet.signAndBroadcast(msgs);
+    const res = await wallet.signAndBroadcast(msgs, feeDenom, memo);
     assertIsDeliverTxSuccess(res);
     return res;
   };
