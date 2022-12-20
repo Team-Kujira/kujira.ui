@@ -18,7 +18,7 @@ export class Sonar {
     options: { request: (uri: string) => void; auto: boolean }
   ): Promise<Sonar> => {
     const connector = new WalletConnect({
-      bridge: "https://bridge.walletconnect.org", // Required
+      bridge: "https://bridge.walletconnect.org",
       qrcodeModal: {
         open(uri: string, cb: any) {
           options.request(uri);
