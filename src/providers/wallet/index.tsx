@@ -97,9 +97,7 @@ export const WalletContext: FC = ({ children }) => {
   >(null);
 
   useEffect(() => {
-    console.log({ stored });
-
-    stored && connect(stored);
+    stored && connect(stored, network, true);
   }, []);
 
   const refreshBalances = () => {
@@ -192,7 +190,11 @@ export const WalletContext: FC = ({ children }) => {
     }
   };
 
-  const connect = (adapter: Adapter, chain?: NETWORK) => {
+  const connect = (
+    adapter: Adapter,
+    chain?: NETWORK,
+    auto?: boolean
+  ) => {
     switch (adapter) {
       case Adapter.Keplr:
         Keplr.connect(chain || network, { feeDenom }).then((x) => {
@@ -205,6 +207,7 @@ export const WalletContext: FC = ({ children }) => {
       case Adapter.Sonar:
         Sonar.connect(network, {
           request: sonarRequest,
+          auto: !!auto,
         }).then((x) => {
           setModal(false);
           setStored(adapter);

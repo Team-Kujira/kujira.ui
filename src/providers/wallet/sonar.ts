@@ -15,7 +15,7 @@ export class Sonar {
 
   static connect = (
     network: string = MAINNET,
-    options: { request: (uri: string) => void }
+    options: { request: (uri: string) => void; auto: boolean }
   ): Promise<Sonar> => {
     const connector = new WalletConnect({
       bridge: "https://bridge.walletconnect.org", // Required
@@ -39,7 +39,8 @@ export class Sonar {
         resolve(new Sonar(connector, account));
       }
 
-      if (!connector.connected) {
+      // Only create a new session from an explicit action
+      if (!connector.connected && !options.auto) {
         // create new session
         connector.createSession();
       }
