@@ -5,6 +5,7 @@ import {
 } from "@cosmjs/proto-signing";
 import { DeliverTxResponse } from "@cosmjs/stargate";
 import WalletConnect from "@walletconnect/client";
+import { getClientMeta } from "@walletconnect/utils";
 import { Denom, MAINNET, registry } from "kujira.js";
 
 export class Sonar {
@@ -87,6 +88,7 @@ export class Sonar {
       method: "sign_tx",
       params: [
         {
+          clientMeta: getClientMeta(),
           gas: gas.reference,
           memo,
           msgs: msgs
