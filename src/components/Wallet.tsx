@@ -3,7 +3,6 @@ import {
   Denom,
   LOCALNET,
   MAINNET,
-  NETWORK,
   NETWORKS,
   TESTNET,
 } from "kujira.js";
@@ -28,12 +27,8 @@ const names = {
   [LOCALNET]: "Local",
 };
 
-export const NetworkSelect = ({
-  onChange,
-}: {
-  onChange: (network: NETWORK) => void;
-}) => {
-  const [{ network }] = useNetwork();
+export const NetworkSelect = () => {
+  const [{ network }, setNetwork] = useNetwork();
   /* const [showList, setShowList] = useState(false);
 
   return (
@@ -70,7 +65,7 @@ export const NetworkSelect = ({
             label: names[network],
             value: network,
           }}
-          onChange={onChange}
+          onChange={setNetwork}
           options={[
             { label: "Mainnet", value: MAINNET },
             { label: "Testnet", value: TESTNET },
@@ -156,9 +151,7 @@ export function Wallet({
         </div>
         <div className="wallet__popup">
           {Object.keys(NETWORKS).includes(chainInfo.chainId) && (
-            <NetworkSelect
-              onChange={(n) => connect && connect(Adapter.Keplr, n)}
-            />
+            <NetworkSelect />
           )}
           <small className="network">
             Network: {chainInfo.chainId}

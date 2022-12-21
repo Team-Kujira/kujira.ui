@@ -102,6 +102,12 @@ export const WalletContext: FC = ({ children }) => {
     stored && connect(stored, network, true);
   }, []);
 
+  useEffect(() => {
+    console.log({ network });
+
+    wallet && connect(stored, network);
+  }, [network]);
+
   const refreshBalances = () => {
     if (!wallet) return;
     query?.bank.allBalances(wallet.account.address).then((x) => {

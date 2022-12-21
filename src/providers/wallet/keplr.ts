@@ -77,11 +77,11 @@ export class Keplr {
   public disconnect = () => {};
 
   public signAndBroadcast = async (
-    msgs: EncodeObject[],
-    batch?: {
-      size: number;
-      cb: (total: number, remaining: number) => void;
-    }
+    msgs: EncodeObject[]
+    // batch?: {
+    //   size: number;
+    //   cb: (total: number, remaining: number) => void;
+    // }
   ): Promise<DeliverTxResponse> => {
     if (!window.keplr) throw new Error("No Wallet Connected");
 
