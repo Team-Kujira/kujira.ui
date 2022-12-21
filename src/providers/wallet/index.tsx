@@ -2,7 +2,7 @@ import { AccountData, EncodeObject } from "@cosmjs/proto-signing";
 import {
   assertIsDeliverTxSuccess,
   Coin,
-  DeliverTxResponse,
+  DeliverTxResponse
 } from "@cosmjs/stargate";
 import { ChainInfo } from "@keplr-wallet/types";
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
@@ -14,7 +14,7 @@ import {
   FC,
   useContext,
   useEffect,
-  useState,
+  useState
 } from "react";
 import QRCode from "react-qr-code";
 import { Modal } from "../../components/Modal";
@@ -103,8 +103,6 @@ export const WalletContext: FC = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    console.log({ network });
-
     wallet && connect(stored, network);
   }, [network]);
 
