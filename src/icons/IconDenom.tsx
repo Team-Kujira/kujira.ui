@@ -17,6 +17,7 @@ import { IconANC } from "./IconANC";
 import { IconBAtom } from "./IconBAtom";
 import { IconBETH } from "./IconBETH";
 import { IconBLUNA } from "./IconBLUNA";
+import { IconBNB } from "./IconBNB";
 import { IconBSolana } from "./IconBSolana";
 import { IconSAvax } from "./IconSAvax";
 
@@ -284,13 +285,7 @@ const IconDenomInner: React.FC<{ denom: Denom }> = ({ denom }) => {
       );
     case "wbnb":
     case "bnb":
-      return (
-        <img
-          className="icon-denom"
-          src="https://assets.kujira.app/axelar/images/assets/wbnb.svg"
-          alt="BNB"
-        />
-      );
+      return <IconBNB />;
     default:
       return <IconCoinDefault />;
   }
