@@ -2,19 +2,19 @@ import { AccountData, EncodeObject } from "@cosmjs/proto-signing";
 import {
   assertIsDeliverTxSuccess,
   Coin,
-  DeliverTxResponse
+  DeliverTxResponse,
 } from "@cosmjs/stargate";
 import { ChainInfo } from "@keplr-wallet/types";
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { BigNumber } from "ethers";
-import { Denom, NETWORK } from "kujira.js";
+import { CHAIN_INFO, Denom, NETWORK } from "kujira.js";
 import {
   createContext,
   FC,
   useContext,
   useEffect,
-  useState
+  useState,
 } from "react";
 import QRCode from "react-qr-code";
 import { Modal } from "../../components/Modal";
@@ -204,7 +204,9 @@ export const WalletContext: FC = ({ children }) => {
   ) => {
     switch (adapter) {
       case Adapter.Keplr:
-        Keplr.connect(chain || network, { feeDenom }).then((x) => {
+        Keplr.connect(CHAIN_INFO[chain || network], {
+          feeDenom,
+        }).then((x) => {
           setStored(adapter);
           setWallet(x);
         });

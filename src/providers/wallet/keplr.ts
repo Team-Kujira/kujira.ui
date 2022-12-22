@@ -5,14 +5,12 @@ import {
   GasPrice,
   SigningStargateClient,
 } from "@cosmjs/stargate";
-import { Window as KeplrWindow } from "@keplr-wallet/types";
 import {
-  aminoTypes,
-  CHAIN_INFO,
-  MAINNET,
-  NETWORK,
-  registry,
-} from "kujira.js";
+  ChainInfo,
+  Window as KeplrWindow,
+} from "@keplr-wallet/types";
+import { aminoTypes, registry } from "kujira.js";
+import * as evmos from "./evmos";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -24,33 +22,32 @@ type Options = { feeDenom: string };
 export class Keplr {
   private constructor(
     public account: AccountData,
-    private network: NETWORK,
-    private options: Options
+    private config: ChainInfo,
+    private options?: Options
   ) {}
 
   static connect = (
-    network: NETWORK = MAINNET,
-    opts: { feeDenom: string }
+    config: ChainInfo,
+    opts?: { feeDenom: string }
   ): Promise<Keplr> => {
     const keplr = window.keplr;
 
     if (!keplr) throw new Error("Keplr Not Detected");
 
-    const config = CHAIN_INFO[network];
     return keplr
       .experimentalSuggestChain({
         ...config,
         // Keplr is bullshti and defaults to the first of these provided as the fee denom
         feeCurrencies: config.feeCurrencies.filter(
-          (x) => x.coinMinimalDenom === opts.feeDenom
+          (x) => opts && x.coinMinimalDenom === opts.feeDenom
         ),
       })
-      .then(() => keplr.enable(network))
-      .then(() => keplr.getOfflineSignerAuto(network))
+      .then(() => keplr.enable(config.chainId))
+      .then(() => keplr.getOfflineSignerAuto(config.chainId))
       .then((signer) => signer.getAccounts())
       .then((as) => {
         if (as.length) {
-          return new Keplr(as[0], network, opts);
+          return new Keplr(as[0], config, opts);
         } else {
           throw new Error("No Accounts");
         }
@@ -63,7 +60,7 @@ export class Keplr {
       if (!keplr) return;
 
       keplr
-        .getOfflineSignerAuto(this.network)
+        .getOfflineSignerAuto(this.config.chainId)
         .then((signer) => signer.getAccounts())
         .then((as) => {
           if (as.length) {
@@ -86,20 +83,33 @@ export class Keplr {
     if (!window.keplr) throw new Error("No Wallet Connected");
 
     const signer = await window.keplr.getOfflineSignerAuto(
-      this.network
+      this.config.chainId
     );
+
+    if (this.config.chainName === "Evmos")
+      return evmos.signAndBroadcast({
+        signer,
+        messages: msgs,
+        sourceAccount: this.account,
+        sourceChainData: this.config,
+      });
+
     const gasPrice = new GasPrice(
       Decimal.fromUserInput("0.00125", 18),
-      this.options.feeDenom
+      this.options
+        ? this.options.feeDenom
+        : this.config.feeCurrencies[0].coinDenom
     );
 
     const client = await SigningStargateClient.connectWithSigner(
-      CHAIN_INFO[this.network].rpc,
+      this.config.rpc,
       signer,
       {
         registry,
         gasPrice,
-        aminoTypes: aminoTypes("kujira"),
+        aminoTypes: aminoTypes(
+          this.config.bech32Config.bech32PrefixAccAddr
+        ),
       }
     );
 
