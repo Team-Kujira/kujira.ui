@@ -206,10 +206,14 @@ export const WalletContext: FC = ({ children }) => {
       case Adapter.Keplr:
         Keplr.connect(CHAIN_INFO[chain || network], {
           feeDenom,
-        }).then((x) => {
-          setStored(adapter);
-          setWallet(x);
-        });
+        })
+          .then((x) => {
+            setStored(adapter);
+            setWallet(x);
+          })
+          .catch((err) => {
+            console.error(err.message);
+          });
 
         break;
 
