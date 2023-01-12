@@ -34,14 +34,16 @@ export class Keplr {
 
     if (!keplr) throw new Error("Keplr Not Detected");
 
+    const chainInfo = {
+      ...config,
+      // Keplr is bullshti and defaults to the first of these provided as the fee denom
+      feeCurrencies: config.feeCurrencies.filter((x) =>
+        opts ? x.coinMinimalDenom === opts.feeDenom : true
+      ),
+    };
+
     return keplr
-      .experimentalSuggestChain({
-        ...config,
-        // Keplr is bullshti and defaults to the first of these provided as the fee denom
-        feeCurrencies: config.feeCurrencies.filter(
-          (x) => opts && x.coinMinimalDenom === opts.feeDenom
-        ),
-      })
+      .experimentalSuggestChain(chainInfo)
       .then(() => keplr.enable(config.chainId))
       .then(() => keplr.getOfflineSignerAuto(config.chainId))
       .then((signer) => signer.getAccounts())
