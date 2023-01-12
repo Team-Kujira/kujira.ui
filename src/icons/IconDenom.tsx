@@ -20,6 +20,10 @@ import { IconBLUNA } from "./IconBLUNA";
 import { IconBNB } from "./IconBNB";
 import { IconBSolana } from "./IconBSolana";
 import { IconSAvax } from "./IconSAvax";
+import { IconSTATOM } from "./IconSTATOM";
+import { IconSTJUNO } from "./IconSTJUNO";
+import { IconSTOSMO } from "./IconSTOSMO";
+import { IconSTSCRT } from "./IconSTSCRT";
 
 export const IconDenom: React.FC<{ denom: Denom }> = ({ denom }) => {
   const warning =
@@ -129,6 +133,14 @@ const IconDenomInner: React.FC<{ denom: Denom }> = ({ denom }) => {
       return <IconCalc />;
     case "strd":
       return <IconStrd />;
+    case "statom":
+      return <IconSTATOM />;
+    case "stjuno":
+      return <IconSTJUNO />;
+    case "stosmo":
+      return <IconSTOSMO />;
+    case "stscrt":
+      return <IconSTSCRT />;
     case "ampluna":
       return (
         <img
