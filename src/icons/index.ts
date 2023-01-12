@@ -48,6 +48,7 @@ export * from "./IconSonar";
 export * from "./IconSort";
 export * from "./IconSortAsc";
 export * from "./IconSortDesc";
+export * from "./IconStation";
 export * from "./IconSuccess";
 export * from "./IconTrash";
 export * from "./IconUpload";

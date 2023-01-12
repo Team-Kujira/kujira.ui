@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import ReactTooltip from "react-tooltip";
 import * as i18n from "../i18n";
-import { IconSonar } from "../icons";
+import { IconSonar, IconStation } from "../icons";
 import { IconCopy } from "../icons/IconCopy";
 import { IconKado } from "../icons/IconKado";
 import { IconWallet } from "../icons/IconWallet";
@@ -215,6 +215,13 @@ export function Wallet({
               connect && connect(Adapter.Sonar);
             }}>
             <IconSonar />
+          </button>
+          <button
+            className="transparent block pointer"
+            onClick={() => {
+              //connect && connect(Adapter.Sonar);
+            }}>
+            <IconStation />
           </button>
           <button
             className="transparent block pointer"
