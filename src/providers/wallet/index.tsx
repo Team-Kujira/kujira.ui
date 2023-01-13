@@ -8,7 +8,7 @@ import { ChainInfo } from "@keplr-wallet/types";
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { BigNumber } from "ethers";
-import { CHAIN_INFO, Denom, NETWORK } from "kujira.js";
+import { CHAIN_INFO, Denom, Keplr, NETWORK, Sonar } from "kujira.js";
 import {
   createContext,
   FC,
@@ -22,8 +22,6 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { IconSonar } from "../../icons";
 import { useNetwork } from "../network";
-import { Keplr } from "./keplr";
-import { Sonar } from "./sonar";
 
 export enum Adapter {
   Sonar = "sonar",
