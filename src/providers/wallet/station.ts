@@ -1,6 +1,6 @@
 import { fromBech32, toBech32 } from "@cosmjs/encoding";
 import { AccountData, EncodeObject } from "@cosmjs/proto-signing";
-import { DeliverTxResponse } from "@cosmjs/stargate";
+import { DeliverTxResponse, StargateClient } from "@cosmjs/stargate";
 import { ChainInfo } from "@keplr-wallet/types";
 import { Msg } from "@terra-money/feather.js";
 import {
@@ -57,17 +57,13 @@ export class Station {
       Msg.fromProto({ typeUrl: m.typeUrl, value: registry.encode(m) })
     );
 
-    const res = await this.controller.post(
-      {
-        msgs: terraMsgs,
-        chainID: this.config.chainId,
-      },
-      this.account.address
-    );
-    console.log(res);
+    const res = await this.controller.sign({
+      msgs: terraMsgs,
+      chainID: this.config.chainId,
+    });
 
-    //
-    return res;
-    // }
+    const stargate = await StargateClient.connect(this.config.rpc);
+    const result = await stargate.broadcastTx(res.result.toBytes());
+    return result;
   };
 }
