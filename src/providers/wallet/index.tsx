@@ -5,6 +5,10 @@ import {
   DeliverTxResponse,
 } from "@cosmjs/stargate";
 import { ChainInfo } from "@keplr-wallet/types";
+import {
+  getChainOptions,
+  WalletController,
+} from "@terra-money/wallet-controller";
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { BigNumber } from "ethers";
@@ -16,16 +20,19 @@ import {
   useEffect,
   useState,
 } from "react";
+import { toast } from "react-hot-toast";
 import QRCode from "react-qr-code";
 import { Modal } from "../../components/Modal";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { IconSonar } from "../../icons";
 import { useNetwork } from "../network";
+import { Station } from "./station";
 
 export enum Adapter {
   Sonar = "sonar",
   Keplr = "keplr",
+  Station = "station",
 }
 
 export type IWallet = {
@@ -73,7 +80,9 @@ const Context = createContext<IWallet>({
 
 export const WalletContext: FC = ({ children }) => {
   const [stored, setStored] = useLocalStorage("wallet", "");
-  const [wallet, setWallet] = useState<Sonar | Keplr | null>(null);
+  const [wallet, setWallet] = useState<
+    Sonar | Keplr | Station | null
+  >(null);
   const [feeDenom, setFeeDenom] = useLocalStorage(
     "feeDenom",
     "ukuji"
@@ -81,6 +90,8 @@ export const WalletContext: FC = ({ children }) => {
   const [balances, setBalances] = useState<Record<string, BigNumber>>(
     {}
   );
+  const [stationController, setStationController] =
+    useState<WalletController | null>(null);
 
   const [kujiraBalances, setKujiraBalances] = useState<Coin[]>([]);
 
@@ -95,6 +106,12 @@ export const WalletContext: FC = ({ children }) => {
   const [delegations, setDelegations] = useState<
     null | DelegationResponse[]
   >(null);
+
+  useEffect(() => {
+    getChainOptions().then((opts) =>
+      setStationController(new WalletController(opts))
+    );
+  }, []);
 
   useEffect(() => {
     stored && connect(stored, network, true);
@@ -210,7 +227,7 @@ export const WalletContext: FC = ({ children }) => {
             setWallet(x);
           })
           .catch((err) => {
-            console.error(err.message);
+            toast.error(err.message);
           });
 
         break;
@@ -225,6 +242,22 @@ export const WalletContext: FC = ({ children }) => {
           setWallet(x);
         });
         break;
+      case Adapter.Station:
+        stationController &&
+          Station.connect(CHAIN_INFO[chain || network], {
+            controller: stationController,
+          })
+            .then((x) => {
+              setStored(adapter);
+              setWallet(x);
+            })
+            .catch((err) => {
+              toast.error(
+                err.message === "extension instance is not created!"
+                  ? "Station extension not available"
+                  : err.message
+              );
+            });
     }
   };
 
