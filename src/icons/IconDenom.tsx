@@ -118,8 +118,10 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <IconETH />;
     case "scrt":
       return <IconSCRT />;
+    case "ftm":
     case "wftm":
       return <IconWFTM />;
+    case "matic":
     case "wmatic":
       return <IconWMatic />;
     case "dot":
