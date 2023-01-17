@@ -25,8 +25,11 @@ import { IconSTJUNO } from "./IconSTJUNO";
 import { IconSTOSMO } from "./IconSTOSMO";
 import { IconSTSCRT } from "./IconSTSCRT";
 
-export const IconDenom: React.FC<{ denom: Denom }> = ({ denom }) => {
+export const IconDenom: React.FC<{ denom: Denom | string }> = ({
+  denom,
+}) => {
   const warning =
+    typeof denom !== "string" &&
     denom.trace &&
     denom.trace.path.split("/").length > 2 &&
     i18n.t("Indirect IBC token. Possibly spoofed");
@@ -37,12 +40,14 @@ export const IconDenom: React.FC<{ denom: Denom }> = ({ denom }) => {
     <IconDenomInner denom={denom} />
   );
 };
-const IconDenomInner: React.FC<{ denom: Denom }> = ({ denom }) => {
-  // console.log(denom);
+const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
+  denom,
+}) => {
   if (!denom) return null;
-  const token = denom.symbol.toLowerCase();
+  const token =
+    typeof denom === "string" ? denom : denom.symbol.toLowerCase();
 
-  if (denom.underlying) {
+  if (typeof denom !== "string" && denom.underlying) {
     return (
       <>
         <IconDenom denom={denom.underlying[0]} />
