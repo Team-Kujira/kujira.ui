@@ -17,7 +17,7 @@ import { IconANC } from "./IconANC";
 import { IconBAtom } from "./IconBAtom";
 import { IconBETH } from "./IconBETH";
 import { IconBLUNA } from "./IconBLUNA";
-import { IconBNB } from "./IconBNB";
+import { IconBNB, IconWBNB } from "./IconBNB";
 import { IconBSolana } from "./IconBSolana";
 import { IconSAvax } from "./IconSAvax";
 import { IconSTATOM } from "./IconSTATOM";
@@ -107,6 +107,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
     case "sei":
       return <IconSEI />;
     case "axl":
+    case "waxl":
       return <IconAXL />;
     case "wavax":
       return <IconWAVAX />;
@@ -305,6 +306,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
         />
       );
     case "wbnb":
+      return <IconWBNB />;
     case "bnb":
       return <IconBNB />;
     default:
