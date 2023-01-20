@@ -6,6 +6,7 @@ import {
 } from "@cosmjs/stargate";
 import { ChainInfo } from "@keplr-wallet/types";
 import {
+  ConnectType,
   getChainOptions,
   WalletController,
 } from "@terra-money/wallet-controller";
@@ -112,6 +113,19 @@ export const WalletContext: FC = ({ children }) => {
       setStationController(new WalletController(opts))
     );
   }, []);
+
+  useEffect(() => {
+    if (!wallet && stored === Adapter.Station) {
+      stationController?.availableConnections().subscribe((next) => {
+        // https://github.com/terra-money/wallet-provider/blob/main/packages/src/%40terra-money/wallet-controller/controller.ts#L247-L259
+        // The extension isn't actually available when this is called
+        next.find((x) => x.type === ConnectType.EXTENSION) &&
+          setTimeout(() => {
+            connect(Adapter.Station);
+          }, 10);
+      });
+    }
+  }, [stationController]);
 
   useEffect(() => {
     stored && connect(stored, network, true);

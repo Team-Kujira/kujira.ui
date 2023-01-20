@@ -10,8 +10,6 @@ import {
 } from "@terra-money/wallet-controller";
 import { registry } from "kujira.js";
 
-// import { getChainOptions } from "@terra-money/wallet-provider";
-
 export class Station {
   private constructor(
     private controller: WalletController,
@@ -32,6 +30,9 @@ export class Station {
         next && r(next);
       })
     );
+
+    if (!wallet.addresses[config.chainId])
+      throw new Error(`${config.chainId} not available on Station`);
 
     const account: AccountData = {
       address: toBech32(
