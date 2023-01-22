@@ -2,6 +2,7 @@ import { FC } from "react";
 
 export const IconPAXG: FC<JSX.IntrinsicElements["svg"]> = (props) => (
   <svg
+    className="icon-denom"
     data-name="Layer 1"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 71.98 67.9"
