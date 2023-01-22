@@ -116,9 +116,11 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <IconWAVAX />;
     case "usdc":
     case "axlusdc":
+    case "gusdc":
       return <IconUSDC />;
     case "eth":
     case "weth":
+    case "gweth":
       return <IconETH />;
     case "scrt":
       return <IconSCRT />;
@@ -249,6 +251,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
         />
       );
     case "dai":
+    case "gdai":
       return (
         <img
           className="icon-denom"
@@ -258,6 +261,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       );
     case "axlusdt":
     case "usdt":
+    case "gusdt":
       return (
         <img
           className="icon-denom"
@@ -266,6 +270,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
         />
       );
     case "wbtc":
+    case "gwbtc":
       return (
         <img
           className="icon-denom"
