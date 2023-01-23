@@ -48,23 +48,25 @@ const Context = createContext<NetworkContext>({
   lock: () => {},
 });
 
-const toClient =
-  (setLatencies: Dispatch<SetStateAction<Record<string, number>>>) =>
-  (endpoint: string): Promise<[Tendermint34Client, string]> => {
-    const start = new Date().getTime();
-    return Tendermint34Client.create(
-      new HttpBatchClient(endpoint, {
-        dispatchInterval: 100,
-        batchSizeLimit: 200,
-      })
-    ).then((c) => {
+const toClient = (
+  endpoint: string,
+  setLatencies?: Dispatch<SetStateAction<Record<string, number>>>
+): Promise<[Tendermint34Client, string]> => {
+  const start = new Date().getTime();
+  return Tendermint34Client.create(
+    new HttpBatchClient(endpoint, {
+      dispatchInterval: 100,
+      batchSizeLimit: 200,
+    })
+  ).then((c) => {
+    setLatencies &&
       setLatencies((prev) => ({
         ...prev,
         [endpoint]: new Date().getTime() - start,
       }));
-      return [c, endpoint];
-    });
-  };
+    return [c, endpoint];
+  });
+};
 
 export const NetworkContext: React.FC<{
   onError?: (err: any) => void;
@@ -82,14 +84,14 @@ export const NetworkContext: React.FC<{
 
   useEffect(() => {
     if (preferred) {
-      toClient(setLatencies)(preferred)
+      toClient(preferred)
         .then(setTmClient)
         .catch((err) =>
           onError ? onError(err) : console.error(err)
         );
     } else {
       Promise.any(
-        RPCS[network as NETWORK].map(toClient(setLatencies))
+        RPCS[network as NETWORK].map((x) => toClient(x, setLatencies))
       )
         .then(setTmClient)
         .catch((err) =>
@@ -99,7 +101,7 @@ export const NetworkContext: React.FC<{
   }, [network]);
 
   const setRpc = (val: string) => {
-    toClient(setLatencies)(val)
+    toClient(val)
       .then(setTmClient)
       .catch((err) => (onError ? onError(err) : console.error(err)));
   };
