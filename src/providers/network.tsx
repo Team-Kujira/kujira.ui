@@ -25,6 +25,7 @@ export type NetworkContext = {
   setNetwork: (n: NETWORK) => void;
   tmClient: Tendermint34Client | null;
   query: KujiraQueryClient | null;
+  rpc: string | null;
 };
 
 const Context = createContext<NetworkContext>({
@@ -32,21 +33,26 @@ const Context = createContext<NetworkContext>({
   setNetwork: () => {},
   tmClient: null,
   query: null,
+  rpc: null,
 });
 
-const toClient = (endpoint: string): Promise<Tendermint34Client> =>
+const toClient = (
+  endpoint: string
+): Promise<[Tendermint34Client, string]> =>
   Tendermint34Client.create(
     new HttpBatchClient(endpoint, {
       dispatchInterval: 100,
       batchSizeLimit: 200,
     })
-  );
+  ).then((c) => [c, endpoint]);
 
 export const NetworkContext: React.FC = ({ children }) => {
   const [network, setNetwork] = useLocalStorage("network", MAINNET);
-  const [tmClient, setTmClient] = useState<null | Tendermint34Client>(
-    null
-  );
+  const [tm, setTmClient] = useState<
+    null | [Tendermint34Client, string]
+  >(null);
+
+  const tmClient = tm && tm[0];
 
   useEffect(() => {
     Promise.any(RPCS[network as NETWORK].map(toClient)).then(
@@ -62,7 +68,13 @@ export const NetworkContext: React.FC = ({ children }) => {
   return (
     <Context.Provider
       key={network}
-      value={{ network, setNetwork, tmClient, query }}>
+      value={{
+        network,
+        setNetwork,
+        tmClient,
+        query,
+        rpc: tm && tm[1],
+      }}>
       {children}
     </Context.Provider>
   );
@@ -74,14 +86,15 @@ export const useNetwork = (): [
     chainInfo: ChainInfo;
     tmClient: Tendermint34Client | null;
     query: KujiraQueryClient | null;
+    rpc: string | null;
   },
   (n: NETWORK) => void
 ] => {
-  const { network, setNetwork, tmClient, query } =
+  const { network, setNetwork, tmClient, query, rpc } =
     useContext(Context);
 
   return [
-    { network, chainInfo: CHAIN_INFO[network], tmClient, query },
+    { network, chainInfo: CHAIN_INFO[network], tmClient, query, rpc },
     setNetwork,
   ];
 };
