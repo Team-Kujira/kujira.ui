@@ -129,7 +129,7 @@ export function Select<T>({
             <li
               onClick={() => handleChange(m.value)}
               key={m.label}
-              className={m === selected ? "current" : ""}>
+              className={m.value === selected.value ? "current" : ""}>
               {m.status && <b className={m.status} />}
               {m.label}
             </li>
