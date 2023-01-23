@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import { IconArrow } from "../icons/IconArrow";
 
 type OptionType<T> = {
@@ -17,6 +17,7 @@ export type SelectProps<T> = {
   allowCustomInput?: boolean;
   onCustomChange?: (e: any) => void;
   disabled?: boolean;
+  suffix?: (t: OptionType<T>) => ReactElement;
 };
 
 export function Select<T>({
@@ -28,6 +29,7 @@ export function Select<T>({
   allowCustomInput,
   onCustomChange,
   disabled,
+  suffix,
 }: SelectProps<T>) {
   const node = useRef<HTMLDivElement>(null);
   const drop = useRef<HTMLUListElement>(null);
@@ -139,6 +141,7 @@ export function Select<T>({
               className={m.value === selected.value ? "current" : ""}>
               {m.status && <b className={m.status} />}
               {m.label}
+              {suffix && suffix(m)}
             </li>
           ))}
         </ul>
