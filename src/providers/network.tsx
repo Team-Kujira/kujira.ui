@@ -83,10 +83,7 @@ export const NetworkContext: React.FC<{
 
   const setRpc = (val: string) => {
     toClient(val)
-      .then((x) => {
-        setPreferred(val);
-        setTmClient(x);
-      })
+      .then(setTmClient)
       .catch((err) => (onError ? onError(err) : console.error(err)));
   };
 
