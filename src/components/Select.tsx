@@ -140,7 +140,7 @@ export function Select<T>({
               key={m.label}
               className={m.value === selected.value ? "current" : ""}>
               {m.status && <b className={m.status} />}
-              {m.label}
+              <span>{m.label}</span>
               {suffix && suffix(m)}
             </li>
           ))}
