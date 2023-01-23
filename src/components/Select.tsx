@@ -16,6 +16,7 @@ export type SelectProps<T> = {
   className?: string;
   allowCustomInput?: boolean;
   onCustomChange?: (e: any) => void;
+  disabled?: boolean;
 };
 
 export function Select<T>({
@@ -26,6 +27,7 @@ export function Select<T>({
   className,
   allowCustomInput,
   onCustomChange,
+  disabled,
 }: SelectProps<T>) {
   const node = useRef<HTMLDivElement>(null);
   const drop = useRef<HTMLUListElement>(null);
@@ -99,9 +101,10 @@ export function Select<T>({
         "select--dark": dark,
         "select--open": open,
         "select--top": top,
+        "select--disabled": disabled,
         [`${className}`]: className,
       })}
-      onClick={() => setOpen(!open)}>
+      onClick={() => !disabled && setOpen(!open)}>
       {open && allowCustomInput ? (
         <input
           autoFocus
@@ -121,8 +124,12 @@ export function Select<T>({
           {selected.label}
         </>
       )}
-      <div className="select__space" />
-      <IconArrow />
+      {!disabled && (
+        <>
+          <div className="select__space" />
+          <IconArrow />
+        </>
+      )}
       {open && (
         <ul ref={drop}>
           {options.map((m) => (
