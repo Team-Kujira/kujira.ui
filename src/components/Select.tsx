@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-//import { motion, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
 import { IconArrow } from "../icons/IconArrow";
 
 type OptionType<T> = {
   label: string;
   value: T;
+  status?: string;
 };
 
 export type SelectProps<T> = {
@@ -14,6 +14,8 @@ export type SelectProps<T> = {
   onChange?: (e: any) => void;
   dark?: boolean;
   className?: string;
+  allowCustomInput?: boolean;
+  onCustomChange?: (e: any) => void;
 };
 
 export function Select<T>({
@@ -22,20 +24,53 @@ export function Select<T>({
   onChange,
   dark = false,
   className,
+  allowCustomInput,
+  onCustomChange,
 }: SelectProps<T>) {
   const node = useRef<HTMLDivElement>(null);
+  const drop = useRef<HTMLUListElement>(null);
   const [open, setOpen] = useState(false);
+  const [top, setTop] = useState(false);
+  const [custom, setCustom] = useState("");
 
   useEffect(() => {
     if (open) {
       document.addEventListener("mousedown", handleClickOutside);
+      const ref = drop.current;
+      if (ref) {
+        const box = ref.getBoundingClientRect();
+        if (
+          box.bottom >
+          (window.innerHeight ||
+            document.documentElement.clientHeight)
+        ) {
+          setTop(true);
+        }
+      }
     } else {
+      if (custom !== "") {
+      }
       document.removeEventListener("mousedown", handleClickOutside);
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [open]);
+
+  useEffect(() => {
+    const ref = node.current;
+    if (ref) {
+      const box = ref.getBoundingClientRect();
+      if (
+        box.bottom >
+        (window.innerHeight ||
+          document.documentElement.clientHeight) -
+          100
+      ) {
+        setTop(true);
+      }
+    }
+  }, []);
 
   const handleClickOutside = (e: any) => {
     const ref = node.current;
@@ -52,6 +87,7 @@ export function Select<T>({
   };
 
   const handleChange = (e: T) => {
+    setCustom("");
     if (onChange) onChange(e);
   };
 
@@ -60,49 +96,41 @@ export function Select<T>({
       ref={node}
       className={clsx({
         select: true,
-        //"ml-1": true,
         "select--dark": dark,
         "select--open": open,
+        "select--top": top,
         [`${className}`]: className,
       })}
       onClick={() => setOpen(!open)}>
-      {selected.label}
+      {open && allowCustomInput ? (
+        <input
+          autoFocus
+          type="text"
+          value={custom}
+          onChange={(e) => setCustom(e.currentTarget.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && onCustomChange) {
+              onCustomChange(custom);
+              setOpen(false);
+            }
+          }}
+        />
+      ) : (
+        <>
+          {selected.status && <b className={selected.status} />}
+          {selected.label}
+        </>
+      )}
+      <div className="select__space" />
       <IconArrow />
-      {/* <AnimatePresence>
-        {open && (
-          <motion.ul
-            initial={{ scale: 0, y: -20, opacity: 0 }}
-            animate={{
-              scale: 1,
-              y: 0,
-              opacity: 1,
-              transition: { duration: 0.1 },
-            }}
-            exit={{
-              scale: 0,
-              y: -20,
-              opacity: 0,
-              transition: { duration: 0.1 },
-            }}>
-            {options.map((m) => (
-              <li
-                onClick={() => handleChange(m.value)}
-                key={m.label}
-                className={m === selected ? "current" : ""}>
-                {m.label}
-              </li>
-            ))}
-          </motion.ul>
-        )}
-      </AnimatePresence> */}
-
       {open && (
-        <ul>
+        <ul ref={drop}>
           {options.map((m) => (
             <li
               onClick={() => handleChange(m.value)}
               key={m.label}
               className={m === selected ? "current" : ""}>
+              {m.status && <b className={m.status} />}
               {m.label}
             </li>
           ))}
