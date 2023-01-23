@@ -26,6 +26,10 @@ export type NetworkContext = {
   tmClient: Tendermint34Client | null;
   query: KujiraQueryClient | null;
   rpc: string | null;
+  setRpc: (val: string) => void;
+  preferred: string | null;
+  unlock: () => void;
+  lock: () => void;
 };
 
 const Context = createContext<NetworkContext>({
@@ -34,6 +38,10 @@ const Context = createContext<NetworkContext>({
   tmClient: null,
   query: null,
   rpc: null,
+  setRpc: () => {},
+  preferred: null,
+  unlock: () => {},
+  lock: () => {},
 });
 
 const toClient = (
@@ -46,8 +54,11 @@ const toClient = (
     })
   ).then((c) => [c, endpoint]);
 
-export const NetworkContext: React.FC = ({ children }) => {
+export const NetworkContext: React.FC<{
+  onError?: (err: any) => void;
+}> = ({ children, onError }) => {
   const [network, setNetwork] = useLocalStorage("network", MAINNET);
+  const [preferred, setPreferred] = useLocalStorage("rpc", "");
   const [tm, setTmClient] = useState<
     null | [Tendermint34Client, string]
   >(null);
@@ -55,10 +66,37 @@ export const NetworkContext: React.FC = ({ children }) => {
   const tmClient = tm && tm[0];
 
   useEffect(() => {
-    Promise.any(RPCS[network as NETWORK].map(toClient)).then(
-      setTmClient
-    );
+    if (preferred) {
+      toClient(preferred)
+        .then(setTmClient)
+        .catch((err) =>
+          onError ? onError(err) : console.error(err)
+        );
+    } else {
+      Promise.any(RPCS[network as NETWORK].map(toClient))
+        .then(setTmClient)
+        .catch((err) =>
+          onError ? onError(err) : console.error(err)
+        );
+    }
   }, [network]);
+
+  const setRpc = (val: string) => {
+    toClient(val)
+      .then((x) => {
+        setPreferred(val);
+        setTmClient(x);
+      })
+      .catch((err) => (onError ? onError(err) : console.error(err)));
+  };
+
+  const unlock = () => {
+    setPreferred("");
+  };
+
+  const lock = () => {
+    tm && setPreferred(tm[1]);
+  };
 
   const query = useMemo(
     () => tmClient && kujiraQueryClient({ client: tmClient }),
@@ -74,6 +112,10 @@ export const NetworkContext: React.FC = ({ children }) => {
         tmClient,
         query,
         rpc: tm && tm[1],
+        setRpc,
+        unlock,
+        lock,
+        preferred: preferred || null,
       }}>
       {children}
     </Context.Provider>
@@ -87,14 +129,37 @@ export const useNetwork = (): [
     tmClient: Tendermint34Client | null;
     query: KujiraQueryClient | null;
     rpc: string | null;
+    setRpc: (val: string) => void;
+    preferred: null | string;
+    unlock: () => void;
+    lock: () => void;
   },
   (n: NETWORK) => void
 ] => {
-  const { network, setNetwork, tmClient, query, rpc } =
-    useContext(Context);
+  const {
+    network,
+    setNetwork,
+    tmClient,
+    query,
+    rpc,
+    setRpc,
+    preferred,
+    lock,
+    unlock,
+  } = useContext(Context);
 
   return [
-    { network, chainInfo: CHAIN_INFO[network], tmClient, query, rpc },
+    {
+      network,
+      chainInfo: CHAIN_INFO[network],
+      tmClient,
+      query,
+      rpc,
+      setRpc,
+      preferred,
+      lock,
+      unlock,
+    },
     setNetwork,
   ];
 };
