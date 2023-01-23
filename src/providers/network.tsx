@@ -9,6 +9,7 @@ import {
   kujiraQueryClient,
   MAINNET,
   NETWORK,
+  RPCS,
 } from "kujira.js";
 import {
   createContext,
@@ -33,6 +34,14 @@ const Context = createContext<NetworkContext>({
   query: null,
 });
 
+const toClient = (endpoint: string): Promise<Tendermint34Client> =>
+  Tendermint34Client.create(
+    new HttpBatchClient(endpoint, {
+      dispatchInterval: 100,
+      batchSizeLimit: 200,
+    })
+  );
+
 export const NetworkContext: React.FC = ({ children }) => {
   const [network, setNetwork] = useLocalStorage("network", MAINNET);
   const [tmClient, setTmClient] = useState<null | Tendermint34Client>(
@@ -40,14 +49,9 @@ export const NetworkContext: React.FC = ({ children }) => {
   );
 
   useEffect(() => {
-    const httpClient = new HttpBatchClient(
-      CHAIN_INFO[network as NETWORK].rpc,
-      {
-        dispatchInterval: 100,
-        batchSizeLimit: 200,
-      }
+    Promise.any(RPCS[network as NETWORK].map(toClient)).then(
+      setTmClient
     );
-    Tendermint34Client.create(httpClient).then(setTmClient);
   }, [network]);
 
   const query = useMemo(
