@@ -13,6 +13,8 @@ import {
 } from "kujira.js";
 import {
   createContext,
+  Dispatch,
+  SetStateAction,
   useContext,
   useEffect,
   useMemo,
@@ -26,6 +28,7 @@ export type NetworkContext = {
   tmClient: Tendermint34Client | null;
   query: KujiraQueryClient | null;
   rpc: string | null;
+  rpcs: { endpoint: string; latency: number }[];
   setRpc: (val: string) => void;
   preferred: string | null;
   unlock: () => void;
@@ -38,21 +41,30 @@ const Context = createContext<NetworkContext>({
   tmClient: null,
   query: null,
   rpc: null,
+  rpcs: [],
   setRpc: () => {},
   preferred: null,
   unlock: () => {},
   lock: () => {},
 });
 
-const toClient = (
-  endpoint: string
-): Promise<[Tendermint34Client, string]> =>
-  Tendermint34Client.create(
-    new HttpBatchClient(endpoint, {
-      dispatchInterval: 100,
-      batchSizeLimit: 200,
-    })
-  ).then((c) => [c, endpoint]);
+const toClient =
+  (setLatencies: Dispatch<SetStateAction<Record<string, number>>>) =>
+  (endpoint: string): Promise<[Tendermint34Client, string]> => {
+    const start = new Date().getTime();
+    return Tendermint34Client.create(
+      new HttpBatchClient(endpoint, {
+        dispatchInterval: 100,
+        batchSizeLimit: 200,
+      })
+    ).then((c) => {
+      setLatencies((prev) => ({
+        ...prev,
+        [endpoint]: new Date().getTime() - start,
+      }));
+      return [c, endpoint];
+    });
+  };
 
 export const NetworkContext: React.FC<{
   onError?: (err: any) => void;
@@ -62,18 +74,23 @@ export const NetworkContext: React.FC<{
   const [tm, setTmClient] = useState<
     null | [Tendermint34Client, string]
   >(null);
+  const [latencies, setLatencies] = useState<Record<string, number>>(
+    {}
+  );
 
   const tmClient = tm && tm[0];
 
   useEffect(() => {
     if (preferred) {
-      toClient(preferred)
+      toClient(setLatencies)(preferred)
         .then(setTmClient)
         .catch((err) =>
           onError ? onError(err) : console.error(err)
         );
     } else {
-      Promise.any(RPCS[network as NETWORK].map(toClient))
+      Promise.any(
+        RPCS[network as NETWORK].map(toClient(setLatencies))
+      )
         .then(setTmClient)
         .catch((err) =>
           onError ? onError(err) : console.error(err)
@@ -82,7 +99,7 @@ export const NetworkContext: React.FC<{
   }, [network]);
 
   const setRpc = (val: string) => {
-    toClient(val)
+    toClient(setLatencies)(val)
       .then(setTmClient)
       .catch((err) => (onError ? onError(err) : console.error(err)));
   };
@@ -109,6 +126,10 @@ export const NetworkContext: React.FC<{
         tmClient,
         query,
         rpc: tm && tm[1],
+        rpcs: RPCS[network as NETWORK].map((endpoint) => ({
+          endpoint,
+          latency: latencies[endpoint] || 9999,
+        })),
         setRpc,
         unlock,
         lock,
@@ -126,6 +147,7 @@ export const useNetwork = (): [
     tmClient: Tendermint34Client | null;
     query: KujiraQueryClient | null;
     rpc: string | null;
+    rpcs: { endpoint: string; latency: number }[];
     setRpc: (val: string) => void;
     preferred: null | string;
     unlock: () => void;
@@ -143,6 +165,7 @@ export const useNetwork = (): [
     preferred,
     lock,
     unlock,
+    rpcs,
   } = useContext(Context);
 
   return [
@@ -152,6 +175,7 @@ export const useNetwork = (): [
       tmClient,
       query,
       rpc,
+      rpcs,
       setRpc,
       preferred,
       lock,
