@@ -1,11 +1,5 @@
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
-import {
-  Denom,
-  LOCALNET,
-  MAINNET,
-  NETWORKS,
-  TESTNET,
-} from "kujira.js";
+import { Denom, LOCALNET, TESTNET } from "kujira.js";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import ReactTooltip from "react-tooltip";
@@ -19,63 +13,6 @@ import { useNetwork } from "../providers/network";
 import { Adapter, IWallet, useWallet } from "../providers/wallet";
 import { coinSort } from "../utils";
 import KadoModal from "./KadoModal";
-import { Select } from "./Select";
-
-const names = {
-  [TESTNET]: "Testnet",
-  [MAINNET]: "Mainnet",
-  [LOCALNET]: "Local",
-};
-
-export const NetworkSelect = () => {
-  const [{ network }, setNetwork] = useNetwork();
-  /* const [showList, setShowList] = useState(false);
-
-  return (
-    <>
-      <Network onClick={() => setShowList(!showList)} />
-      {showList && (
-        <ul className="wallet__network-select">
-          <li
-            onClick={() => onChange(MAINNET)}
-            className={names[network] === MAINNET ? "current" : ""}>
-            Mainnet
-          </li>
-          <li
-            onClick={() => onChange(TESTNET)}
-            className={names[network] === TESTNET ? "current" : ""}>
-            Mainnet
-          </li>
-          <li
-            onClick={() => onChange(LOCALNET)}
-            className={names[network] === LOCALNET ? "current" : ""}>
-            Local
-          </li>
-        </ul>
-      )}
-    </>
-  ); */
-
-  return (
-    <>
-      {Object.entries(NETWORKS).length > 1 && (
-        <Select
-          className="w-full condensed select--light select--tight mb-1"
-          selected={{
-            label: names[network],
-            value: network,
-          }}
-          onChange={setNetwork}
-          options={[
-            { label: "Mainnet", value: MAINNET },
-            { label: "Testnet", value: TESTNET },
-            { label: "Local", value: LOCALNET },
-          ]}
-        />
-      )}
-    </>
-  );
-};
 
 export const NetworkWarning = () => {
   const [{ network }] = useNetwork();
@@ -150,12 +87,6 @@ export function Wallet({
           </span>
         </div>
         <div className="wallet__popup">
-          {Object.keys(NETWORKS).includes(chainInfo.chainId) && (
-            <NetworkSelect />
-          )}
-          <small className="network">
-            Network: {chainInfo.chainId}
-          </small>
           <span className="address mb-2">
             {account.address.substr(0, 16)}...
             {account.address.substr(-16)}
