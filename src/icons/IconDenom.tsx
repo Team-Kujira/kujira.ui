@@ -36,7 +36,10 @@ export const IconDenom: React.FC<{ denom: Denom | string }> = ({
     i18n.t("Indirect IBC token. Possibly spoofed");
 
   return warning ? (
-    <IconWarning className="color-red" data-tip={warning} />
+    <IconWarning
+      className="color-red icon-denom"
+      data-tip={warning}
+    />
   ) : (
     <IconDenomInner denom={denom} />
   );
@@ -360,6 +363,7 @@ const IconCalc = () => (
 
 const SHD = () => (
   <svg
+    className="icon-denom"
     width="40"
     height="40"
     viewBox="0 0 36 33"
@@ -1059,7 +1063,10 @@ const IconWFTM = () => (
 );
 
 const IconWMatic = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <svg
+    className="icon-denom"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 256 256">
     <g fill="none" fillRule="evenodd">
       <circle
         cx="128"
@@ -1160,6 +1167,7 @@ const IconDot = () => (
 
 const IconAUSD = () => (
   <svg
+    className="icon-denom"
     width="128"
     height="128"
     viewBox="0 0 128 128"
@@ -1197,6 +1205,7 @@ const IconAUSD = () => (
 
 const IconLocal = () => (
   <svg
+    className="icon-denom"
     width="24"
     height="24"
     viewBox="0 0 24 24"
@@ -1268,7 +1277,10 @@ const IconLocal = () => (
 );
 
 const IconStrd = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <svg
+    className="icon-denom"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 500 500">
     <g fill="none" fillRule="evenodd">
       <path
         fill="#E50571"
@@ -1285,6 +1297,7 @@ const IconStrd = () => (
 
 const IconAvax = () => (
   <svg
+    className="icon-denom"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 1503 1504"
     fill="none">
