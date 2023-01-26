@@ -102,7 +102,7 @@ export const WalletContext: FC = ({ children }) => {
 
   const [kujiraBalances, setKujiraBalances] = useState<Coin[]>([]);
 
-  const [{ network, chainInfo, query }] = useNetwork();
+  const [{ network, chainInfo, query, rpc }] = useNetwork();
   const [link, setLink] = useState("");
   const [modal, setModal] = useState(false);
 
@@ -237,9 +237,13 @@ export const WalletContext: FC = ({ children }) => {
     chain?: NETWORK,
     auto?: boolean
   ) => {
+    const chainInfo: ChainInfo = {
+      ...CHAIN_INFO[chain || network],
+    };
+
     switch (adapter) {
       case Adapter.Keplr:
-        Keplr.connect(CHAIN_INFO[chain || network], {
+        Keplr.connect(rpc ? { ...chainInfo, rpc } : chainInfo, {
           feeDenom,
         })
           .then((x) => {
@@ -264,7 +268,7 @@ export const WalletContext: FC = ({ children }) => {
         break;
       case Adapter.Station:
         stationController &&
-          Station.connect(CHAIN_INFO[chain || network], {
+          Station.connect(chainInfo, {
             controller: stationController,
           })
             .then((x) => {
