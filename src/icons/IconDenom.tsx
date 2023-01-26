@@ -200,6 +200,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
         />
       );
 
+    case "grav":
     case "graviton":
       return (
         <img
