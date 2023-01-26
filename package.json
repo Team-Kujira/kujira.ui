@@ -20,7 +20,7 @@
     "@types/react-dom": "^18.0.0",
     "clsx": "^1.2.1",
     "ethers": "^5.7.2",
-    "kujira.js": "Team-Kujira/kujira.js#ac3d8f07537ae85c32cc4edb8cd5b3671c47e145",
+    "kujira.js": "Team-Kujira/kujira.js#502784ecf6499e466594ba8df14d14c3dbf69147",
     "react": "^18.2.0",
     "react-hot-toast": "^2.1.1",
     "react-is": "^18.2.0",
