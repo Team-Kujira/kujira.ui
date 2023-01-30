@@ -18,6 +18,7 @@ import {
   Denom,
   Keplr,
   NETWORK,
+  ReadOnly,
   Sonar,
   Station,
 } from "kujira.js";
@@ -30,6 +31,7 @@ import {
 } from "react";
 import { toast } from "react-hot-toast";
 import QRCode from "react-qr-code";
+import Input from "../../components/Input";
 import { Modal } from "../../components/Modal";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useWindowSize } from "../../hooks/useWindowSize";
@@ -40,6 +42,7 @@ export enum Adapter {
   Sonar = "sonar",
   Keplr = "keplr",
   Station = "station",
+  ReadOnly = "readOnly",
 }
 
 export type IWallet = {
@@ -86,9 +89,11 @@ const Context = createContext<IWallet>({
 });
 
 export const WalletContext: FC = ({ children }) => {
+  const [address, setAddress] = useLocalStorage("address", "");
+  const [showAddress, setShowAddress] = useState(false);
   const [stored, setStored] = useLocalStorage("wallet", "");
   const [wallet, setWallet] = useState<
-    Sonar | Keplr | Station | null
+    Sonar | Keplr | Station | ReadOnly | null
   >(null);
   const [feeDenom, setFeeDenom] = useLocalStorage(
     "feeDenom",
@@ -134,6 +139,11 @@ export const WalletContext: FC = ({ children }) => {
   }, [stationController]);
 
   useEffect(() => {
+    if (!wallet && stored === Adapter.ReadOnly && address) {
+      ReadOnly.connect(address).then(setWallet);
+      return;
+    }
+
     stored && connect(stored, network, true);
   }, []);
 
@@ -282,6 +292,9 @@ export const WalletContext: FC = ({ children }) => {
                   : err.message
               );
             });
+        break;
+      case Adapter.ReadOnly:
+        setShowAddress(true);
     }
   };
 
@@ -337,6 +350,30 @@ export const WalletContext: FC = ({ children }) => {
             <h3>Scan this code using the Sonar Mobile App.</h3>
           </div>
         </div>
+      </Modal>
+
+      <Modal
+        show={showAddress}
+        close={() => setShowAddress(false)}
+        confirm={() =>
+          ReadOnly.connect(address).then((w) => {
+            setStored(Adapter.ReadOnly);
+            setWallet(w);
+            setShowAddress(false);
+          })
+        }
+        title="Read Only Connection">
+        <>
+          <p className="fs-14 lh-16 color-white mb-2">
+            Enter a Kujira address to see a <strong>read only</strong>{" "}
+            version of the app, as if connected with this address.
+          </p>
+          <Input
+            placeholder="kujira1..."
+            value={address}
+            onChange={(e) => setAddress(e.currentTarget.value)}
+          />
+        </>
       </Modal>
     </Context.Provider>
   );
