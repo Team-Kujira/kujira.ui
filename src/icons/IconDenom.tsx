@@ -162,6 +162,14 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
     case "gpaxg":
     case "paxg":
       return <IconPAXG />;
+    case "inj":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/injective/images/inj.png"
+          alt="INJ"
+        />
+      );
     case "ampluna":
       return (
         <img
