@@ -49,12 +49,12 @@ export const Modal = ({
                 {confirm && (
                   <div className="modal__footer text-right mt-4">
                     <button
-                      className="button--outline-blue"
+                      className="md-button md-button--grey"
                       onClick={close}>
                       Cancel
                     </button>
                     <button
-                      className="button--gradient ml-1"
+                      className="md-button ml-1"
                       onClick={confirm}>
                       Confirm
                     </button>

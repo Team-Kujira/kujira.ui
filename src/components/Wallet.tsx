@@ -12,7 +12,9 @@ import { IconWarning } from "../icons/IconWarning";
 import { useNetwork } from "../providers/network";
 import { Adapter, IWallet, useWallet } from "../providers/wallet";
 import { coinSort } from "../utils";
+import Input from "./Input";
 import KadoModal from "./KadoModal";
+import { Modal } from "./Modal";
 
 export const NetworkWarning = () => {
   const [{ network }] = useNetwork();
@@ -70,6 +72,8 @@ export function Wallet({
     adapter();
   const [showKado, setShowKado] = useState(false);
   const [showWalletSelect, setShowWalletSelect] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [address, setAddress] = useState("");
 
   if (account) {
     return (
@@ -161,8 +165,31 @@ export function Wallet({
             }}>
             <img src="https://github.com/chainapsis/keplr-wallet/blob/master/packages/mobile/src/assets/logo/keplr-logo-dark-mode.png?raw=true" />
           </button>
+          <hr className="hr my-2" />
+          <button
+            className="transparent block pointer color-white fw-600 fs-12 p-2"
+            onClick={() => setShowModal(true)}>
+            Read Only Connect
+          </button>
         </div>
       )}
+      <Modal
+        show={showModal}
+        close={() => setShowModal(false)}
+        confirm={() => console.log("connect")}
+        title="Read Only Connection">
+        <>
+          <p className="fs-14 lh-16 color-white mb-2">
+            Enter a Kujira address to see a <strong>read only</strong>{" "}
+            version of the app, as if connected with this address.
+          </p>
+          <Input
+            placeholder="kujira1..."
+            value={address}
+            onChange={(e) => setAddress(e.currentTarget.value)}
+          />
+        </>
+      </Modal>
     </>
   );
 }
