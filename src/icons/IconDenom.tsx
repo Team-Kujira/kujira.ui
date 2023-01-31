@@ -19,7 +19,7 @@ import { IconBETH } from "./IconBETH";
 import { IconBLUNA } from "./IconBLUNA";
 import { IconWBNB } from "./IconBNB";
 import { IconBSolana } from "./IconBSolana";
-import { IconLink } from "./IconLINK";
+import { IconLink } from "./IconLink";
 import { IconPAXG } from "./IconPAXG";
 import { IconSAvax } from "./IconSAvax";
 import { IconSTATOM } from "./IconSTATOM";
