@@ -19,6 +19,7 @@ import { IconBETH } from "./IconBETH";
 import { IconBLUNA } from "./IconBLUNA";
 import { IconWBNB } from "./IconBNB";
 import { IconBSolana } from "./IconBSolana";
+import { IconLink } from "./IconLINK";
 import { IconPAXG } from "./IconPAXG";
 import { IconSAvax } from "./IconSAvax";
 import { IconSTATOM } from "./IconSTATOM";
@@ -162,6 +163,8 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
     case "gpaxg":
     case "paxg":
       return <IconPAXG />;
+    case "link":
+      return <IconLink />;
     case "inj":
       return (
         <img
