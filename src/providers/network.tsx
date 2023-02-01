@@ -27,7 +27,7 @@ export type NetworkContext = {
   setNetwork: (n: NETWORK) => void;
   tmClient: Tendermint34Client | null;
   query: KujiraQueryClient | null;
-  rpc: string | null;
+  rpc: string;
   rpcs: { endpoint: string; latency: number }[];
   setRpc: (val: string) => void;
   preferred: string | null;
@@ -40,7 +40,7 @@ const Context = createContext<NetworkContext>({
   setNetwork: () => {},
   tmClient: null,
   query: null,
-  rpc: null,
+  rpc: "",
   rpcs: [],
   setRpc: () => {},
   preferred: null,
@@ -120,25 +120,27 @@ export const NetworkContext: React.FC<{
   );
 
   return (
-    <Context.Provider
-      key={network}
-      value={{
-        network,
-        setNetwork,
-        tmClient,
-        query,
-        rpc: tm && tm[1],
-        rpcs: RPCS[network as NETWORK].map((endpoint) => ({
-          endpoint,
-          latency: latencies[endpoint] || 9999,
-        })),
-        setRpc,
-        unlock,
-        lock,
-        preferred: preferred || null,
-      }}>
-      {children}
-    </Context.Provider>
+    tm && (
+      <Context.Provider
+        key={network}
+        value={{
+          network,
+          setNetwork,
+          tmClient,
+          query,
+          rpc: tm[1],
+          rpcs: RPCS[network as NETWORK].map((endpoint) => ({
+            endpoint,
+            latency: latencies[endpoint] || 9999,
+          })),
+          setRpc,
+          unlock,
+          lock,
+          preferred: preferred || null,
+        }}>
+        {children}
+      </Context.Provider>
+    )
   );
 };
 
@@ -148,7 +150,7 @@ export const useNetwork = (): [
     chainInfo: ChainInfo;
     tmClient: Tendermint34Client | null;
     query: KujiraQueryClient | null;
-    rpc: string | null;
+    rpc: string;
     rpcs: { endpoint: string; latency: number }[];
     setRpc: (val: string) => void;
     preferred: null | string;
