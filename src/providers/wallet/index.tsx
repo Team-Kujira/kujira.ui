@@ -13,15 +13,7 @@ import {
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { BigNumber } from "ethers";
-import {
-  CHAIN_INFO,
-  Denom,
-  Keplr,
-  NETWORK,
-  ReadOnly,
-  Sonar,
-  Station,
-} from "kujira.js";
+import { CHAIN_INFO, Denom, NETWORK } from "kujira.js";
 import {
   createContext,
   FC,
@@ -36,6 +28,7 @@ import { Modal } from "../../components/Modal";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { IconSonar } from "../../icons";
+import { Keplr, ReadOnly, Sonar, Station } from "../../wallets";
 import { useNetwork } from "../network";
 
 export enum Adapter {
