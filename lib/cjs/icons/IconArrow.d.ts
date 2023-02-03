@@ -1,4 +1,2 @@
-/// <reference types="react" />
-export declare function IconArrow({ className, }: {
-    className?: string;
-}): JSX.Element;
+import { FC } from "react";
+export declare const IconArrow: FC<JSX.IntrinsicElements["svg"]>;

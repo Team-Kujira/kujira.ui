@@ -1,5 +1,6 @@
 interface LocaleDecimal {
     toLocaleDecimal: (decimals: number) => string;
 }
-interface Number extends LocaleDecimal {
+export interface Number extends LocaleDecimal {
 }
+export {};

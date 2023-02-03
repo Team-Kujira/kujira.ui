@@ -1,27 +1,26 @@
-import { FC } from "react";
-import { ChainInfo } from "@keplr-wallet/types";
-import { Any } from "cosmjs-types/google/protobuf/any";
 import { AccountData, EncodeObject } from "@cosmjs/proto-signing";
-import { DeliverTxResponse, Coin } from "@cosmjs/stargate";
-import { BigNumber } from "ethers";
+import { Coin, DeliverTxResponse } from "@cosmjs/stargate";
+import { ChainInfo } from "@keplr-wallet/types";
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
-import { Denom } from "kujira.js";
+import { Any } from "cosmjs-types/google/protobuf/any";
+import { BigNumber } from "ethers";
+import { Denom, NETWORK } from "kujira.js";
+import { FC, PropsWithChildren } from "react";
 export declare enum Adapter {
-    KujiraWebview = "kujira-webview",
-    KujiraWalletConnect = "kujira-walletconnect",
-    Keplr = "keplr"
+    Sonar = "sonar",
+    Keplr = "keplr",
+    Station = "station",
+    ReadOnly = "readOnly"
 }
-export declare type Wallets = {
-    adapter: Adapter;
-    setAdapter: (a: Adapter) => void;
-    connect: null | ((chain?: string) => void);
+export type IWallet = {
+    connect: null | ((adapter: Adapter, chain?: NETWORK) => void);
     disconnect: () => void;
     account: AccountData | null;
     kujiraAccount: Any | null;
     balances: Coin[];
     getBalance: (denom: Denom, refresh?: boolean) => Promise<BigNumber | null>;
     balance: (denom: Denom) => BigNumber;
-    signAndBroadcast: (msgs: EncodeObject[]) => Promise<DeliverTxResponse>;
+    signAndBroadcast: (msgs: EncodeObject[], memo?: string) => Promise<DeliverTxResponse>;
     delegations: null | DelegationResponse[];
     refreshBalances: () => void;
     refreshDelegations: () => void;
@@ -29,5 +28,5 @@ export declare type Wallets = {
     setFeeDenom: (denom: string) => void;
     chainInfo: ChainInfo;
 };
-export declare const WalletContext: FC;
-export declare function useWallet(): Wallets;
+export declare const WalletContext: FC<PropsWithChildren<{}>>;
+export declare function useWallet(): IWallet;
