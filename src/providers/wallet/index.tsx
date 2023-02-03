@@ -17,6 +17,7 @@ import { CHAIN_INFO, Denom, NETWORK } from "kujira.js";
 import {
   createContext,
   FC,
+  PropsWithChildren,
   useContext,
   useEffect,
   useState,
@@ -81,7 +82,9 @@ const Context = createContext<IWallet>({
   chainInfo: {} as ChainInfo,
 });
 
-export const WalletContext: FC = ({ children }) => {
+export const WalletContext: FC<PropsWithChildren<{}>> = ({
+  children,
+}) => {
   const [address, setAddress] = useLocalStorage("address", "");
   const [showAddress, setShowAddress] = useState(false);
   const [stored, setStored] = useLocalStorage("wallet", "");

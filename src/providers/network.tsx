@@ -14,6 +14,7 @@ import {
 import {
   createContext,
   Dispatch,
+  PropsWithChildren,
   SetStateAction,
   useContext,
   useEffect,
@@ -68,9 +69,11 @@ const toClient = (
   });
 };
 
-export const NetworkContext: React.FC<{
-  onError?: (err: any) => void;
-}> = ({ children, onError }) => {
+export const NetworkContext: React.FC<
+  PropsWithChildren<{
+    onError?: (err: any) => void;
+  }>
+> = ({ children, onError }) => {
   const [network, setNetwork] = useLocalStorage("network", MAINNET);
   const [preferred, setPreferred] = useLocalStorage("rpc", "");
   const [tm, setTmClient] = useState<
