@@ -1,4 +1,4 @@
-import { createElement } from "react";
+import { createElement, PropsWithChildren } from "react";
 import de from "./languages/de-DE.json";
 import es from "./languages/es-ES.json";
 import it from "./languages/it-IT.json";
@@ -49,7 +49,7 @@ const translations = (language: string): Record<string, string> => {
 };
 
 const comp =
-  (tag: string): React.FC =>
+  (tag: string): React.FC<PropsWithChildren<{}>> =>
   (props) =>
     createElement(
       tag,
