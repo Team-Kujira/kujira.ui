@@ -7,6 +7,8 @@ const status = (latency: number) =>
   latency > 2000 ? "red" : latency > 750 ? "orange" : "green";
 
 export const Network = () => {
+  return null;
+  // TODO: Move realtime into kujira.ui
   const [{ rpcs, rpc, setRpc, preferred, lock, unlock, tmClient }] =
     useNetwork();
 
