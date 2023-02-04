@@ -1,4 +1,5 @@
 import { LOCALNET, MAINNET, NETWORKS, TESTNET } from "kujira.js";
+import { useEffect, useState } from "react";
 import { useNetwork } from "../providers/network";
 import { Select } from "./Select";
 
@@ -6,11 +7,28 @@ const status = (latency: number) =>
   latency > 2000 ? "red" : latency > 750 ? "orange" : "green";
 
 export const Network = () => {
-  const [{ rpcs, rpc, setRpc, preferred, lock, unlock }] =
+  const [{ rpcs, rpc, setRpc, preferred, lock, unlock, tmClient }] =
     useNetwork();
 
   const locked = !!preferred;
   const latency = rpcs.find((r) => r.endpoint === rpc)?.latency || 0;
+
+  const [height, setHeight] = useState(0);
+  const [blockTime, setBlockTime] = useState<null | number>(null);
+
+  useEffect(() => {
+    tmClient?.block().then(({ block }) => {
+      if (!block?.header?.height) return;
+      const height = block.header.height;
+      setHeight(height);
+      tmClient?.block(height - 1000).then(({ block }) => {
+        if (!block?.header?.time) return;
+        const time = block.header.time;
+        const diff = new Date().getTime() - time.getTime();
+        setBlockTime(diff / 1000);
+      });
+    });
+  }, [tmClient]);
 
   return (
     <div className="rpc">
@@ -63,6 +81,18 @@ export const Network = () => {
           />
         </svg>
       )}
+
+      <div className="status">
+        <i />
+        <span>Block height</span>
+        <span className="color-white ml-q1">
+          {height.toLocaleString()}
+        </span>
+        <span className="ml-1">Block speed</span>
+        <span className="color-white ml-q1">
+          {Math.round(blockTime || 0).toLocaleString()}ms
+        </span>
+      </div>
     </div>
   );
 };
