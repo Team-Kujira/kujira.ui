@@ -25,6 +25,7 @@
     "ethers": "^5.7.2",
     "kujira.js": "Team-Kujira/kujira.js#8bf1a4045f8c86bb419c10dd7c85b4d6d03abbf6",
     "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-hot-toast": "^2.1.1",
     "react-is": "^18.2.0",
     "react-qr-code": "^2.0.8",
