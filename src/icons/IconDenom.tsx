@@ -1412,10 +1412,10 @@ const IconMars = () => (
         y2="0"
         gradientTransform="scale(-20.976) rotate(44.864 .49 -1.582)"
         gradientUnits="userSpaceOnUse">
-        <stop offset="0" stop-color="#ef4136" />
-        <stop offset=".01" stop-color="#ef4136" />
-        <stop offset=".32" stop-color="#df5153" />
-        <stop offset="1" stop-color="#ac0b1b" />
+        <stop offset="0" stopColor="#ef4136" />
+        <stop offset=".01" stopColor="#ef4136" />
+        <stop offset=".32" stopColor="#df5153" />
+        <stop offset="1" stopColor="#ac0b1b" />
       </linearGradient>
     </defs>
   </svg>
