@@ -4,7 +4,7 @@ import { FC, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import ReactTooltip from "react-tooltip";
 import * as i18n from "../i18n";
-import { IconSonar, IconStation } from "../icons";
+import { IconDenom, IconSonar, IconStation } from "../icons";
 import { IconCopy } from "../icons/IconCopy";
 import { IconKado } from "../icons/IconKado";
 import { IconWallet } from "../icons/IconWallet";
@@ -109,11 +109,15 @@ export function Wallet({
                 ))}
               {balances.length > 5 && (
                 <tr>
-                  <td className="text-right mono" colSpan={2}>
+                  <td
+                    className="text-right mono color-grey"
+                    colSpan={2}>
                     + {balances.length - 5}
                   </td>
                   <td className="text-right mono">
-                    <a href="https://blue.kujira.app/wallet">
+                    <a
+                      className="inline-link"
+                      href="https://blue.kujira.app/wallet">
                       View all
                     </a>
                   </td>
@@ -137,7 +141,7 @@ export function Wallet({
             <a
               className="transparent md-flex ai-c jc-e mr-0 ml-a pointer"
               href="https://app.localmoney.io/">
-              <LocalLogo />
+              <IconDenom denom={"local"} />
               <span className="fs-12 color-white ml-1 fw-600">
                 Fund with Local Money
               </span>
