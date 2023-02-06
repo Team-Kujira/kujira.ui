@@ -1,13 +1,14 @@
 import { LOCALNET, MAINNET, NETWORKS, TESTNET } from "kujira.js";
 import { useEffect, useState } from "react";
 import { useNetwork } from "../providers/network";
+import { useChannel } from "../providers/realtime";
 import { Select } from "./Select";
 
 const status = (latency: number) =>
   latency > 2000 ? "red" : latency > 750 ? "orange" : "green";
 
 export const Network = () => {
-  return null;
+  // return null;
   // TODO: Move realtime into kujira.ui
   const [{ rpcs, rpc, setRpc, preferred, lock, unlock, tmClient }] =
     useNetwork();
@@ -15,14 +16,35 @@ export const Network = () => {
   const locked = !!preferred;
   const latency = rpcs.find((r) => r.endpoint === rpc)?.latency || 0;
 
-  const [height, setHeight] = useState(0);
   const [blockTime, setBlockTime] = useState<null | number>(null);
+  const [lag, setLag] = useState(10000);
+
+  const [block, setBlock] = useState<null | {
+    height: number;
+  }>();
+
+  const blockChannel = useChannel("block:all");
+  useEffect(() => {
+    blockChannel?.on(
+      "new_block",
+      ({ body }: { body: { height: number } }) => {
+        setBlock({ height: body.height });
+      }
+    );
+    return blockChannel?.off();
+  }, [blockChannel]);
 
   useEffect(() => {
     tmClient?.block().then(({ block }) => {
       if (!block?.header?.height) return;
       const height = block.header.height;
-      setHeight(height);
+      setBlock({
+        height: block.header.height,
+      });
+      const diff = new Date().getTime() - block.header.time.getTime();
+
+      setLag(diff);
+
       tmClient?.block(height - 1000).then(({ block }) => {
         if (!block?.header?.time) return;
         const time = block.header.time;
@@ -85,10 +107,11 @@ export const Network = () => {
       )}
 
       <div className="status">
-        <i />
+        {/* 750 latency = green. 2 blocks (5.6s) = green */}
+        <i className={status(lag / 7.5)} />
         <span>Block height</span>
         <span className="color-white ml-q1">
-          {height.toLocaleString()}
+          {block && block.height.toLocaleString()}
         </span>
         <span className="ml-1">Block speed</span>
         <span className="color-white ml-q1">
