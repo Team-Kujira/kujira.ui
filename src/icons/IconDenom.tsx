@@ -27,6 +27,7 @@ import { IconSTATOM } from "./IconSTATOM";
 import { IconSTJUNO } from "./IconSTJUNO";
 import { IconSTOSMO } from "./IconSTOSMO";
 import { IconSTSCRT } from "./IconSTSCRT";
+import { IconSWTH } from "./IconSWTH";
 
 export const IconDenom: React.FC<{ denom: Denom | string }> = ({
   denom,
@@ -168,6 +169,8 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <IconLink />;
     case "cnto":
       return <IconCNTO />;
+    case "swth":
+      return <IconSWTH />;
     case "inj":
       return (
         <img
