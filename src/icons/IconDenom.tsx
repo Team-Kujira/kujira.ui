@@ -345,6 +345,9 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
     /* return <IconBNB />; */
     case "mars":
       return <IconMars />;
+    case "wtao":
+    case "tao":
+      return <IconTAO />;
     default:
       return <IconCoinDefault />;
   }
@@ -1421,5 +1424,23 @@ const IconMars = () => (
         <stop offset="1" stopColor="#ac0b1b" />
       </linearGradient>
     </defs>
+  </svg>
+);
+
+const IconTAO = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="84" height="84">
+    <g fill="none" fillRule="evenodd">
+      <circle cx="42" cy="42" r="42" fill="#FFF" />
+      <path
+        fill="#000"
+        fillRule="nonzero"
+        d="M45.4 51.314V37.256c0-3.513-2.898-6.374-6.41-6.374v22.466c0 4.47 3.79 5.947 6.132 5.947 1.942 0 3.038-.334 4.358-1.264-3.698-.39-4.08-2.62-4.08-6.717Z"
+      />
+      <path
+        fill="#000"
+        fillRule="nonzero"
+        d="M31.844 25C28.62 25 26 27.667 26 30.89h26.156C55.38 30.89 58 28.225 58 25H31.844Z"
+      />
+    </g>
   </svg>
 );
