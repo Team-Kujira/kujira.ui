@@ -1428,7 +1428,12 @@ const IconMars = () => (
 );
 
 const IconTAO = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="84" height="84">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon-denom"
+    width="84"
+    height="84"
+    viewBox="0 0 84 84">
     <g fill="none" fillRule="evenodd">
       <circle cx="42" cy="42" r="42" fill="#FFF" />
       <path
