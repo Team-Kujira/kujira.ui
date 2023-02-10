@@ -60,6 +60,7 @@ export type IWallet = {
   feeDenom: string;
   setFeeDenom: (denom: string) => void;
   chainInfo: ChainInfo;
+  adapter: null | Adapter;
 };
 
 const Context = createContext<IWallet>({
@@ -80,6 +81,7 @@ const Context = createContext<IWallet>({
   feeDenom: "ukuji",
   setFeeDenom: () => {},
   chainInfo: {} as ChainInfo,
+  adapter: null,
 });
 
 export const WalletContext: FC<PropsWithChildren<{}>> = ({
@@ -302,10 +304,22 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
     wallet?.disconnect();
   };
 
+  const adapter =
+    wallet instanceof Keplr
+      ? Adapter.Keplr
+      : wallet instanceof Sonar
+      ? Adapter.Sonar
+      : wallet instanceof Station
+      ? Adapter.Station
+      : wallet instanceof ReadOnly
+      ? Adapter.ReadOnly
+      : null;
+
   return (
     <Context.Provider
       key={network + wallet?.account.address}
       value={{
+        adapter,
         account: wallet?.account || null,
         delegations,
         connect,

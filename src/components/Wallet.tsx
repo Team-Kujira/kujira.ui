@@ -1,6 +1,6 @@
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { Denom, LOCALNET, TESTNET } from "kujira.js";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import ReactTooltip from "react-tooltip";
 import * as i18n from "../i18n";
@@ -49,6 +49,7 @@ export function Wallet({
 }: {
   adapter?: () => Pick<
     IWallet,
+    | "adapter"
     | "balance"
     | "account"
     | "connect"
@@ -57,8 +58,13 @@ export function Wallet({
     | "chainInfo"
   >;
 }) {
-  const { account, connect, disconnect, balances, chainInfo } =
-    adapter();
+  const {
+    adapter: a,
+    account,
+    connect,
+    disconnect,
+    balances,
+  } = adapter();
   const [showKado, setShowKado] = useState(false);
   const [showWalletSelect, setShowWalletSelect] = useState(false);
 
@@ -67,9 +73,9 @@ export function Wallet({
       <>
         <NetworkWarning />
         <div className="md-button md-button--grey md-button--outline md-button--wallet">
-          <Sonar />
-          {/* <Station /> */}
-          {/* <Keplr /> */}
+          {a === Adapter.Sonar && <Sonar />}
+          {a === Adapter.Station && <Station />}
+          {a === Adapter.Keplr && <Keplr />}
           <span className="desktop color-white">
             {account.address.substr(0, 6)}...
             {account.address.substr(-6)}
