@@ -67,6 +67,7 @@ export function Wallet({
   } = adapter();
   const [showKado, setShowKado] = useState(false);
   const [showWalletSelect, setShowWalletSelect] = useState(false);
+  const [{ chainInfo }] = useNetwork();
 
   if (account) {
     return (
@@ -103,7 +104,14 @@ export function Wallet({
             <tbody>
               {balances
                 ?.sort(coinSort)
-                .slice(0, 5)
+                .sort((a, b) => {
+                  return chainInfo.feeCurrencies.find(
+                    (c) => c.coinMinimalDenom === b.denom
+                  )
+                    ? 1
+                    : -1;
+                })
+                .slice(0, 10)
                 .map((b) => (
                   <Balance balance={b} key={b.denom} />
                 ))}
