@@ -251,7 +251,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
 
     switch (adapter) {
       case Adapter.Keplr:
-        Keplr.connect({ ...chainInfo, rpc })
+        Keplr.connect({ ...chainInfo, rpc }, { feeDenom })
           .then((x) => {
             setStored(adapter);
             setWallet(x);
