@@ -28,6 +28,7 @@ import { IconSTJUNO } from "./IconSTJUNO";
 import { IconSTOSMO } from "./IconSTOSMO";
 import { IconSTSCRT } from "./IconSTSCRT";
 import { IconSWTH } from "./IconSWTH";
+import { IconWHALE } from "./IconWHALE";
 
 export const IconDenom: React.FC<{ denom: Denom | string }> = ({
   denom,
@@ -172,13 +173,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
     case "swth":
       return <IconSWTH />;
     case "whale":
-      return (
-        <img
-          className="icon-denom"
-          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/migaloo/images/whitewhale.png"
-          alt="WHALE"
-        />
-      );
+      return <IconWHALE />;
 
     case "inj":
       return (
