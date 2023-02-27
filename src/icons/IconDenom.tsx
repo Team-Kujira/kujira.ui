@@ -171,6 +171,15 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <IconCNTO />;
     case "swth":
       return <IconSWTH />;
+    case "whale":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/migaloo/images/whitewhale.png"
+          alt="WHALE"
+        />
+      );
+
     case "inj":
       return (
         <img
