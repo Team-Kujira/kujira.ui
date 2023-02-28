@@ -23,9 +23,9 @@ export const IconCNTO: React.FC<JSX.IntrinsicElements["svg"]> = (
           x2="46.1666551%"
           y2="50.001734%"
           id="linearGradient-3">
-          <stop stop-color="#42E3FF" offset="0%"></stop>
-          <stop stop-color="#87F2FF" offset="0%"></stop>
-          <stop stop-color="#0093FF" offset="100%"></stop>
+          <stop stopColor="#42E3FF" offset="0%"></stop>
+          <stop stopColor="#87F2FF" offset="0%"></stop>
+          <stop stopColor="#0093FF" offset="100%"></stop>
         </linearGradient>
         <linearGradient
           x1="1.26588095e-05%"
@@ -33,11 +33,11 @@ export const IconCNTO: React.FC<JSX.IntrinsicElements["svg"]> = (
           x2="100%"
           y2="49.9998666%"
           id="linearGradient-4">
-          <stop stop-color="#E8B218" offset="0%"></stop>
-          <stop stop-color="#ECAC1A" offset="0%"></stop>
-          <stop stop-color="#E7BA1E" offset="31.985%"></stop>
-          <stop stop-color="#FFE864" offset="68.015%"></stop>
-          <stop stop-color="#F5C635" offset="100%"></stop>
+          <stop stopColor="#E8B218" offset="0%"></stop>
+          <stop stopColor="#ECAC1A" offset="0%"></stop>
+          <stop stopColor="#E7BA1E" offset="31.985%"></stop>
+          <stop stopColor="#FFE864" offset="68.015%"></stop>
+          <stop stopColor="#F5C635" offset="100%"></stop>
         </linearGradient>
         <path
           d="M148.995,28.24459 C130.875776,49.826238 104.743173,63.0908294 76.6270976,64.9776569 C48.5110222,66.8644843 20.8403912,57.2105469 0,38.24342 L30.77378,12.48868 C42.613216,25.1399411 59.8150632,31.324474 76.999787,29.1081895 C94.1845109,26.8919051 109.254371,16.5453452 117.49657,1.30419 L118.20792,-2.84217094e-14 L148.995,28.24459 Z"
@@ -48,11 +48,11 @@ export const IconCNTO: React.FC<JSX.IntrinsicElements["svg"]> = (
           x2="100%"
           y2="50%"
           id="linearGradient-7">
-          <stop stop-color="#D79617" offset="0%"></stop>
-          <stop stop-color="#B46A11" offset="0%"></stop>
-          <stop stop-color="#D68D15" offset="31.985%"></stop>
-          <stop stop-color="#E7AC18" offset="68.015%"></stop>
-          <stop stop-color="#F8C73D" offset="100%"></stop>
+          <stop stopColor="#D79617" offset="0%"></stop>
+          <stop stopColor="#B46A11" offset="0%"></stop>
+          <stop stopColor="#D68D15" offset="31.985%"></stop>
+          <stop stopColor="#E7AC18" offset="68.015%"></stop>
+          <stop stopColor="#F8C73D" offset="100%"></stop>
         </linearGradient>
         <path
           d="M263.431714,0.00860136793 C234.723472,-0.028113166 207.296366,11.8907129 187.735454,32.9034514 L187.695894,32.9430114 L184.020454,37.4089314 C179.861574,42.4006169 176.343228,47.8927803 173.547304,53.7575914 C164.759369,72.4437546 160.052902,92.7876062 159.741244,113.434721 L159.530424,127.477821 C159.530424,127.477821 156.408254,141.139151 147.081214,150.742701 C135.896724,162.269701 119.258274,167.973901 101.789874,167.354771 C67.7621537,166.156081 40.3738737,137.792961 40.2817337,103.751891 C40.2138365,79.4518658 53.9517154,57.2218657 75.7159681,46.4138522 C97.4802208,35.6058387 123.493752,38.0954975 142.812904,52.8354514 C143.247664,53.1647914 142.931504,53.9024514 142.931504,53.9024514 L166.077784,20.9944514 C121.360234,-12.8548204 57.8235986,-4.95880569 22.7515762,38.8063144 C-12.3204462,82.5714344 -6.18314939,146.301997 36.5961161,182.569985 C79.3753816,218.837973 143.251199,214.464081 180.687454,172.703341 L180.779684,172.597851 L183.506684,169.436271 L350.101894,46.9072714 C330.996081,17.6297369 298.391772,-0.0129948306 263.431714,0.00860136793 Z M199.341454,113.237031 L199.301894,112.960281 C192.240784,64.8761114 239.653074,27.0411514 284.970794,44.5886714 L287.355234,45.5107714 L199.341454,113.237031 Z"
@@ -63,19 +63,19 @@ export const IconCNTO: React.FC<JSX.IntrinsicElements["svg"]> = (
           x2="100.000004%"
           y2="50%"
           id="linearGradient-10">
-          <stop stop-color="#DC9617" offset="0%"></stop>
-          <stop stop-color="#DA9917" offset="0%"></stop>
-          <stop stop-color="#FFCF25" offset="31.985%"></stop>
-          <stop stop-color="#FFFF90" offset="68.015%"></stop>
-          <stop stop-color="#ECBF26" offset="100%"></stop>
+          <stop stopColor="#DC9617" offset="0%"></stop>
+          <stop stopColor="#DA9917" offset="0%"></stop>
+          <stop stopColor="#FFCF25" offset="31.985%"></stop>
+          <stop stopColor="#FFFF90" offset="68.015%"></stop>
+          <stop stopColor="#ECBF26" offset="100%"></stop>
         </linearGradient>
       </defs>
       <g
         id="Page-1"
         stroke="none"
-        stroke-width="1"
+        strokeWidth="1"
         fill="none"
-        fill-rule="evenodd">
+        fillRule="evenodd">
         <g
           id="Ciento-Exchange-New-Logo-wFrame"
           transform="translate(6.956910, 6.956900)">
@@ -97,12 +97,12 @@ export const IconCNTO: React.FC<JSX.IntrinsicElements["svg"]> = (
             d="M288.76335,97.30325 C260.055109,97.2665355 232.628002,109.185362 213.06709,130.1981 L213.02753,130.23766 L209.35209,134.70358 C205.193211,139.695266 201.674864,145.187429 198.87894,151.05224 C190.091005,169.738403 185.384538,190.082255 185.07288,210.72937 L184.86206,224.77247 C184.86206,224.77247 181.73989,238.4338 172.41285,248.03735 C161.22836,259.56435 144.58991,265.26855 127.12151,264.64942 C93.09379,263.45073 65.70551,235.08761 65.61337,201.04654 C65.5454728,176.746514 79.2833517,154.516514 101.047604,143.708501 C122.811857,132.900487 148.825389,135.390146 168.14454,150.1301 C168.5793,150.45944 168.26314,151.1971 168.26314,151.1971 L191.40942,118.2891 C146.69187,84.4398283 83.1552349,92.3358429 48.0832125,136.100963 C13.0111901,179.866083 19.1484869,243.596646 61.9277524,279.864633 C104.707018,316.132621 168.582836,311.758729 206.01909,269.99799 L206.11132,269.8925 L208.83832,266.73092 L375.43353,144.20192 C356.327717,114.924386 323.723408,97.2816538 288.76335,97.30325 Z M224.67309,210.53168 L224.63353,210.25493 C217.57242,162.17076 264.98471,124.3358 310.30243,141.88332 L312.68687,142.80542 L224.67309,210.53168 Z"
             id="Shape"
             fill="url(#linearGradient-3)"
-            fill-rule="nonzero"></path>
+            fillRule="nonzero"></path>
           <path
             d="M377.06463,276.72489 L367.60589,268.00379 C349.420199,289.367675 323.343213,302.436916 295.344003,304.219939 C267.344793,306.002961 239.820645,296.347104 219.07189,277.46261 L249.84582,251.70788 C261.685269,264.359085 278.887089,270.543579 296.071781,268.327295 C313.256472,266.11101 328.326311,255.764488 336.56853,240.52338 L336.9901,239.75928 L327.0966,230.62989 L375.1281,228.69338 L377.06463,276.72489 Z"
             id="Path"
             fill="url(#linearGradient-4)"
-            fill-rule="nonzero"></path>
+            fillRule="nonzero"></path>
           <g
             id="Clipped"
             transform="translate(219.074310, 239.223980)">
@@ -110,7 +110,7 @@ export const IconCNTO: React.FC<JSX.IntrinsicElements["svg"]> = (
               <use xlinkHref="#path-5"></use>
             </mask>
             <g id="Path"></g>
-            <g id="Group" mask="url(#mask-6)" fill-rule="nonzero">
+            <g id="Group" mask="url(#mask-6)" fillRule="nonzero">
               <g transform="translate(15.033260, 14.298990)">
                 <path
                   d="M32.79931,3.6216 L0,47.23032 C0,47.23032 58.42681,64.79532 59.46423,64.79532 C60.50165,64.79532 125.68728,39.814 125.68728,39.814 L83.92163,0 L32.79931,3.6216 Z"
@@ -131,7 +131,7 @@ export const IconCNTO: React.FC<JSX.IntrinsicElements["svg"]> = (
             <circle
               id="Oval"
               fill="url(#linearGradient-10)"
-              fill-rule="nonzero"
+              fillRule="nonzero"
               mask="url(#mask-9)"
               cx="284.813314"
               cy="92.8940514"
@@ -140,7 +140,7 @@ export const IconCNTO: React.FC<JSX.IntrinsicElements["svg"]> = (
           <ellipse
             id="Oval"
             stroke="#FFFFFF"
-            stroke-width="13.91381"
+            strokeWidth="13.91381"
             cx="202.84062"
             cy="200.86863"
             rx="202.84062"

@@ -12,10 +12,10 @@ export const IconWHALE: React.FC<JSX.IntrinsicElements["svg"]> = (
       <g
         id="Page-1"
         stroke="none"
-        stroke-width="1"
+        strokeWidth="1"
         fill="none"
-        fill-rule="evenodd">
-        <g id="logo" fill-rule="nonzero">
+        fillRule="evenodd">
+        <g id="logo" fillRule="nonzero">
           <path
             d="M28.5,57 C44.2401,57 57,44.2401 57,28.5 C57,12.7599 44.2401,0 28.5,0 C12.7599,0 0,12.7599 0,28.5 C0,44.2401 12.7599,57 28.5,57 Z"
             id="Path"
