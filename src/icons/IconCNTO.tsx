@@ -9,7 +9,6 @@ export const IconCNTO: React.FC<JSX.IntrinsicElements["svg"]> = (
       version="1.1"
       className="icon-denom"
       {...props}>
-      <title>Ciento-Exchange-New-Logo-wFrame</title>
       <defs>
         <ellipse
           id="path-1"
