@@ -176,6 +176,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <IconWHALE />;
 
     case "inj":
+    case "ginj":
       return (
         <img
           className="icon-denom"
