@@ -10,6 +10,7 @@ export const IconSTATOM: FC<JSX.IntrinsicElements["svg"]> = (
     fill="none"
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"
+    className="icon-denom"
     {...props}>
     <circle cx="120" cy="120" r="120" fill="#E50571"></circle>
     <path
