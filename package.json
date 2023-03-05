@@ -23,7 +23,7 @@
     "@walletconnect/client": "^1.8.0",
     "clsx": "^1.2.1",
     "ethers": "^5.7.2",
-    "kujira.js": "Team-Kujira/kujira.js#d809946321eb3b7643f262f474d14f9e8b4dc1fd",
+    "kujira.js": "Team-Kujira/kujira.js#dd0e1240d011d3f20277273f0754079b80307284",
     "phoenix": "^1.6.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

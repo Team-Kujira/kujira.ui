@@ -9,7 +9,7 @@ import {
   ChainInfo,
   Window as KeplrWindow,
 } from "@keplr-wallet/types";
-import { aminoTypes, registry } from "kujira.js";
+import { accountParser, aminoTypes, registry } from "kujira.js";
 import * as evmos from "./evmos";
 
 declare global {
@@ -113,6 +113,7 @@ export class Keplr {
         aminoTypes: aminoTypes(
           this.config.bech32Config.bech32PrefixAccAddr
         ),
+        accountParser,
       }
     );
 
