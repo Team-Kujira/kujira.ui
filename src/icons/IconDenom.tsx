@@ -360,6 +360,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
 
 const IconCalc = () => (
   <svg
+    className="icon-denom"
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg">
@@ -1359,6 +1360,7 @@ const IconAvax = () => (
 
 const IconMars = () => (
   <svg
+    className="icon-denom"
     xmlns="http://www.w3.org/2000/svg"
     fillRule="evenodd"
     clipRule="evenodd"
