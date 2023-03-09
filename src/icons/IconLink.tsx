@@ -2,6 +2,7 @@ import { FC } from "react";
 
 export const IconLink: FC<JSX.IntrinsicElements["svg"]> = (props) => (
   <svg
+    className="icon-denom"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 37.8 43.6"
     {...props}>

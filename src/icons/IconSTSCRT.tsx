@@ -4,6 +4,7 @@ export const IconSTSCRT: FC<JSX.IntrinsicElements["svg"]> = (
   props
 ) => (
   <svg
+    className="icon-denom"
     width="240"
     height="241"
     viewBox="0 0 240 241"
