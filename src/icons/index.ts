@@ -1,6 +1,7 @@
 export * from "./IconANC";
 export * from "./IconAnchor";
 export * from "./IconAngleRight";
+export * from "./IconAngleUp";
 export * from "./IconArrow";
 export * from "./IconArrowLeft";
 export * from "./IconAstroport";
