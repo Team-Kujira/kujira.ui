@@ -76,6 +76,7 @@ export class Keplr {
   public disconnect = () => {};
 
   public signAndBroadcast = async (
+    rpc: string,
     msgs: EncodeObject[]
     // batch?: {
     //   size: number;
@@ -105,7 +106,7 @@ export class Keplr {
     );
 
     const client = await SigningStargateClient.connectWithSigner(
-      this.config.rpc,
+      rpc,
       signer,
       {
         registry,

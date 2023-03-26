@@ -218,11 +218,17 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
       : BigNumber.from(0);
 
   const signAndBroadcast = async (
+    rpc: string,
     msgs: EncodeObject[],
     memo?: string
   ): Promise<DeliverTxResponse> => {
     if (!wallet) throw new Error("No Wallet Connected");
-    const res = await wallet.signAndBroadcast(msgs, feeDenom, memo);
+    const res = await wallet.signAndBroadcast(
+      rpc,
+      msgs,
+      feeDenom,
+      memo
+    );
     assertIsDeliverTxSuccess(res);
     return res;
   };
@@ -328,7 +334,8 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
         balances: kujiraBalances,
         getBalance,
         balance,
-        signAndBroadcast,
+        signAndBroadcast: (msgs, memo) =>
+          signAndBroadcast(rpc, msgs, memo),
         refreshBalances,
         refreshDelegations,
         feeDenom,

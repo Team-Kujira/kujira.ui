@@ -6,7 +6,7 @@ import {
 import { DeliverTxResponse } from "@cosmjs/stargate";
 import WalletConnect from "@walletconnect/client";
 import { getClientMeta } from "@walletconnect/utils";
-import { MAINNET, Denom, registry } from "kujira.js";
+import { Denom, MAINNET, registry } from "kujira.js";
 
 export class Sonar {
   private constructor(
@@ -78,6 +78,7 @@ export class Sonar {
   };
 
   signAndBroadcast = async (
+    rpc: string,
     msgs: EncodeObject[],
     gas: Denom,
     memo?: string

@@ -52,6 +52,7 @@ export class Station {
   public onChange = (fn: (k: Station) => void) => {};
 
   public signAndBroadcast = async (
+    rpc: string,
     msgs: EncodeObject[]
   ): Promise<DeliverTxResponse> => {
     const terraMsgs = msgs.map((m) =>
@@ -63,7 +64,7 @@ export class Station {
       chainID: this.config.chainId,
     });
 
-    const stargate = await StargateClient.connect(this.config.rpc);
+    const stargate = await StargateClient.connect(rpc);
     const result = await stargate.broadcastTx(res.result.toBytes());
     return result;
   };

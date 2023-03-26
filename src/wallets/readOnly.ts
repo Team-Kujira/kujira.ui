@@ -18,6 +18,7 @@ export class ReadOnly {
   public disconnect = () => {};
 
   signAndBroadcast = async (
+    rpc: string,
     msgs: EncodeObject[],
     gas: Denom,
     memo?: string
