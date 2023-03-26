@@ -22,7 +22,7 @@ type Options = { feeDenom: string };
 export class Keplr {
   private constructor(
     public account: AccountData,
-    private config: ChainInfo,
+    public config: ChainInfo,
     private options?: Options
   ) {}
 
