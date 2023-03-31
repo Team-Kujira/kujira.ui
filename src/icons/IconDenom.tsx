@@ -59,6 +59,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
   if (typeof denom !== "string" && denom.underlying) {
     return (
       <>
+        {denom.underlying.length === 1 && "👻"}
         <IconDenom denom={denom.underlying[0]} />
         {denom.underlying
           .slice(1, denom.underlying.length)
