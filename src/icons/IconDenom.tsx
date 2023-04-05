@@ -58,15 +58,15 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
 
   if (typeof denom !== "string" && denom.underlying) {
     return (
-      <>
-        {denom.underlying.length === 1 && "👻"}
+      <div className="icon-denom ghost">
         <IconDenom denom={denom.underlying[0]} />
         {denom.underlying
           .slice(1, denom.underlying.length)
           .map((d, idx) => (
             <IconDenom key={idx} denom={d} />
           ))}
-      </>
+        {denom.underlying.length === 1 && <span>👻image.png</span>}
+      </div>
     );
   }
 
