@@ -65,7 +65,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
           .map((d, idx) => (
             <IconDenom key={idx} denom={d} />
           ))}
-        {/* {denom.underlying.length === 1 && <span></span>} */}
+        {denom.underlying.length === 1 && <span>👻</span>}
       </div>
     );
   }
