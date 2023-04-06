@@ -56,7 +56,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
   const token =
     typeof denom === "string" ? denom : denom.symbol.toLowerCase();
 
-  if (typeof denom !== "string" && denom.underlying) {
+  if (typeof denom !== "string" && denom.underlying?.length === 1) {
     return (
       <div className="icon-denom ghost">
         <IconDenom denom={denom.underlying[0]} />
@@ -65,8 +65,20 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
           .map((d, idx) => (
             <IconDenom key={idx} denom={d} />
           ))}
-        {denom.underlying.length === 1 && <span>👻image.png</span>}
+        {/* {denom.underlying.length === 1 && <span></span>} */}
       </div>
+    );
+  }
+  if (typeof denom !== "string" && denom.underlying) {
+    return (
+      <>
+        <IconDenom denom={denom.underlying[0]} />
+        {denom.underlying
+          .slice(1, denom.underlying.length)
+          .map((d, idx) => (
+            <IconDenom key={idx} denom={d} />
+          ))}
+      </>
     );
   }
 
