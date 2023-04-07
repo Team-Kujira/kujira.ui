@@ -1,25 +1,25 @@
 import clsx from "clsx";
+import { FC } from "react";
 import ReactDOM from "react-dom";
 import { IconClose } from "../icons/IconClose";
 
-export const Modal = ({
-  show,
-  close,
-  title,
-  children,
-  confirm,
-  large,
-  backgroundClose = true,
-  className,
-}: {
+export const Modal: FC<{
   show: boolean;
   close: () => void;
   title?: string;
-  children: React.ReactChild;
   confirm?: () => void;
   large?: boolean;
   backgroundClose?: boolean;
   className?: string;
+}> = ({
+  show,
+  close,
+  title,
+  confirm,
+  large,
+  backgroundClose = true,
+  className,
+  children,
 }) => {
   const dest = document.getElementById("modal")!;
 
