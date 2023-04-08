@@ -30,6 +30,7 @@ import { IconSTOSMO } from "./IconSTOSMO";
 import { IconSTSCRT } from "./IconSTSCRT";
 import { IconSWTH } from "./IconSWTH";
 import { IconWHALE } from "./IconWHALE";
+import mnta from "./MNTA.png";
 
 export const IconDenom: React.FC<{ denom: Denom | string }> = ({
   denom,
@@ -195,6 +196,8 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <IconFRNZ />;
     case "hans":
       return <IconHans />;
+    case "mnta":
+      return <img className="icon-denom" src={mnta} alt="MNTA" />;
 
     case "inj":
     case "ginj":
