@@ -14,6 +14,7 @@ import {
 import {
   createContext,
   Dispatch,
+  FC,
   PropsWithChildren,
   SetStateAction,
   useContext,
@@ -122,28 +123,46 @@ export const NetworkContext: React.FC<
     [tmClient]
   );
 
+  return tm ? (
+    <Context.Provider
+      key={network}
+      value={{
+        network,
+        setNetwork,
+        tmClient,
+        query,
+        rpc: tm[1],
+        rpcs: RPCS[network as NETWORK].map((endpoint) => ({
+          endpoint,
+          latency: latencies[endpoint] || 9999,
+        })),
+        setRpc,
+        unlock,
+        lock,
+        preferred: preferred || null,
+      }}>
+      {children}
+    </Context.Provider>
+  ) : (
+    <NoConnection network={network} setNetwork={setNetwork} />
+  );
+};
+
+const NoConnection: FC<{
+  network: NETWORK;
+  setNetwork(n: NETWORK): void;
+}> = ({ network, setNetwork }) => {
   return (
-    tm && (
-      <Context.Provider
-        key={network}
-        value={{
-          network,
-          setNetwork,
-          tmClient,
-          query,
-          rpc: tm[1],
-          rpcs: RPCS[network as NETWORK].map((endpoint) => ({
-            endpoint,
-            latency: latencies[endpoint] || 9999,
-          })),
-          setRpc,
-          unlock,
-          lock,
-          preferred: preferred || null,
-        }}>
-        {children}
-      </Context.Provider>
-    )
+    <div>
+      <span>No Connection</span>
+      {network !== MAINNET && (
+        <button
+          className="md-btn"
+          onClick={() => setNetwork(MAINNET)}>
+          Switch to Mainnet
+        </button>
+      )}
+    </div>
   );
 };
 
