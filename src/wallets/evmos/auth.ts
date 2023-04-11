@@ -1,6 +1,6 @@
-import { Writer, Reader } from "protobufjs/minimal";
 import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
-import { DeepPartial } from "cosmjs-types/google/protobuf/any";
+import { DeepPartial } from "cosmjs-types/helpers";
+import { Reader, Writer } from "protobufjs/minimal";
 
 export const protobufPackage = "cosmos.auth.v1beta1";
 
