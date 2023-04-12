@@ -79,7 +79,7 @@ export const NetworkContext: React.FC<
   const [preferred, setPreferred] = useLocalStorage("rpc", "");
   const [tm, setTmClient] = useState<
     null | [Tendermint34Client, string]
-  >(null);
+  >();
   const [latencies, setLatencies] = useState<Record<string, number>>(
     {}
   );
@@ -98,9 +98,10 @@ export const NetworkContext: React.FC<
         RPCS[network as NETWORK].map((x) => toClient(x, setLatencies))
       )
         .then(setTmClient)
-        .catch((err) =>
-          onError ? onError(err) : console.error(err)
-        );
+        .catch((err) => {
+          setTmClient(null);
+          onError ? onError(err) : console.error(err);
+        });
     }
   }, [network]);
 
@@ -119,33 +120,40 @@ export const NetworkContext: React.FC<
   };
 
   const query = useMemo(
-    () => tmClient && kujiraQueryClient({ client: tmClient }),
+    () => (tmClient ? kujiraQueryClient({ client: tmClient }) : null),
     [tmClient]
   );
 
-  return tm ? (
-    <Context.Provider
-      key={network}
-      value={{
-        network,
-        setNetwork,
-        tmClient,
-        query,
-        rpc: tm[1],
-        rpcs: RPCS[network as NETWORK].map((endpoint) => ({
-          endpoint,
-          latency: latencies[endpoint] || 9999,
-        })),
-        setRpc,
-        unlock,
-        lock,
-        preferred: preferred || null,
-      }}>
-      {children}
-    </Context.Provider>
-  ) : (
-    <NoConnection network={network} setNetwork={setNetwork} />
-  );
+  switch (tm) {
+    case null:
+      return (
+        <NoConnection network={network} setNetwork={setNetwork} />
+      );
+    case undefined:
+      return null;
+    default:
+      return (
+        <Context.Provider
+          key={network}
+          value={{
+            network,
+            setNetwork,
+            tmClient: tmClient || null,
+            query,
+            rpc: tm[1],
+            rpcs: RPCS[network as NETWORK].map((endpoint) => ({
+              endpoint,
+              latency: latencies[endpoint] || 9999,
+            })),
+            setRpc,
+            unlock,
+            lock,
+            preferred: preferred || null,
+          }}>
+          {children}
+        </Context.Provider>
+      );
+  }
 };
 
 const NoConnection: FC<{
@@ -155,9 +163,9 @@ const NoConnection: FC<{
   return (
     <div className="px-2 py-10 md-flex ai-c jc-c dir-c wrap">
       <h1 className="fs-18">
-        Oh dear, you seem to be on an unsupported network.
+        No RPC connections available for {network}
       </h1>
-      <h2 className="fs-16">Lets sort this right out...</h2>
+      <h2 className="fs-16">Please check your internet connection</h2>
       {network !== MAINNET && (
         <button
           className="md-button mt-2"
