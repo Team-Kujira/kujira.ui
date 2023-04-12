@@ -32,6 +32,21 @@ import { IconSWTH } from "./IconSWTH";
 import { IconWHALE } from "./IconWHALE";
 import mnta from "./MNTA.png";
 
+const makeID = (length: number) => {
+  let result = "";
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(
+      Math.floor(Math.random() * charactersLength)
+    );
+    counter += 1;
+  }
+  return result;
+};
+
 export const IconDenom: React.FC<{ denom: Denom | string }> = ({
   denom,
 }) => {
@@ -932,24 +947,32 @@ const IconOSMO = () => (
   </svg>
 );
 
-const IconDEMO = () => (
-  <svg
-    className="icon-denom"
-    viewBox="0 0 100 100"
-    xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="demo_a">
-        <stop stopColor="#FDFC47" offset="0%" />
-        <stop stopColor="#24FE41" offset="100%" />
-      </linearGradient>
-    </defs>
-    <path
-      d="M97.222 27.778h-5.555c-1.541 0-2.778 1.237-2.778 2.621v13.89h-5.556V36.11a2.77 2.77 0 0 0-2.777-2.778h-8.334v-11.11h8.334a2.766 2.766 0 0 0 2.777-2.779V13.89a2.766 2.766 0 0 0-2.777-2.778H75a2.766 2.766 0 0 0-2.778 2.778v2.778H63.89a2.77 2.77 0 0 0-2.778 2.777v8.334H38.89v-8.334a2.77 2.77 0 0 0-2.778-2.777h-8.333v-2.778A2.766 2.766 0 0 0 25 11.11h-5.556a2.766 2.766 0 0 0-2.777 2.778v5.555a2.766 2.766 0 0 0 2.777 2.778h8.334v11.111h-8.334a2.77 2.77 0 0 0-2.777 2.778v8.333H11.11V30.556c0-1.541-1.237-2.622-2.778-2.622H2.778C1.237 27.934 0 29.171 0 30.556v22.222a2.77 2.77 0 0 0 2.778 2.778h8.333v13.888a2.77 2.77 0 0 0 2.778 2.778h8.333v13.89A2.77 2.77 0 0 0 25 88.888h16.667c1.54 0 2.777-1.237 2.777-2.622v-5.399a2.77 2.77 0 0 0-2.777-2.778h-8.334v-5.555h33.334v5.555h-8.334a2.77 2.77 0 0 0-2.777 2.778v5.4c0 1.54 1.237 2.62 2.777 2.62H75a2.77 2.77 0 0 0 2.778-2.777V72.222h8.333a2.77 2.77 0 0 0 2.778-2.778V55.556h8.333A2.77 2.77 0 0 0 100 52.778V30.556a2.764 2.764 0 0 0-2.778-2.778ZM38.89 61.11H27.778V44.444h11.11v16.667Zm33.333 0h-11.11V44.444h11.11v16.667Z"
-      fill="url(#demo_a)"
-      fillRule="nonzero"
-    />
-  </svg>
-);
+const IconDEMO = () => {
+  const id = makeID(18);
+  return (
+    <svg
+      className="icon-denom"
+      viewBox="0 0 100 100"
+      xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient
+          x1="50%"
+          y1="0%"
+          x2="50%"
+          y2="100%"
+          id={`demo_${id}`}>
+          <stop stopColor="#FDFC47" offset="0%" />
+          <stop stopColor="#24FE41" offset="100%" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M97.222 27.778h-5.555c-1.541 0-2.778 1.237-2.778 2.621v13.89h-5.556V36.11a2.77 2.77 0 0 0-2.777-2.778h-8.334v-11.11h8.334a2.766 2.766 0 0 0 2.777-2.779V13.89a2.766 2.766 0 0 0-2.777-2.778H75a2.766 2.766 0 0 0-2.778 2.778v2.778H63.89a2.77 2.77 0 0 0-2.778 2.777v8.334H38.89v-8.334a2.77 2.77 0 0 0-2.778-2.777h-8.333v-2.778A2.766 2.766 0 0 0 25 11.11h-5.556a2.766 2.766 0 0 0-2.777 2.778v5.555a2.766 2.766 0 0 0 2.777 2.778h8.334v11.111h-8.334a2.77 2.77 0 0 0-2.777 2.778v8.333H11.11V30.556c0-1.541-1.237-2.622-2.778-2.622H2.778C1.237 27.934 0 29.171 0 30.556v22.222a2.77 2.77 0 0 0 2.778 2.778h8.333v13.888a2.77 2.77 0 0 0 2.778 2.778h8.333v13.89A2.77 2.77 0 0 0 25 88.888h16.667c1.54 0 2.777-1.237 2.777-2.622v-5.399a2.77 2.77 0 0 0-2.777-2.778h-8.334v-5.555h33.334v5.555h-8.334a2.77 2.77 0 0 0-2.777 2.778v5.4c0 1.54 1.237 2.62 2.777 2.62H75a2.77 2.77 0 0 0 2.778-2.777V72.222h8.333a2.77 2.77 0 0 0 2.778-2.778V55.556h8.333A2.77 2.77 0 0 0 100 52.778V30.556a2.764 2.764 0 0 0-2.778-2.778ZM38.89 61.11H27.778V44.444h11.11v16.667Zm33.333 0h-11.11V44.444h11.11v16.667Z"
+        fill={`url(#demo_${id})`}
+        fillRule="nonzero"
+      />
+    </svg>
+  );
+};
 
 const IconEVMOS = () => (
   <svg
@@ -1309,21 +1332,6 @@ const IconAUSD = () => (
     />
   </svg>
 );
-
-const makeID = (length: number) => {
-  let result = "";
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  const charactersLength = characters.length;
-  let counter = 0;
-  while (counter < length) {
-    result += characters.charAt(
-      Math.floor(Math.random() * charactersLength)
-    );
-    counter += 1;
-  }
-  return result;
-};
 
 const IconLocal = () => {
   const id = makeID(18);
