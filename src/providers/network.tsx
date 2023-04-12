@@ -153,11 +153,14 @@ const NoConnection: FC<{
   setNetwork(n: NETWORK): void;
 }> = ({ network, setNetwork }) => {
   return (
-    <div>
-      <span>No Connection</span>
+    <div className="px-2 py-10 md-flex ai-c jc-c dir-c wrap">
+      <h1 className="fs-18">
+        Oh dear, you seem to be on an unsupported network.
+      </h1>
+      <h2 className="fs-16">Lets sort this right out...</h2>
       {network !== MAINNET && (
         <button
-          className="md-btn"
+          className="md-button mt-2"
           onClick={() => setNetwork(MAINNET)}>
           Switch to Mainnet
         </button>
