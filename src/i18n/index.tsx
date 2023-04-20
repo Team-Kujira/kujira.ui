@@ -1,4 +1,5 @@
 import { createElement, PropsWithChildren } from "react";
+import ar from "../../i18n/translations/ar-AE.json";
 import de from "../../i18n/translations/de-DE.json";
 import es from "../../i18n/translations/es-ES.json";
 import it from "../../i18n/translations/it-IT.json";
@@ -43,6 +44,24 @@ const translations = (language: string): Record<string, string> => {
     case "ru":
     case "ru-RU":
       return ru;
+    case "ar":
+    case "ar-AE":
+    case "ar-BH":
+    case "ar-DZ":
+    case "ar-EG":
+    case "ar-IQ":
+    case "ar-JO":
+    case "ar-KW":
+    case "ar-LB":
+    case "ar-LY":
+    case "ar-MA":
+    case "ar-OM":
+    case "ar-QA":
+    case "ar-SA":
+    case "ar-SY":
+    case "ar-TN":
+    case "ar-YE":
+      return ar;
     default:
       return template;
   }
