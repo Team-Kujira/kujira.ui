@@ -1,10 +1,10 @@
 import { createElement, PropsWithChildren } from "react";
-import de from "./languages/de-DE.json";
-import es from "./languages/es-ES.json";
-import it from "./languages/it-IT.json";
-import ru from "./languages/ru-RU.json";
-import template from "./languages/template.json";
-import tr from "./languages/tr-TR.json";
+import de from "../../i18n/translations/de-DE.json";
+import es from "../../i18n/translations/es-ES.json";
+import it from "../../i18n/translations/it-IT.json";
+import ru from "../../i18n/translations/ru-RU.json";
+import template from "../../i18n/translations/template.json";
+import tr from "../../i18n/translations/tr-TR.json";
 
 const replace = (string: string, replacements: string[]): string => {
   const r = replacements.pop();
