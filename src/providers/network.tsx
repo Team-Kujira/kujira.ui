@@ -55,12 +55,27 @@ const toClient = (
   setLatencies?: Dispatch<SetStateAction<Record<string, number>>>
 ): Promise<[Tendermint34Client, string]> => {
   const start = new Date().getTime();
+
   return Tendermint34Client.create(
     new HttpBatchClient(endpoint, {
       dispatchInterval: 100,
       batchSizeLimit: 200,
     })
-  ).then((c) => {
+  ).then(async (c) => {
+    const status = await c.status();
+
+    if (
+      new Date().getTime() -
+        status.syncInfo.latestBlockTime.getTime() >
+      5000
+    ) {
+      throw new Error(
+        `Lagging client ${
+          status.nodeInfo.moniker
+        }@${status.syncInfo.latestBlockTime.toISOString()}`
+      );
+    }
+
     setLatencies &&
       setLatencies((prev) => ({
         ...prev,
