@@ -67,7 +67,7 @@ const toClient = (
     if (
       new Date().getTime() -
         status.syncInfo.latestBlockTime.getTime() >
-      15000
+      30000
     ) {
       throw new Error(
         `Lagging client ${
