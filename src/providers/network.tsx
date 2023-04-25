@@ -62,19 +62,19 @@ const toClient = (
       batchSizeLimit: 200,
     })
   ).then(async (c) => {
-    const status = await c.status();
+    await c.status();
 
-    if (
-      new Date().getTime() -
-        status.syncInfo.latestBlockTime.getTime() >
-      60000
-    ) {
-      throw new Error(
-        `Lagging client ${
-          status.nodeInfo.moniker
-        }@${status.syncInfo.latestBlockTime.toISOString()}`
-      );
-    }
+    // if (
+    //   new Date().getTime() -
+    //     status.syncInfo.latestBlockTime.getTime() >
+    //   60000
+    // ) {
+    //   throw new Error(
+    //     `Lagging client ${
+    //       status.nodeInfo.moniker
+    //     }@${status.syncInfo.latestBlockTime.toISOString()}`
+    //   );
+    // }
 
     setLatencies &&
       setLatencies((prev) => ({
