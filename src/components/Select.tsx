@@ -10,7 +10,7 @@ type OptionType<T> = {
 
 export type SelectProps<T> = {
   options: OptionType<T>[];
-  selected: OptionType<T>;
+  selected?: OptionType<T>;
   onChange?: (e: any) => void;
   dark?: boolean;
   className?: string;
@@ -18,6 +18,7 @@ export type SelectProps<T> = {
   onCustomChange?: (e: any) => void;
   disabled?: boolean;
   suffix?: (t: OptionType<T>) => ReactElement;
+  placeholder?: string;
 };
 
 export function Select<T>({
@@ -30,6 +31,7 @@ export function Select<T>({
   onCustomChange,
   disabled,
   suffix,
+  placeholder,
 }: SelectProps<T>) {
   const node = useRef<HTMLDivElement>(null);
   const drop = useRef<HTMLUListElement>(null);
@@ -92,7 +94,7 @@ export function Select<T>({
 
   const handleChange = (e: T) => {
     setCustom("");
-    if (onChange && e !== selected.value) onChange(e);
+    if (selected && onChange && e !== selected.value) onChange(e);
   };
 
   return (
@@ -120,11 +122,13 @@ export function Select<T>({
             }
           }}
         />
-      ) : (
+      ) : selected ? (
         <>
           {selected.status && <b className={selected.status} />}
           {selected.label}
         </>
+      ) : (
+        <span className="color-grey">{placeholder}</span>
       )}
       {!disabled && (
         <>
@@ -138,7 +142,11 @@ export function Select<T>({
             <li
               onClick={() => handleChange(m.value)}
               key={m.label}
-              className={m.value === selected.value ? "current" : ""}>
+              className={
+                selected && m.value === selected.value
+                  ? "current"
+                  : ""
+              }>
               {m.status && <b className={m.status} />}
               <span>{m.label}</span>
               {suffix && suffix(m)}
