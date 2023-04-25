@@ -94,7 +94,7 @@ export function Select<T>({
 
   const handleChange = (e: T) => {
     setCustom("");
-    if (selected && onChange && e !== selected.value) onChange(e);
+    if (onChange && e !== selected?.value) onChange(e);
   };
 
   return (
