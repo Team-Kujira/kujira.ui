@@ -25,7 +25,7 @@
     "@walletconnect/web3wallet": "^1.6.0",
     "clsx": "^1.2.1",
     "ethers": "^5.7.2",
-    "kujira.js": "https://github.com/Team-Kujira/kujira.js#024af6ccaa15da106f99e135b13b1a0ebae94cf5",
+    "kujira.js": "https://github.com/Team-Kujira/kujira.js#8e11b236cc9285fa11f6d23b39d25730947b9d6b",
     "phoenix": "^1.6.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
