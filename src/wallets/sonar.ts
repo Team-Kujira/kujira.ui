@@ -3,94 +3,116 @@ import {
   Algo,
   EncodeObject,
 } from "@cosmjs/proto-signing";
-import { DeliverTxResponse } from "@cosmjs/stargate";
-import WalletConnect from "@walletconnect/client";
-import { getClientMeta } from "@walletconnect/utils";
-import { Denom, MAINNET, registry } from "kujira.js";
+import {
+  assertIsDeliverTxSuccess,
+  DeliverTxResponse,
+  StargateClient,
+} from "@cosmjs/stargate";
+import Client, { SignClient } from "@walletconnect/sign-client";
+import { SessionTypes } from "@walletconnect/types";
+import { MAINNET, registry } from "kujira.js";
 
+const requiredNamespaces = {
+  cosmos: {
+    chains: ["cosmos:kaiyo-1"],
+    methods: [],
+    events: [],
+  },
+};
+
+// https://docs.walletconnect.com/2.0/javascript/sign/dapp-usage
 export class Sonar {
-  private constructor(
-    private connector: WalletConnect,
-    public account: AccountData
-  ) {}
+  public account: AccountData;
 
-  static connect = (
+  private constructor(
+    private connector: Client,
+    public session: SessionTypes.Struct
+  ) {
+    const [account] = session.namespaces["cosmos"].accounts.map(
+      (address) => ({
+        address: address.split(":")[2],
+        pubkey: new Uint8Array(),
+        algo: "secp256k1" as Algo,
+      })
+    );
+
+    this.account = account;
+  }
+
+  static connect = async (
     network: string = MAINNET,
     options: { request: (uri: string) => void; auto: boolean }
   ): Promise<Sonar> => {
-    const connector = new WalletConnect({
-      bridge: "https://bridge.walletconnect.org",
-      storageId: "kujirawalletconnect",
-      qrcodeModal: {
-        open(uri: string, cb: any) {
-          options.request(uri);
+    const signClient = await SignClient.init({
+      projectId: "fbda64846118d1a3487a4bfe3a6b00ac",
+    });
+
+    const lastSession = signClient
+      .find({
+        requiredNamespaces,
+      })
+      .at(-1);
+
+    if (lastSession) return new Sonar(signClient, lastSession);
+
+    const { uri, approval } = await signClient.connect({
+      requiredNamespaces,
+      optionalNamespaces: {
+        cosmos: {
+          chains: [],
+          methods: ["cosmos_signDirect", "cosmos_signAmino"],
+          events: [],
         },
-        close: () => {},
       },
     });
 
-    return new Promise((resolve, reject) => {
-      if (connector.session.connected) {
-        const [account] = connector.session.accounts.map(
-          (address) => ({
-            address,
-            pubkey: new Uint8Array(),
-            algo: "secp256k1" as Algo,
-          })
-        );
-        resolve(new Sonar(connector, account));
-      }
+    uri && options.request(uri);
 
-      // Only create a new session from an explicit action
-      if (!connector.connected && !options.auto) {
-        // create new session
-        connector.createSession();
-      }
+    const session = await approval();
 
-      connector.on("connect", (error, payload) => {
-        if (error) throw error;
-
-        const [account] = connector.session.accounts.map(
-          (address) => ({
-            address,
-            pubkey: new Uint8Array(),
-            algo: "secp256k1" as Algo,
-          })
-        );
-        resolve(new Sonar(connector, account));
-      });
-
-      connector.on("session_update", (error, payload) => {
-        if (error) reject(error);
-      });
-    });
+    return new Sonar(signClient, session);
   };
 
   public onChange = (fn: (k: Sonar | null) => void) => {
-    this.connector.on("disconnect", (error, payload) => {
-      if (error) throw error;
-      fn(null);
-    });
+    // this.connector.on("disconnect", (error, payload) => {
+    //   if (error) throw error;
+    //   fn(null);
+    // });
   };
 
   public disconnect = () => {
-    this.connector.killSession();
+    this.connector.disconnect({
+      topic: this.session.topic,
+      reason: { code: 1, message: "USER_CLOSED" },
+    });
   };
 
   signAndBroadcast = async (
     rpc: string,
     msgs: EncodeObject[],
-    gas: Denom,
+    feeDenom: string,
     memo?: string
   ): Promise<DeliverTxResponse> => {
-    const x = await this.connector.sendCustomRequest({
-      id: 0,
-      jsonrpc: "2.0",
-      method: "sign_tx",
-      params: [
-        {
-          clientMeta: getClientMeta(),
-          gas: gas.reference,
+    console.log(feeDenom);
+
+    console.log({
+      feeDenom,
+      memo,
+      msgs: msgs
+        .map((m) => registry.encodeAsAny(m))
+        .map((x) => ({
+          ...x,
+          value: Buffer.from(x.value).toString("base64"),
+        })),
+    });
+
+    const bytes = await this.connector.request<string>({
+      topic: this.session.topic,
+      chainId: "cosmos:kaiyo-1",
+      request: {
+        method: this.session.namespaces["cosmos"].methods[0],
+        params: {
+          feeDenom,
           memo,
           msgs: msgs
             .map((m) => registry.encodeAsAny(m))
@@ -99,9 +121,15 @@ export class Sonar {
               value: Buffer.from(x.value).toString("base64"),
             })),
         },
-      ],
+      },
     });
 
-    return x;
+    const client = await StargateClient.connect(rpc);
+    const res = await client.broadcastTx(
+      Buffer.from(bytes, "base64")
+    );
+    assertIsDeliverTxSuccess(res);
+
+    return res;
   };
 }
