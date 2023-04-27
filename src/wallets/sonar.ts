@@ -93,19 +93,6 @@ export class Sonar {
     feeDenom: string,
     memo?: string
   ): Promise<DeliverTxResponse> => {
-    console.log(feeDenom);
-
-    console.log({
-      feeDenom,
-      memo,
-      msgs: msgs
-        .map((m) => registry.encodeAsAny(m))
-        .map((x) => ({
-          ...x,
-          value: Buffer.from(x.value).toString("base64"),
-        })),
-    });
-
     const bytes = await this.connector.request<string>({
       topic: this.session.topic,
       chainId: "cosmos:kaiyo-1",
