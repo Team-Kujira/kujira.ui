@@ -74,10 +74,9 @@ export class Sonar {
   };
 
   public onChange = (fn: (k: Sonar | null) => void) => {
-    // this.connector.on("disconnect", (error, payload) => {
-    //   if (error) throw error;
-    //   fn(null);
-    // });
+    this.connector.on("session_delete", () => {
+      fn(null);
+    });
   };
 
   public disconnect = () => {
