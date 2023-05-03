@@ -1,6 +1,9 @@
 export function IconUST() {
   return (
-    <svg viewBox="0 0 170 171" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      className="icon-denom"
+      viewBox="0 0 170 171"
+      xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient
           x1="7.942%"
