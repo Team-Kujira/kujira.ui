@@ -255,6 +255,16 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
           alt="FURY"
         />
       );
+
+    case "rac":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmorama/wynd-assets-list/main/images/RAC.png"
+          alt="FURY"
+        />
+      );
+
     case "cmdx":
       return (
         <img
