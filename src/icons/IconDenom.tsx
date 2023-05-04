@@ -20,10 +20,12 @@ import { IconBLUNA } from "./IconBLUNA";
 import { IconWBNB } from "./IconBNB";
 import { IconBSolana } from "./IconBSolana";
 import { IconCNTO } from "./IconCNTO";
+import { IconFIS } from "./IconFIS";
 import { IconFRNZ } from "./IconFRNZ";
 import { IconLink } from "./IconLink";
 import { IconLunc } from "./IconLunc";
 import { IconPAXG } from "./IconPAXG";
+import { IconRATOM } from "./IconRATOM";
 import { IconSAvax } from "./IconSAvax";
 import { IconSTATOM } from "./IconSTATOM";
 import { IconSTJUNO } from "./IconSTJUNO";
@@ -202,6 +204,10 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
     case "gpaxg":
     case "paxg":
       return <IconPAXG />;
+    case "ratom":
+      return <IconRATOM />;
+    case "fis":
+      return <IconFIS />;
     case "link":
       return <IconLink />;
     case "cnto":
