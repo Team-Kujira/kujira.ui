@@ -362,7 +362,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return (
         <img
           className="icon-denom"
-          src="https://etherscan.io/token/images/pepe_32.png"
+          src="https://s2.coinmarketcap.com/static/img/coins/128x128/24478.png"
           alt="PEPE"
         />
       );
