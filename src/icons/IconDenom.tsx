@@ -358,6 +358,14 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
           alt="USDT"
         />
       );
+    case "pepe":
+      return (
+        <img
+          className="icon-denom"
+          src="https://etherscan.io/token/images/pepe_32.png"
+          alt="PEPE"
+        />
+      );
     case "wbtc":
     case "gwbtc":
       return (
