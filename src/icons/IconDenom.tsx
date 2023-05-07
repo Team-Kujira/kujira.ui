@@ -237,6 +237,33 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
           alt="INJ"
         />
       );
+    case "akt":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/akash/images/akt.svg"
+          alt="INJ"
+        />
+      );
+
+    case "fet":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/fetchhub/images/fet.svg"
+          alt="INJ"
+        />
+      );
+
+    case "wglmr":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/_non-cosmos/moonbeam/images/glmr.png"
+          alt="INJ"
+        />
+      );
+
     case "ampluna":
       return (
         <img
