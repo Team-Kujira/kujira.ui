@@ -237,21 +237,103 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
           alt="INJ"
         />
       );
+
+    case "stinj":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/stride/images/stinj.svg"
+          alt="stINJ"
+        />
+      );
+
+    case "acre":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/acrechain/images/acre.svg"
+          alt="ACRE"
+        />
+      );
+
     case "akt":
       return (
         <img
           className="icon-denom"
           src="https://raw.githubusercontent.com/cosmos/chain-registry/master/akash/images/akt.svg"
-          alt="INJ"
+          alt="AKT"
         />
       );
 
-    case "fet":
+    case "dvpn":
       return (
         <img
           className="icon-denom"
-          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/fetchhub/images/fet.svg"
-          alt="INJ"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/sentinel/images/dvpn.svg"
+          alt="CRE"
+        />
+      );
+
+    case "cre":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/crescent/images/cre.svg"
+          alt="DVPN"
+        />
+      );
+
+    case "cre":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/crescent/images/cre.svg"
+          alt="DVPN"
+        />
+      );
+
+    case "mntl":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/assetmantle/images/mntl.svg"
+          alt="MNTL"
+        />
+      );
+
+    case "flix":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/omniflixhub/images/flix.svg"
+          alt="FLIX"
+        />
+      );
+
+    case "regen":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/regen/images/regen.svg"
+          alt="REGEN"
+        />
+      );
+
+    case "somm":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/sommelier/images/somm.svg"
+          alt="SOMM"
+        />
+      );
+
+    case "plq":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/planq/images/planq.svg"
+          alt="PLQ"
         />
       );
 
@@ -260,7 +342,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
         <img
           className="icon-denom"
           src="https://raw.githubusercontent.com/cosmos/chain-registry/master/_non-cosmos/moonbeam/images/glmr.png"
-          alt="INJ"
+          alt="wGMLR"
         />
       );
 
