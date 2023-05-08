@@ -4,6 +4,7 @@ export * from "./IconAngleRight";
 export * from "./IconAngleUp";
 export * from "./IconArrow";
 export * from "./IconArrowLeft";
+export * from "./IconArrowRight";
 export * from "./IconAstroport";
 export * from "./IconAtom";
 export * from "./IconAUST";
