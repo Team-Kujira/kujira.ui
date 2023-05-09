@@ -279,16 +279,34 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
         <img
           className="icon-denom"
           src="https://raw.githubusercontent.com/cosmos/chain-registry/master/crescent/images/cre.svg"
+          alt="CRE"
+        />
+      );
+
+    case "dvpn":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/sentinel/images/dvpn.svg"
           alt="DVPN"
         />
       );
 
-    case "cre":
+    case "fet":
       return (
         <img
           className="icon-denom"
-          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/crescent/images/cre.svg"
-          alt="DVPN"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/fetchhub/images/fet.svg"
+          alt="FET"
+        />
+      );
+
+    case "glto":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/juno/images/glto.svg"
+          alt="GLTO"
         />
       );
 
