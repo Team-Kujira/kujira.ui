@@ -441,6 +441,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
         />
       );
     case "ust":
+    case "ustc":
       return <IconUST />;
     case "vdl":
       return (
