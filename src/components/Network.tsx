@@ -80,7 +80,11 @@ export const Network = () => {
         suffix={(v) => (
           <small className="color-lightGrey ml-q1">
             ({rpcs.find((r) => r.endpoint === v.value)?.latency || 0}
-            ms)
+            ms,{" "}
+            {rpcs
+              .find((r) => r.endpoint === v.value)
+              ?.latestBlockTime.toLocaleString()}
+            )
           </small>
         )}
       />

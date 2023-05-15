@@ -30,7 +30,11 @@ export type NetworkContext = {
   tmClient: Tendermint34Client | null;
   query: KujiraQueryClient | null;
   rpc: string;
-  rpcs: { endpoint: string; latency: number }[];
+  rpcs: {
+    endpoint: string;
+    latency: number;
+    latestBlockTime: Date;
+  }[];
   setRpc: (val: string) => void;
   preferred: string | null;
   unlock: () => void;
@@ -50,39 +54,35 @@ const Context = createContext<NetworkContext>({
   lock: () => {},
 });
 
-const toClient = (
+const toClient = async (
   endpoint: string,
-  setLatencies?: Dispatch<SetStateAction<Record<string, number>>>
+  setLatencies?: Dispatch<
+    SetStateAction<
+      Record<string, { latency: number; latestBlockTime: Date }>
+    >
+  >
 ): Promise<[Tendermint34Client, string]> => {
   const start = new Date().getTime();
 
-  return Tendermint34Client.create(
+  const c = await Tendermint34Client.create(
     new HttpBatchClient(endpoint, {
       dispatchInterval: 100,
       batchSizeLimit: 200,
     })
-  ).then(async (c) => {
-    await c.status();
+  );
+  const status = await c.status();
 
-    // if (
-    //   new Date().getTime() -
-    //     status.syncInfo.latestBlockTime.getTime() >
-    //   60000
-    // ) {
-    //   throw new Error(
-    //     `Lagging client ${
-    //       status.nodeInfo.moniker
-    //     }@${status.syncInfo.latestBlockTime.toISOString()}`
-    //   );
-    // }
-
-    setLatencies &&
-      setLatencies((prev) => ({
-        ...prev,
-        [endpoint]: new Date().getTime() - start,
-      }));
-    return [c, endpoint];
-  });
+  setLatencies &&
+    setLatencies((prev) => ({
+      ...prev,
+      [endpoint]: {
+        latency: new Date().getTime() - start,
+        latestBlockTime: new Date(
+          status.syncInfo.latestBlockTime.toISOString()
+        ),
+      },
+    }));
+  return await [c, endpoint];
 };
 
 export const NetworkContext: React.FC<
@@ -95,9 +95,9 @@ export const NetworkContext: React.FC<
   const [tm, setTmClient] = useState<
     null | [Tendermint34Client, string]
   >();
-  const [latencies, setLatencies] = useState<Record<string, number>>(
-    {}
-  );
+  const [latencies, setLatencies] = useState<
+    Record<string, { latency: number; latestBlockTime: Date }>
+  >({});
 
   const tmClient = tm && tm[0];
 
@@ -156,10 +156,12 @@ export const NetworkContext: React.FC<
             tmClient: tmClient || null,
             query,
             rpc: tm[1],
-            rpcs: RPCS[network as NETWORK].map((endpoint) => ({
-              endpoint,
-              latency: latencies[endpoint] || 9999,
-            })),
+            rpcs: Object.entries(latencies).map(
+              ([endpoint, data]) => ({
+                endpoint,
+                ...data,
+              })
+            ),
             setRpc,
             unlock,
             lock,
@@ -199,7 +201,11 @@ export const useNetwork = (): [
     tmClient: Tendermint34Client | null;
     query: KujiraQueryClient | null;
     rpc: string;
-    rpcs: { endpoint: string; latency: number }[];
+    rpcs: {
+      endpoint: string;
+      latency: number;
+      latestBlockTime: Date;
+    }[];
     setRpc: (val: string) => void;
     preferred: null | string;
     unlock: () => void;
