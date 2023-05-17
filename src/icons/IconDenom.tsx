@@ -268,15 +268,6 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
         />
       );
 
-    case "dvpn":
-      return (
-        <img
-          className="icon-denom"
-          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/sentinel/images/dvpn.svg"
-          alt="CRE"
-        />
-      );
-
     case "cre":
       return (
         <img
