@@ -170,6 +170,7 @@ export function Wallet({
   return (
     <>
       <button
+        id="connect-wallet"
         onClick={() => setShowWalletSelect(!showWalletSelect)}
         className="md-button md-button--grey md-button--nowrap">
         <IconWallet />
