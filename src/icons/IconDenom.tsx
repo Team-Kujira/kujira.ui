@@ -27,6 +27,7 @@ import { IconLunc } from "./IconLunc";
 import { IconPAXG } from "./IconPAXG";
 import { IconRATOM } from "./IconRATOM";
 import { IconSAvax } from "./IconSAvax";
+import { IconSPERM } from "./IconSPERM";
 import { IconSTATOM } from "./IconSTATOM";
 import { IconSTJUNO } from "./IconSTJUNO";
 import { IconSTOSMO } from "./IconSTOSMO";
@@ -226,6 +227,9 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <IconFRNZ />;
     case "hans":
       return <IconHans />;
+    case "sperm":
+      return <IconSPERM />;
+
     case "mnta":
       return <img className="icon-denom" src={mnta} alt="MNTA" />;
     case "wink":
