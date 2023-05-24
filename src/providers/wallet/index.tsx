@@ -236,14 +236,8 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
   const size = useWindowSize();
 
   const sonarRequest = (uri: string) => {
-    if (size?.width && size?.width < 768) {
-      window.location.assign(
-        `kujira://ws?uri=${encodeURIComponent(uri)}`
-      );
-    } else {
-      setLink(uri);
-      setModal(true);
-    }
+    setLink(uri);
+    setModal(true);
   };
 
   const connect = (
@@ -348,12 +342,14 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
         close={() => setModal(false)}
         className="modal--auto">
         <div className="md-flex ai-c">
-          <QRCode
-            value={link}
-            bgColor="#607d8b"
-            fgColor="transparent"
-            className="no-shrink"
-          />
+          <div className="no-shrink bg-darkGrey">
+            <QRCode
+              className="m-1"
+              value={link}
+              bgColor="transparent"
+              fgColor="#607d8b"
+            />
+          </div>
           <div className="ml-2">
             <IconSonar
               style={{
