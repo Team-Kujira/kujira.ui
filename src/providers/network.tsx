@@ -82,7 +82,7 @@ const toClient = async (
         ),
       },
     }));
-  return await [c, endpoint];
+  return [c, endpoint];
 };
 
 export const NetworkContext: React.FC<
