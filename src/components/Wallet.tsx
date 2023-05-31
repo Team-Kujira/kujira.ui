@@ -198,7 +198,7 @@ export function Wallet({
             onClick={() => {
               connect && connect(Adapter.Keplr);
             }}>
-            <img src="https://github.com/chainapsis/keplr-wallet/blob/master/packages/mobile/src/assets/logo/keplr-logo-dark-mode.png?raw=true" />
+            <img src="https://assets.website-files.com/63eb7ddf41cf5b1c8fdfbc74/63edd5d1a40b9a48841ac1d2_Keplr%20Logo.svg" />
           </button>
           <hr className="hr my-2" />
           <button
