@@ -30,10 +30,12 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { IconSonar } from "../../icons";
 import { Keplr, ReadOnly, Sonar, Station } from "../../wallets";
+import { CW3Wallet } from "../../wallets/cw3";
 import { useNetwork } from "../network";
 
 export enum Adapter {
   Sonar = "sonar",
+  CW3 = "cw3",
   Keplr = "keplr",
   Station = "station",
   ReadOnly = "readOnly",
@@ -89,9 +91,10 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
 }) => {
   const [address, setAddress] = useLocalStorage("address", "");
   const [showAddress, setShowAddress] = useState(false);
+  const [showCW3, setShowCW3] = useState(false);
   const [stored, setStored] = useLocalStorage("wallet", "");
   const [wallet, setWallet] = useState<
-    Sonar | Keplr | Station | ReadOnly | null
+    Sonar | Keplr | Station | ReadOnly | CW3Wallet | null
   >(null);
   const [feeDenom, setFeeDenom] = useLocalStorage(
     "feeDenom",
@@ -291,6 +294,8 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
         break;
       case Adapter.ReadOnly:
         setShowAddress(true);
+      case Adapter.CW3:
+        setShowCW3(true);
     }
   };
 
@@ -313,6 +318,8 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
       ? Adapter.Station
       : wallet instanceof ReadOnly
       ? Adapter.ReadOnly
+      : wallet instanceof CW3Wallet
+      ? Adapter.CW3
       : null;
 
   return (
@@ -378,6 +385,33 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
           <p className="fs-14 lh-16 color-white mb-2">
             Enter a Kujira address to see a <strong>read only</strong>{" "}
             version of the app, as if connected with this address.
+          </p>
+          <Input
+            placeholder="kujira1..."
+            value={address}
+            onChange={(e) => setAddress(e.currentTarget.value)}
+          />
+        </>
+      </Modal>
+
+      <Modal
+        show={showCW3}
+        close={() => setShowCW3(false)}
+        confirm={() =>
+          wallet &&
+          (wallet instanceof Sonar || wallet instanceof Keplr) &&
+          CW3Wallet.connect(address, wallet).then((w) => {
+            setStored(Adapter.CW3);
+            setWallet(w);
+            setShowCW3(false);
+          })
+        }
+        title="SQUAD Connection">
+        <>
+          <p className="fs-14 lh-16 color-white mb-2">
+            Enter a SQUAD address. You will be able to submit
+            proposals to the SQUAD where normally you would execute
+            those transactions with your own account.
           </p>
           <Input
             placeholder="kujira1..."

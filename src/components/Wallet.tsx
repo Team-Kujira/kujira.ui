@@ -7,6 +7,7 @@ import * as i18n from "../i18n";
 import { IconDenom, IconSonar, IconStation } from "../icons";
 import { IconCopy } from "../icons/IconCopy";
 import { IconKado } from "../icons/IconKado";
+import { IconManta } from "../icons/IconManta";
 import { IconWallet } from "../icons/IconWallet";
 import { IconWarning } from "../icons/IconWarning";
 import { useNetwork } from "../providers/network";
@@ -77,6 +78,7 @@ export function Wallet({
           {a === Adapter.Sonar && <Sonar />}
           {a === Adapter.Station && <Station />}
           {a === Adapter.Keplr && <Keplr />}
+          {a === Adapter.CW3 && <IconManta />}
           {a === Adapter.ReadOnly && <ReadOnly />}
           <span className="desktop color-white">
             {account.address.substr(0, 6)}...
@@ -155,13 +157,33 @@ export function Wallet({
               </span>
             </a>
           </div>
-          <i18n.button
-            className="md-button md-button--grey md-button--outline disconnect"
-            onClick={() => {
-              disconnect();
-            }}>
-            Disconnect Wallet
-          </i18n.button>
+          {a === Adapter.CW3 ? (
+            <i18n.button
+              className="md-button md-button--grey md-button--outline disconnect"
+              onClick={() => {
+                disconnect();
+              }}>
+              Disconnect from SQUAD
+            </i18n.button>
+          ) : (
+            <>
+              <i18n.button
+                className="md-button md-button--grey md-button--outline disconnect"
+                onClick={() => {
+                  disconnect();
+                }}>
+                Disconnect Wallet
+              </i18n.button>
+              {/* <br />
+              <button
+                className="md-button md-button--outline"
+                onClick={() => {
+                  connect && connect(Adapter.CW3);
+                }}>
+                <IconManta />
+              </button> */}
+            </>
+          )}
         </div>
         {showKado && <KadoModal onClose={() => setShowKado(false)} />}
       </>
@@ -186,6 +208,7 @@ export function Wallet({
             }}>
             <IconSonar />
           </button>
+
           <button
             className="transparent block pointer"
             onClick={() => {
