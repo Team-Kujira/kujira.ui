@@ -294,6 +294,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
         break;
       case Adapter.ReadOnly:
         setShowAddress(true);
+        break;
       case Adapter.CW3:
         setShowCW3(true);
     }
@@ -308,6 +309,8 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
     setWallet(null);
     wallet?.disconnect();
   };
+
+  console.log({ showAddress, showCW3 });
 
   const adapter =
     wallet instanceof Keplr
