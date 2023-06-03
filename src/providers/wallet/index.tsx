@@ -310,8 +310,6 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
     wallet?.disconnect();
   };
 
-  console.log({ showAddress, showCW3 });
-
   const adapter =
     wallet instanceof Keplr
       ? Adapter.Keplr
