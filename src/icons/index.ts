@@ -51,6 +51,7 @@ export * from "./IconSort";
 export * from "./IconSortAsc";
 export * from "./IconSortDesc";
 export * from "./IconStation";
+export * from "./IconStationText";
 export * from "./IconSuccess";
 export * from "./IconTrash";
 export * from "./IconUpload";
