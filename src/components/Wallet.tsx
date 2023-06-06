@@ -7,6 +7,8 @@ import * as i18n from "../i18n";
 import { IconDenom, IconSonar, IconStation } from "../icons";
 import { IconCopy } from "../icons/IconCopy";
 import { IconKado } from "../icons/IconKado";
+import { IconKeplr } from "../icons/IconKeplr";
+import { IconLeap } from "../icons/IconLeap";
 import { IconManta } from "../icons/IconManta";
 import { IconWallet } from "../icons/IconWallet";
 import { IconWarning } from "../icons/IconWarning";
@@ -76,6 +78,8 @@ export function Wallet({
         <NetworkWarning />
         <div className="md-button md-button--grey md-button--outline md-button--wallet">
           {a === Adapter.Sonar && <Sonar />}
+          {a === Adapter.Leap && <IconLeap />}
+          {a === Adapter.Xfi && "XDEFI"}
           {a === Adapter.Station && <Station />}
           {a === Adapter.Keplr && <Keplr />}
           {a === Adapter.CW3 && <IconManta />}
@@ -209,6 +213,24 @@ export function Wallet({
             <IconSonar />
           </button>
 
+          <hr className="hr my-2" />
+
+          <button
+            className="transparent block pointer"
+            onClick={() => {
+              connect && connect(Adapter.Keplr);
+            }}>
+            <IconKeplr />
+          </button>
+
+          <button
+            className="transparent block pointer"
+            onClick={() => {
+              connect && connect(Adapter.Leap);
+            }}>
+            <IconLeap />
+          </button>
+
           <button
             className="transparent block pointer"
             onClick={() => {
@@ -219,10 +241,11 @@ export function Wallet({
           <button
             className="transparent block pointer"
             onClick={() => {
-              connect && connect(Adapter.Keplr);
+              connect && connect(Adapter.Xfi);
             }}>
-            <img src="https://assets.website-files.com/63eb7ddf41cf5b1c8fdfbc74/63edd5d1a40b9a48841ac1d2_Keplr%20Logo.svg" />
+            XDEFI
           </button>
+
           <hr className="hr my-2" />
           <button
             className="transparent block pointer color-white fw-600 fs-12 p-2"
@@ -335,3 +358,5 @@ export const ReadOnly = () => (
     />
   </svg>
 );
+
+export const Leap = () => <p>Leap</p>;

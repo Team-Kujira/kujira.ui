@@ -29,7 +29,14 @@ import { Modal } from "../../components/Modal";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { IconSonar } from "../../icons";
-import { Keplr, ReadOnly, Sonar, Station } from "../../wallets";
+import {
+  Keplr,
+  Leap,
+  ReadOnly,
+  Sonar,
+  Station,
+  Xfi,
+} from "../../wallets";
 import { CW3Wallet } from "../../wallets/cw3";
 import { useNetwork } from "../network";
 
@@ -39,6 +46,8 @@ export enum Adapter {
   Keplr = "keplr",
   Station = "station",
   ReadOnly = "readOnly",
+  Leap = "leap",
+  Xfi = "xfi",
 }
 
 export type IWallet = {
@@ -94,7 +103,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
   const [showCW3, setShowCW3] = useState(false);
   const [stored, setStored] = useLocalStorage("wallet", "");
   const [wallet, setWallet] = useState<
-    Sonar | Keplr | Station | ReadOnly | CW3Wallet | null
+    Sonar | Keplr | Station | ReadOnly | CW3Wallet | Leap | Xfi | null
   >(null);
   const [feeDenom, setFeeDenom] = useLocalStorage(
     "feeDenom",
@@ -265,6 +274,30 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
 
         break;
 
+      case Adapter.Leap:
+        Leap.connect({ ...chainInfo, rpc }, { feeDenom })
+          .then((x) => {
+            setStored(adapter);
+            setWallet(x);
+          })
+          .catch((err) => {
+            toast.error(err.message);
+          });
+
+        break;
+
+      case Adapter.Xfi:
+        Xfi.connect({ ...chainInfo, rpc }, { feeDenom })
+          .then((x) => {
+            setStored(adapter);
+            setWallet(x);
+          })
+          .catch((err) => {
+            toast.error(err.message);
+          });
+
+        break;
+
       case Adapter.Sonar:
         Sonar.connect(network, {
           request: sonarRequest,
@@ -313,6 +346,10 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
   const adapter =
     wallet instanceof Keplr
       ? Adapter.Keplr
+      : wallet instanceof Leap
+      ? Adapter.Leap
+      : wallet instanceof Xfi
+      ? Adapter.Xfi
       : wallet instanceof Sonar
       ? Adapter.Sonar
       : wallet instanceof Station
