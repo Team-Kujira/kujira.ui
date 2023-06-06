@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import ReactTooltip from "react-tooltip";
 import * as i18n from "../i18n";
-import { IconDenom, IconSonar, IconStation } from "../icons";
+import {
+  IconDenom,
+  IconSonar,
+  IconStation,
+  IconXDefi,
+} from "../icons";
 import { IconCopy } from "../icons/IconCopy";
 import { IconKado } from "../icons/IconKado";
 import { IconKeplr } from "../icons/IconKeplr";
@@ -78,8 +83,8 @@ export function Wallet({
         <NetworkWarning />
         <div className="md-button md-button--grey md-button--outline md-button--wallet">
           {a === Adapter.Sonar && <Sonar />}
-          {a === Adapter.Leap && <IconLeap />}
-          {a === Adapter.Xfi && "XDEFI"}
+          {a === Adapter.Leap && <Leap />}
+          {a === Adapter.Xfi && <XDefi />}
           {a === Adapter.Station && <Station />}
           {a === Adapter.Keplr && <Keplr />}
           {a === Adapter.CW3 && <IconManta />}
@@ -204,51 +209,52 @@ export function Wallet({
       </button>
       {/* <NetworkSelect onChange={(n) => connect && connect(n)} /> */}
       {showWalletSelect && (
-        <div className="wallet__connections">
+        <div className="wallet__connections ai-c">
           <button
-            className="transparent block pointer"
+            className="transparent block pointer sonar"
             onClick={() => {
               connect && connect(Adapter.Sonar);
             }}>
             <IconSonar />
           </button>
 
-          <hr className="hr my-2" />
+          <hr className="hr my-q3" />
+          <div className="md-flex w-full ai-c jc-c wrap">
+            <button
+              className="transparent block pointer"
+              onClick={() => {
+                connect && connect(Adapter.Keplr);
+              }}>
+              <IconKeplr />
+            </button>
 
-          <button
-            className="transparent block pointer"
-            onClick={() => {
-              connect && connect(Adapter.Keplr);
-            }}>
-            <IconKeplr />
-          </button>
+            <button
+              className="transparent block pointer"
+              onClick={() => {
+                connect && connect(Adapter.Leap);
+              }}>
+              <IconLeap />
+            </button>
 
-          <button
-            className="transparent block pointer"
-            onClick={() => {
-              connect && connect(Adapter.Leap);
-            }}>
-            <IconLeap />
-          </button>
+            <button
+              className="transparent block pointer"
+              onClick={() => {
+                connect && connect(Adapter.Station);
+              }}>
+              <IconStation />
+            </button>
+            <button
+              className="transparent block pointer"
+              onClick={() => {
+                connect && connect(Adapter.Xfi);
+              }}>
+              <IconXDefi />
+            </button>
+          </div>
 
+          <hr className="hr my-q3" />
           <button
-            className="transparent block pointer"
-            onClick={() => {
-              connect && connect(Adapter.Station);
-            }}>
-            <IconStation />
-          </button>
-          <button
-            className="transparent block pointer"
-            onClick={() => {
-              connect && connect(Adapter.Xfi);
-            }}>
-            XDEFI
-          </button>
-
-          <hr className="hr my-2" />
-          <button
-            className="transparent block pointer color-white fw-600 fs-12 p-2"
+            className="transparent block pointer color-grey fw-600 fs-12 p-2 text-center mt-1"
             onClick={() => {
               connect && connect(Adapter.ReadOnly);
             }}>
@@ -350,6 +356,14 @@ export const Station = () => (
   </svg>
 );
 
+export const Leap = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 805 877.708">
+    <g fill="#60FBD0" fillRule="nonzero">
+      <path d="M575.435 0c58.54 0 106.078 48.513 106.078 108.252 0 19.646-5.107 37.888-13.947 53.725 8.447 18.443 12.965 38.09 12.965 58.536 0 12.576-1.733 24.866-5.041 36.758 6.391 7.924 12.028 16.166 16.85 24.68l.679 1.212 1.124-1.038A256.572 256.572 0 0 1 724.1 258.48c127.883-86.2 26.716 210.49 26.716 210.49l26.519 17.241c8.84 5.813 5.108 20.848-4.911 20.848H622.343c-10.629 0-19.292-8.883-20.885-20.108-52.11 19.186-118.806 27.904-191.667 27.904-70.215 0-135.049-8.096-186.682-25.851-2.55 10.236-11.759 18.055-22.821 18.055H34.295c-11.198 0-15.323-15.035-5.5-20.848l29.27-17.24-.293-.784C51.574 451.513-49.664 174.865 87.53 258.48c12.845 7.826 24.49 16.278 35.047 25.18l1.163.985.647-1.183c5.243-9.499 11.496-18.664 18.67-27.435a136.55 136.55 0 0 1-4.704-35.514c0-20.447 4.518-40.093 12.965-58.536-8.839-15.837-13.947-34.079-13.947-53.725C137.371 48.513 184.91 0 243.449 0c32.806 0 62.272 15.436 81.916 39.492 26.52-6.214 54.808-9.422 84.077-9.422 29.27 0 57.558 3.408 84.077 9.422C512.967 15.436 542.433 0 575.435 0ZM234.9 36.166c-35.802 0-64.826 29.618-64.826 66.154s29.024 66.154 64.826 66.154c35.802 0 64.825-29.618 64.825-66.154S270.702 36.166 234.9 36.166Zm345.898 0c-35.802 0-64.825 29.618-64.825 66.154s29.023 66.154 64.825 66.154c35.802 0 64.826-29.618 64.826-66.154S616.6 36.166 580.798 36.166ZM235.017 89.94c6.509 0 11.786 5.385 11.786 12.028 0 6.643-5.277 12.028-11.786 12.028-6.51 0-11.787-5.385-11.787-12.028 0-6.643 5.277-12.028 11.787-12.028Zm345.572 0c6.51 0 11.787 5.385 11.787 12.028 0 6.643-5.277 12.028-11.787 12.028-6.509 0-11.786-5.385-11.786-12.028 0-6.643 5.277-12.028 11.786-12.028ZM0 567.708h805v310H0z" />
+    </g>
+  </svg>
+);
+
 export const ReadOnly = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
     <path
@@ -359,4 +373,14 @@ export const ReadOnly = () => (
   </svg>
 );
 
-export const Leap = () => <p>Leap</p>;
+export const XDefi = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 590.031 594.223">
+    <g fill="#60FBD0" fillRule="nonzero">
+      <path d="M353.8 333.56c-45.642 28.112-106.734 42.59-168.606 39.497-52.021-2.53-94.686-21.083-120.484-51.584-22.679-27.268-31.467-63.25-25.514-104.644a135.018 135.018 0 0 1 12.261-39.637l.85-1.757c21.414-40.88 53.193-75.527 92.209-100.53 39.017-25.004 83.927-39.502 130.31-42.07 46.384-2.566 92.641 6.888 134.222 27.43 41.58 20.544 77.049 51.47 102.916 89.733 25.868 38.264 41.242 82.547 44.61 128.492 3.368 45.944-5.386 91.966-25.401 133.537-20.015 41.57-50.601 77.258-88.748 103.548-38.147 26.29-82.54 42.278-128.81 46.39l2.835 32.258c51.95-4.59 101.797-22.518 144.633-52.022 42.836-29.504 77.181-69.565 99.653-116.236 22.471-46.671 32.294-98.342 28.5-149.923-3.794-51.58-21.074-101.291-50.137-144.235-29.063-42.944-68.907-77.64-115.607-100.667C376.792 8.112 324.848-2.455 272.777.48c-52.071 2.935-102.473 19.27-146.24 47.398-43.767 28.128-79.39 67.077-103.358 113.009l-1.134 2.32A166.663 166.663 0 0 0 6.878 212.4c-7.087 50.46 3.898 95.368 32.601 129.945 31.397 37.809 82.496 60.298 143.801 63.25 74.629 3.725 148.833-16.445 201.491-53.552L353.8 333.56Z" />
+      <path d="M416.235 370.244c-29.695 25.58-98.725 71.965-213.256 78.29-128.208 7.027-181.646-34.296-182.142-34.718l-10.348 12.65 10.419-12.44L0 438.907c2.268 1.897 53.509 42.939 173.851 42.939 9.851 0 20.199 0 30.971-.843 138.415-7.66 214.461-67.537 240.967-93.118l-29.554-17.64Z" />
+      <path d="M471.806 403.7a238.273 238.273 0 0 1-63.786 57.629c-86.748 55.52-197.096 62.688-274.348 58.823l-1.63 32.398c12.97.633 25.444.914 37.563.914 217.862 0 305.886-98.39 330.479-133.53l-28.349-16.514M463.511 281.032c14.442 0 26.15-11.61 26.15-25.93 0-14.321-11.708-25.931-26.15-25.931-14.442 0-26.15 11.61-26.15 25.93 0 14.322 11.708 25.93 26.15 25.93Z" />
+    </g>
+  </svg>
+);

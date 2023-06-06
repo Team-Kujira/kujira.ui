@@ -58,3 +58,4 @@ export * from "./IconUSK";
 export * from "./IconUST";
 export * from "./IconWallet";
 export * from "./IconWarning";
+export * from "./IconXDefi";
