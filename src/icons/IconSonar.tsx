@@ -1,7 +1,14 @@
-export const IconSonar = ({ style }: { style?: object }) => (
+export const IconSonar = ({
+  style,
+  className,
+}: {
+  style?: object;
+  className?: string;
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 467 141"
+    viewBox="0 0 468 141"
+    className={className}
     style={style}>
     <g fill="none" fillRule="nonzero">
       <path
