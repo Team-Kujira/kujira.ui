@@ -23,7 +23,7 @@ import {
   useState,
 } from "react";
 import { toast } from "react-hot-toast";
-import QRCode from "react-qr-code";
+//import QRCode from "react-qr-code";
 import { QR } from "react-qr-rounded";
 import Input from "../../components/Input";
 import { Modal } from "../../components/Modal";
@@ -398,7 +398,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
             /> */}
             <QR
               height={256}
-              color="#607d8b"
+              color="#ffffff"
               backgroundColor="transparent"
               rounding={150}
               cutout
