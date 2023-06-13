@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast";
 import ReactTooltip from "react-tooltip";
 import * as i18n from "../i18n";
 import {
+  IconAngleRight,
   IconDenom,
   IconSonar,
   IconStation,
@@ -80,6 +81,20 @@ export function Wallet({
   if (account) {
     return (
       <>
+        {a !== Adapter.Sonar && (
+          <a
+            className="wallet__sonar"
+            onClick={() => {
+              disconnect();
+              connect && connect(Adapter.Sonar);
+            }}
+            /* href="https://sonar.kujira.app"
+            target="_blank" */
+          >
+            Switch to <strong>Sonar</strong> by Kujira
+            <IconAngleRight />
+          </a>
+        )}
         <NetworkWarning />
         <div className="md-button md-button--grey md-button--outline md-button--wallet">
           {a === Adapter.Sonar && <Sonar />}

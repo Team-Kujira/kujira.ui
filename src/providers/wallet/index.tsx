@@ -24,11 +24,12 @@ import {
 } from "react";
 import { toast } from "react-hot-toast";
 import QRCode from "react-qr-code";
+import { QR } from "react-qr-rounded";
 import Input from "../../components/Input";
 import { Modal } from "../../components/Modal";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useWindowSize } from "../../hooks/useWindowSize";
-import { IconSonar } from "../../icons";
+import { IconAngleRight, IconSonar } from "../../icons";
 import {
   Keplr,
   Leap,
@@ -39,6 +40,7 @@ import {
 } from "../../wallets";
 import { CW3Wallet } from "../../wallets/cw3";
 import { useNetwork } from "../network";
+import Logo from "./../../assets/sonar.png";
 
 export enum Adapter {
   Sonar = "sonar",
@@ -388,14 +390,33 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
         className="modal--auto">
         <div className="md-flex ai-c">
           <div className="no-shrink bg-darkGrey">
-            <QRCode
+            {/* <QRCode
               className="m-1"
               value={link}
               bgColor="transparent"
               fgColor="#607d8b"
-            />
+            /> */}
+            <QR
+              height={256}
+              color="#607d8b"
+              backgroundColor="transparent"
+              rounding={150}
+              cutout
+              cutoutElement={
+                <img
+                  src={Logo}
+                  style={{
+                    objectFit: "contain",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
+              }
+              errorCorrectionLevel="M">
+              {link}
+            </QR>
           </div>
-          <div className="ml-2">
+          <div className="ml-3">
             <IconSonar
               style={{
                 display: "block",
@@ -404,6 +425,13 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
               }}
             />
             <h3>Scan this code using the Sonar Mobile App.</h3>
+            <a
+              href="https://sonar.kujira.app"
+              target="_blank"
+              className="md-button mt-2 md-button--icon-right">
+              Download Sonar
+              <IconAngleRight />
+            </a>
           </div>
         </div>
       </Modal>

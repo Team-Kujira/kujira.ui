@@ -32,6 +32,7 @@
     "react-hot-toast": "^2.1.1",
     "react-is": "^18.2.0",
     "react-qr-code": "^2.0.8",
+    "react-qr-rounded": "^1.0.0",
     "react-tooltip": "^4.2.21",
     "typescript": "^4.7.4"
   },
