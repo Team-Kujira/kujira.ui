@@ -31,7 +31,7 @@ export const Network = () => {
         setBlock({ height: body.height });
       }
     );
-    return blockChannel?.off();
+    return blockChannel?.off("new_block");
   }, [blockChannel]);
 
   useEffect(() => {
