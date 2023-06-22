@@ -2,6 +2,7 @@ import { LOCALNET, MAINNET, NETWORK, TESTNET } from "kujira.js";
 import { Channel, Socket } from "phoenix";
 import {
   createContext,
+  PropsWithChildren,
   useContext,
   useEffect,
   useState,
@@ -17,10 +18,9 @@ const Context = createContext<{
   addChannel: () => {},
 });
 
-export const RealtimeContext: React.FC<{ network: NETWORK }> = ({
-  children,
-  network,
-}) => {
+export const RealtimeContext: React.FC<
+  PropsWithChildren<{ network: NETWORK }>
+> = ({ children, network }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [channels, setChannels] = useState<Record<string, Channel>>(
     {}
@@ -29,6 +29,7 @@ export const RealtimeContext: React.FC<{ network: NETWORK }> = ({
   const addChannel = (topic: string) =>
     setChannels((prev) => {
       if (prev[topic]) return prev;
+      if (!socket) return prev;
       const c = socket.channel(topic);
       c.join();
 
@@ -42,7 +43,7 @@ export const RealtimeContext: React.FC<{ network: NETWORK }> = ({
       [MAINNET]: "wss://api.kujira.app",
     }[network];
 
-    if (socket?.endPoint === endpoint) return;
+    if (socket?.endPointURL() === endpoint) return;
     socket?.disconnect();
     setChannels({});
     const s = new Socket(`${endpoint}/socket`);

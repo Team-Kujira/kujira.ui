@@ -1,17 +1,18 @@
 import clsx from "clsx";
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 import ReactDOM from "react-dom";
 import { IconClose } from "../icons/IconClose";
-
-export const Modal: FC<{
-  show: boolean;
-  close: () => void;
-  title?: string;
-  confirm?: () => void;
-  large?: boolean;
-  backgroundClose?: boolean;
-  className?: string;
-}> = ({
+export const Modal: FC<
+  PropsWithChildren<{
+    show: boolean;
+    close: () => void;
+    title?: string;
+    confirm?: () => void;
+    large?: boolean;
+    backgroundClose?: boolean;
+    className?: string;
+  }>
+> = ({
   show,
   close,
   title,

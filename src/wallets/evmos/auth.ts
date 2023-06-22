@@ -104,6 +104,7 @@ export const EthAccount = {
       object.base_account !== null
     ) {
       message.base_account = BaseAccount.fromPartial(
+        // @ts-expect-error
         object.base_account
       );
     } else {
