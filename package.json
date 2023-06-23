@@ -16,6 +16,8 @@
     "@cosmjs/stargate": "^0.30.1",
     "@cosmjs/tendermint-rpc": "^0.30.1",
     "@keplr-wallet/types": "^0.11.22",
+    "@stripe/crypto": "^0.0.4",
+    "@stripe/stripe-js": "^1.54.1",
     "@terra-money/feather.js": "^1.0.0-beta.11",
     "@terra-money/wallet-controller": "4.0.0-beta.3",
     "@types/phoenix": "^1.6.0",

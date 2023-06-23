@@ -20,7 +20,7 @@ import { IconWallet } from "../icons/IconWallet";
 import { IconWarning } from "../icons/IconWarning";
 import { useNetwork } from "../providers/network";
 import { Adapter, IWallet, useWallet } from "../providers/wallet";
-import { coinSort } from "../utils";
+import { appLink, coinSort } from "../utils";
 import KadoModal from "./KadoModal";
 
 export const NetworkWarning = () => {
@@ -88,7 +88,7 @@ export function Wallet({
               disconnect();
               connect && connect(Adapter.Sonar);
             }}
-            /* href="https://sonar.kujira.app"
+            /* href={appLink("sonar")}
             target="_blank" */
           >
             Switch to <strong>Sonar</strong> by Kujira
@@ -151,7 +151,7 @@ export function Wallet({
                   <td className="text-right mono">
                     <a
                       className="inline-link"
-                      href="https://blue.kujira.app/wallet">
+                      href={`${appLink("blue")}/wallet`}>
                       View all
                     </a>
                   </td>

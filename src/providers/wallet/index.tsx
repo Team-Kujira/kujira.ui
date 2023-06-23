@@ -30,6 +30,7 @@ import { Modal } from "../../components/Modal";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { IconAngleRight, IconSonar } from "../../icons";
+import { appLink } from "../../utils";
 import {
   Keplr,
   Leap,
@@ -426,7 +427,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
             />
             <h3>Scan this code using the Sonar Mobile App.</h3>
             <a
-              href="https://sonar.kujira.app"
+              href={appLink("sonar")}
               target="_blank"
               className="md-button mt-2 md-button--icon-right">
               Download Sonar
