@@ -8,5 +8,5 @@ export const coinSort = (a: Coin, b: Coin): number =>
 export const appLink = (app: string): string =>
   window.location.host.replace(
     /^[a-z]+\./,
-    "https://" + app ? `${app}.` : ""
+    "https://" + (app ? `${app}.` : "")
   );
