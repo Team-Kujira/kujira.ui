@@ -38,6 +38,8 @@ export function Select<T>({
   const [open, setOpen] = useState(false);
   const [top, setTop] = useState(false);
   const [custom, setCustom] = useState("");
+  const [internalSelection, setInternalSelection] =
+    useState<OptionType<T>>();
 
   useEffect(() => {
     if (open) {
@@ -95,6 +97,11 @@ export function Select<T>({
   const handleChange = (e: T) => {
     setCustom("");
     if (onChange && e !== selected?.value) onChange(e);
+    if (!selected) {
+      const i = options.find((c) => c.value === e);
+      setInternalSelection(i);
+      console.log(i);
+    }
   };
 
   return (
@@ -122,10 +129,16 @@ export function Select<T>({
             }
           }}
         />
-      ) : selected ? (
+      ) : selected || internalSelection ? (
         <>
-          {selected.status && <b className={selected.status} />}
-          {selected.label}
+          {selected ? (
+            <>
+              {selected.status && <b className={selected.status} />}
+              {selected.label}
+            </>
+          ) : (
+            <>{internalSelection && internalSelection.label}</>
+          )}
         </>
       ) : (
         <span className="color-grey">{placeholder}</span>
@@ -138,12 +151,14 @@ export function Select<T>({
       )}
       {open && (
         <ul ref={drop}>
-          {options.map((m) => (
+          {options.map((m, i) => (
             <li
               onClick={() => handleChange(m.value)}
               key={m.label}
               className={
-                selected && m.value === selected.value
+                (selected && m.value === selected.value) ||
+                (internalSelection &&
+                  internalSelection.value === m.value)
                   ? "current"
                   : ""
               }>
