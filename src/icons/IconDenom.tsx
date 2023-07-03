@@ -8,6 +8,7 @@ import {
   IconLuna,
   IconNBTC,
   IconSKuji,
+  IconTORI,
   IconUSK,
   IconUST,
   IconWarning,
@@ -229,6 +230,8 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <IconHans />;
     case "sperm":
       return <IconSPERM />;
+    case "tori":
+      return <IconTORI />;
 
     case "mnta":
       return <img className="icon-denom" src={mnta} alt="MNTA" />;
