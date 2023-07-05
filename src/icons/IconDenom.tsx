@@ -1,5 +1,6 @@
 import { Denom } from "kujira.js";
 import {
+  IconARCH,
   IconAUST,
   IconBTC,
   IconCoinDefault,
@@ -232,6 +233,8 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <IconSPERM />;
     case "tori":
       return <IconTORI />;
+    case "arch":
+      return <IconARCH />;
 
     case "mnta":
       return <img className="icon-denom" src={mnta} alt="MNTA" />;
