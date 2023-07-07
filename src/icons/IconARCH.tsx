@@ -8,6 +8,7 @@ export const IconARCH: FC<JSX.IntrinsicElements["svg"]> = (props) => {
       height="300"
       fill="none"
       viewBox="0 0 300 300"
+      className="icon-denom"
       {...props}>
       <rect width="300" height="300" fill="#FF4D00" rx="150"></rect>
       <path
