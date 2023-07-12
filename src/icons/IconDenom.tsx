@@ -36,6 +36,7 @@ import { IconSTOSMO } from "./IconSTOSMO";
 import { IconSTSCRT } from "./IconSTSCRT";
 import { IconSWTH } from "./IconSWTH";
 import { IconWHALE } from "./IconWHALE";
+import { IconWSTETH } from "./IconWSTETH";
 import mnta from "./MNTA.png";
 import wink from "./WINK.png";
 
@@ -240,6 +241,8 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <img className="icon-denom" src={mnta} alt="MNTA" />;
     case "wink":
       return <img className="icon-denom" src={wink} alt="WINK" />;
+    case "wsteth":
+      return <IconWSTETH />;
 
     case "inj":
     case "ginj":
