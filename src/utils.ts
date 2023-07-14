@@ -7,5 +7,5 @@ export const coinSort = (a: Coin, b: Coin): number =>
   parseInt(a.amount || "") / 10 ** Denom.from(a.denom || "").decimals;
 export const appLink = (app: string): string => {
   const domain = window.location.host.split(".").slice(-2).join(".");
-  return "https://" + app + "." + domain;
+  return "https://" + app + (app === "" ? "" : ".") + domain;
 };
