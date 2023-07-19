@@ -263,6 +263,15 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
         />
       );
 
+    case "ntrn":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/neutron/images/ntrn.png?raw=true"
+          alt="NTRN"
+        />
+      );
+
     case "acre":
       return (
         <img
