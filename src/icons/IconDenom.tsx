@@ -272,6 +272,14 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
         />
       );
 
+    case "silk":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/secretnetwork/images/silk.png"
+          alt="SILK"
+        />
+      );
     case "acre":
       return (
         <img
