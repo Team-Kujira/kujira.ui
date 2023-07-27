@@ -192,6 +192,8 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <IconLocal />;
     case "shd":
       return <SHD />;
+    case "shd.legacy":
+      return <SHD />;
     case "calc":
       return <IconCalc />;
     case "strd":
