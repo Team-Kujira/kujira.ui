@@ -391,7 +391,10 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
       {children}
       <Modal
         show={modal}
-        close={() => setModal(false)}
+        close={() => {
+          setStored("");
+          setModal(false);
+        }}
         className="modal--auto">
         <div className="md-flex ai-c">
           <div className="no-shrink bg-darkGrey">
