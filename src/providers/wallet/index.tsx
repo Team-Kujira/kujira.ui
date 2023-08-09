@@ -1,23 +1,23 @@
 import { AccountData, EncodeObject } from "@cosmjs/proto-signing";
 import {
-  assertIsDeliverTxSuccess,
   Coin,
   DeliverTxResponse,
+  assertIsDeliverTxSuccess,
 } from "@cosmjs/stargate";
 import { ChainInfo } from "@keplr-wallet/types";
 import {
   ConnectType,
-  getChainOptions,
   WalletController,
+  getChainOptions,
 } from "@terra-money/wallet-controller";
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { BigNumber } from "ethers";
 import { CHAIN_INFO, Denom, NETWORK } from "kujira.js";
 import {
-  createContext,
   FC,
   PropsWithChildren,
+  createContext,
   useContext,
   useEffect,
   useState,
@@ -272,6 +272,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
             setWallet(x);
           })
           .catch((err) => {
+            setStored("");
             toast.error(err.message);
           });
 
@@ -284,6 +285,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
             setWallet(x);
           })
           .catch((err) => {
+            setStored("");
             toast.error(err.message);
           });
 
@@ -296,6 +298,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
             setWallet(x);
           })
           .catch((err) => {
+            setStored("");
             toast.error(err.message);
           });
 
@@ -321,6 +324,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
               setWallet(x);
             })
             .catch((err) => {
+              setStored("");
               toast.error(
                 err.message === "extension instance is not created!"
                   ? "Station extension not available"
