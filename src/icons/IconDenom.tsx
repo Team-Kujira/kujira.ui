@@ -245,6 +245,15 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
         />
       );
 
+    case "yieldeth":
+      return (
+        <img
+          className="icon-denom"
+          src="https://app.sommelier.finance/assets/icons/real-yield-eth.png"
+          alt="yieldETH"
+        />
+      );
+
     case "ntrn":
       return (
         <img
