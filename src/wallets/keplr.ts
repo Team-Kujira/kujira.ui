@@ -118,34 +118,10 @@ export class Keplr {
       }
     );
 
-    // if (batch) {
-    //   const chunks = msgs.reduce((agg, item, index) => {
-    //     const chunkIndex = Math.floor(index / batch.size);
-    //     if (!agg[chunkIndex]) agg[chunkIndex] = [];
-    //     agg[chunkIndex].push(item);
-    //     return agg;
-    //   }, [] as EncodeObject[][]);
-    //   let remaining = chunks.length;
-    //   batch.cb(chunks.length, remaining);
-
-    //   let res: DeliverTxResponse;
-    //   for (const chunk of chunks) {
-    //     res = await client.signAndBroadcast(
-    //       this.account.address,
-    //       chunk,
-    //       1.5
-    //     );
-    //     remaining -= 1;
-    //     batch.cb(chunks.length, remaining);
-    //   }
-    //   // @ts-expect-error this is fine
-    //   return res;
-    // } else {
     return await client.signAndBroadcast(
       this.account.address,
       msgs,
       1.5
     );
-    // }
   };
 }
