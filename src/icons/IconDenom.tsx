@@ -515,6 +515,22 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
           alt="PEPE"
         />
       );
+    case "umee":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/umee/images/umee.png"
+          alt="umee"
+        />
+      );
+    case "ist":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/agoric/images/ist.png"
+          alt="ist"
+        />
+      );
     case "wbtc":
     case "gwbtc":
       return (
