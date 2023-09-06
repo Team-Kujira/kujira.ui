@@ -75,14 +75,26 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
 
   if (typeof denom !== "string" && denom.underlying?.length === 1) {
     return (
-      <div className="icon-denom icon-denom-ghost">
-        <IconDenom denom={denom.underlying[0]} />
+      <div className="icon-denom">
+        {denom.underlying.length === 1 ? (
+          <img
+            className="icon-denom"
+            src={
+              new URL(
+                `../assets/ghost/${denom.underlying[0].symbol.toLowerCase()}.png`,
+                import.meta.url
+              ).href
+            }
+            alt={denom.underlying[0].symbol}
+          />
+        ) : (
+          <IconDenom denom={denom.underlying[0]} />
+        )}
         {denom.underlying
           .slice(1, denom.underlying.length)
           .map((d, idx) => (
             <IconDenom key={idx} denom={d} />
           ))}
-        {denom.underlying.length === 1 && <span>👻</span>}
       </div>
     );
   }
