@@ -1,3 +1,5 @@
+import { getSnaps } from "@leapwallet/cosmos-snap-provider";
+import clsx from "clsx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { Denom, LOCALNET, TESTNET } from "kujira.js";
 import { useEffect, useState } from "react";
@@ -5,6 +7,7 @@ import { toast } from "react-hot-toast";
 import ReactTooltip from "react-tooltip";
 import IconMetamask from "../assets/metamask.png";
 import IconMetamaskConnected from "../assets/metamask_connected.png";
+import { useLocalStorage } from "../hooks";
 import * as i18n from "../i18n";
 import {
   IconAngleRight,
@@ -79,6 +82,23 @@ export function Wallet({
   const [showKado, setShowKado] = useState(false);
   const [showWalletSelect, setShowWalletSelect] = useState(false);
   const [{ chainInfo }] = useNetwork();
+  const [snapsSupported, setSnapsSupported] = useLocalStorage(
+    "snaps",
+    ""
+  );
+  useEffect(() => {
+    getSnaps()
+      .then(() => {
+        setSnapsSupported("y");
+      })
+      .catch(() => {
+        setSnapsSupported("");
+      });
+  }, []);
+
+  useEffect(() => {
+    ReactTooltip.rebuild();
+  }, [showWalletSelect]);
 
   if (account) {
     return (
@@ -247,14 +267,26 @@ export function Wallet({
           <hr className="hr my-q3" />
           <div className="md-flex w-full ai-c jc-c wrap">
             <button
-              className="transparent block pointer"
+              data-tip={
+                snapsSupported
+                  ? undefined
+                  : "MetaMask Snaps not yet supported"
+              }
+              className={clsx({
+                "transparent block": true,
+                pointer: !!snapsSupported,
+              })}
+              disabled={!snapsSupported}
               onClick={() => {
                 connect && connect(Adapter.LeapSnap);
               }}>
               <img
                 src={IconMetamask}
                 width="1rem"
-                className="mm completed"
+                className={clsx({
+                  mm: true,
+                  completed: !!snapsSupported,
+                })}
                 alt="MetaMask"
               />
             </button>
