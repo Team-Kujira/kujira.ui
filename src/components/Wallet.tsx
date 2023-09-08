@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import ReactTooltip from "react-tooltip";
 import IconMetamask from "../assets/metamask.png";
+import IconMetamaskDisabled from "../assets/metamask_disabled.png";
 import IconMetamaskConnected from "../assets/metamask_connected.png";
 import { useLocalStorage } from "../hooks";
 import * as i18n from "../i18n";
@@ -125,7 +126,7 @@ export function Wallet({
             <img
               src={IconMetamaskConnected}
               width="1rem"
-              className="mm completed"
+              className="mm"
               alt="MetaMask"
             />
           )}
@@ -281,12 +282,13 @@ export function Wallet({
                 connect && connect(Adapter.LeapSnap);
               }}>
               <img
-                src={IconMetamask}
+                src={
+                  !snapsSupported
+                    ? IconMetamaskDisabled
+                    : IconMetamask
+                }
                 width="1rem"
-                className={clsx({
-                  mm: true,
-                  completed: !!snapsSupported,
-                })}
+                className="mm"
                 alt="MetaMask"
               />
             </button>
