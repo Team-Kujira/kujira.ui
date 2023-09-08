@@ -270,7 +270,7 @@ export function Wallet({
               data-tip={
                 snapsSupported
                   ? undefined
-                  : "MetaMask Snaps not yet supported"
+                  : "MetaMask Snap support coming soon"
               }
               className={clsx({
                 "transparent block": true,
