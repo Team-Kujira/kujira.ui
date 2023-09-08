@@ -3,6 +3,8 @@ import { Denom, LOCALNET, TESTNET } from "kujira.js";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import ReactTooltip from "react-tooltip";
+import IconMetamask from "../assets/metamask.png";
+import IconMetamaskConnected from "../assets/metamask_connected.png";
 import * as i18n from "../i18n";
 import {
   IconAngleRight,
@@ -99,6 +101,15 @@ export function Wallet({
         <div className="md-button md-button--grey md-button--outline md-button--wallet">
           {a === Adapter.Sonar && <Sonar />}
           {a === Adapter.Leap && <Leap />}
+          {a === Adapter.LeapSnap && (
+            <img
+              src={IconMetamaskConnected}
+              width="1rem"
+              className="mm completed"
+              alt="MetaMask"
+            />
+          )}
+
           {a === Adapter.Xfi && <XDefi />}
           {a === Adapter.Station && <Station />}
           {a === Adapter.Keplr && <Keplr />}
@@ -235,6 +246,19 @@ export function Wallet({
 
           <hr className="hr my-q3" />
           <div className="md-flex w-full ai-c jc-c wrap">
+            <button
+              className="transparent block pointer"
+              onClick={() => {
+                connect && connect(Adapter.LeapSnap);
+              }}>
+              <img
+                src={IconMetamask}
+                width="1rem"
+                className="mm completed"
+                alt="MetaMask"
+              />
+            </button>
+
             <button
               className="transparent block pointer"
               onClick={() => {

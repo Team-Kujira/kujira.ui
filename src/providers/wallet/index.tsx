@@ -34,6 +34,7 @@ import { appLink } from "../../utils";
 import {
   Keplr,
   Leap,
+  LeapSnap,
   ReadOnly,
   Sonar,
   Station,
@@ -50,6 +51,7 @@ export enum Adapter {
   Station = "station",
   ReadOnly = "readOnly",
   Leap = "leap",
+  LeapSnap = "leapSnap",
   Xfi = "xfi",
 }
 
@@ -106,7 +108,15 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
   const [showCW3, setShowCW3] = useState(false);
   const [stored, setStored] = useLocalStorage("wallet", "");
   const [wallet, setWallet] = useState<
-    Sonar | Keplr | Station | ReadOnly | CW3Wallet | Leap | Xfi | null
+    | Sonar
+    | Keplr
+    | Station
+    | ReadOnly
+    | CW3Wallet
+    | Leap
+    | LeapSnap
+    | Xfi
+    | null
   >(null);
   const [feeDenom, setFeeDenom] = useLocalStorage(
     "feeDenom",
@@ -291,6 +301,19 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
 
         break;
 
+      case Adapter.LeapSnap:
+        LeapSnap.connect({ ...chainInfo, rpc }, { feeDenom })
+          .then((x) => {
+            setStored(adapter);
+            setWallet(x);
+          })
+          .catch((err) => {
+            setStored("");
+            toast.error(err.message);
+          });
+
+        break;
+
       case Adapter.Xfi:
         Xfi.connect({ ...chainInfo, rpc }, { feeDenom })
           .then((x) => {
@@ -355,6 +378,8 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
       ? Adapter.Keplr
       : wallet instanceof Leap
       ? Adapter.Leap
+      : wallet instanceof LeapSnap
+      ? Adapter.LeapSnap
       : wallet instanceof Xfi
       ? Adapter.Xfi
       : wallet instanceof Sonar
