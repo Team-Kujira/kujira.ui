@@ -10,7 +10,6 @@ import {
   CosmjsOfflineSigner,
   connectSnap,
   getKey,
-  getSnap,
   suggestChain,
 } from "@leapwallet/cosmos-snap-provider";
 import { accountParser, aminoTypes, registry } from "kujira.js";
@@ -28,21 +27,19 @@ export class LeapSnap {
     config: ChainInfo,
     opts?: { feeDenom: string }
   ): Promise<LeapSnap> {
-    const snapInstalled = await getSnap();
-    if (!snapInstalled) {
-      await connectSnap(); // Initiates installation if not already present
-    }
+    return connectSnap()
+      .then(() => getKey(config.chainId))
+      .then((account) => new LeapSnap(account, config, opts))
+      .catch((error: any) => {
+        if (error.message === "Invalid chainId") {
+          console.log({ error });
 
-    try {
-      const account = await getKey(config.chainId);
-      return new LeapSnap(account, config, opts);
-    } catch (error: any) {
-      if (error.message === "Invalid chainId") {
-        await suggestChain(config);
-        return LeapSnap.connect(config, opts);
-      }
-      throw error;
-    }
+          return suggestChain(config).then(() =>
+            LeapSnap.connect(config, opts)
+          );
+        }
+        throw error;
+      });
   }
   public onChange = (fn: (k: LeapSnap | null) => void) => {};
 
