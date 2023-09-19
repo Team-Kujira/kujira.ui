@@ -24,6 +24,7 @@ import {
 } from "react";
 import { toast } from "react-hot-toast";
 //import QRCode from "react-qr-code";
+import { PageRequest } from "cosmjs-types/cosmos/base/query/v1beta1/pagination";
 import { QR } from "react-qr-rounded";
 import Input from "../../components/Input";
 import { Modal } from "../../components/Modal";
@@ -176,19 +177,24 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
 
   const refreshBalances = () => {
     if (!wallet) return;
-    query?.bank.allBalances(wallet.account.address).then((x) => {
-      x && setKujiraBalances(x);
-      x?.map((b) => {
-        setBalances((prev) =>
-          b.denom
-            ? {
-                ...prev,
-                [b.denom]: BigNumber.from(b.amount),
-              }
-            : prev
-        );
+    query?.bank
+      .allBalances(
+        wallet.account.address,
+        PageRequest.fromPartial({ limit: 10000 })
+      )
+      .then((x) => {
+        x && setKujiraBalances(x);
+        x?.map((b) => {
+          setBalances((prev) =>
+            b.denom
+              ? {
+                  ...prev,
+                  [b.denom]: BigNumber.from(b.amount),
+                }
+              : prev
+          );
+        });
       });
-    });
   };
 
   useEffect(() => {
