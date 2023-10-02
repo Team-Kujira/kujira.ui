@@ -32,8 +32,6 @@ export class LeapSnap {
       .then((account) => new LeapSnap(account, config, opts))
       .catch((error: any) => {
         if (error.message === "Invalid chainId") {
-          console.log({ error });
-
           return suggestChain(config).then(() =>
             LeapSnap.connect(config, opts)
           );

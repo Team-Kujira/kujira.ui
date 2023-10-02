@@ -100,7 +100,6 @@ export function Select<T>({
     if (!selected) {
       const i = options.find((c) => c.value === e);
       setInternalSelection(i);
-      console.log(i);
     }
   };
 
