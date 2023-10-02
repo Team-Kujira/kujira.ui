@@ -119,6 +119,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
     case "btc":
       return <IconBTC />;
     case "nbtc":
+    case "nbtcc":
       return <IconNBTC />;
     case "luna":
       return <IconLuna />;
