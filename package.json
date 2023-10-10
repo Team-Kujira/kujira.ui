@@ -12,9 +12,9 @@
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json"
   },
   "dependencies": {
-    "@cosmjs/proto-signing": "^0.30.1",
-    "@cosmjs/stargate": "^0.30.1",
-    "@cosmjs/tendermint-rpc": "^0.30.1",
+    "@cosmjs/proto-signing": "^0.31.1",
+    "@cosmjs/stargate": "^0.31.1",
+    "@cosmjs/tendermint-rpc": "^0.31.1",
     "@keplr-wallet/types": "^0.11.22",
     "@leapwallet/cosmos-snap-provider": "^0.1.18",
     "@stripe/crypto": "^0.0.4",
@@ -30,7 +30,7 @@
     "clsx": "^1.2.1",
     "csstype": "^3.1.0",
     "ethers": "^5.7.2",
-    "kujira.js": "^0.8.172",
+    "kujira.js": "^0.9.2",
     "phoenix": "^1.6.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -1,22 +1,22 @@
 import {
   HttpBatchClient,
-  Tendermint34Client,
+  Tendermint37Client,
 } from "@cosmjs/tendermint-rpc";
 import { ChainInfo } from "@keplr-wallet/types";
 import {
   CHAIN_INFO,
   KujiraQueryClient,
-  kujiraQueryClient,
   MAINNET,
   NETWORK,
   RPCS,
+  kujiraQueryClient,
 } from "kujira.js";
 import {
-  createContext,
   Dispatch,
   FC,
   PropsWithChildren,
   SetStateAction,
+  createContext,
   useContext,
   useEffect,
   useMemo,
@@ -27,7 +27,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 export type NetworkContext = {
   network: NETWORK;
   setNetwork: (n: NETWORK) => void;
-  tmClient: Tendermint34Client | null;
+  tmClient: Tendermint37Client | null;
   query: KujiraQueryClient | null;
   rpc: string;
   rpcs: {
@@ -61,10 +61,10 @@ const toClient = async (
       Record<string, { latency: number; latestBlockTime: Date }>
     >
   >
-): Promise<[Tendermint34Client, string]> => {
+): Promise<[Tendermint37Client, string]> => {
   const start = new Date().getTime();
 
-  const c = await Tendermint34Client.create(
+  const c = await Tendermint37Client.create(
     new HttpBatchClient(endpoint, {
       dispatchInterval: 100,
       batchSizeLimit: 200,
@@ -93,7 +93,7 @@ export const NetworkContext: React.FC<
   const [network, setNetwork] = useLocalStorage("network", MAINNET);
   const [preferred, setPreferred] = useLocalStorage("rpc", "");
   const [tm, setTmClient] = useState<
-    null | [Tendermint34Client, string]
+    null | [Tendermint37Client, string]
   >();
   const [latencies, setLatencies] = useState<
     Record<string, { latency: number; latestBlockTime: Date }>
@@ -198,7 +198,7 @@ export const useNetwork = (): [
   {
     network: NETWORK;
     chainInfo: ChainInfo;
-    tmClient: Tendermint34Client | null;
+    tmClient: Tendermint37Client | null;
     query: KujiraQueryClient | null;
     rpc: string;
     rpcs: {
