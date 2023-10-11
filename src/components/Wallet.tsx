@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import ReactTooltip from "react-tooltip";
 import IconMetamask from "../assets/metamask.png";
-import IconMetamaskDisabled from "../assets/metamask_disabled.png";
 import IconMetamaskConnected from "../assets/metamask_connected.png";
+import IconMetamaskDisabled from "../assets/metamask_disabled.png";
 import { useLocalStorage } from "../hooks";
 import * as i18n from "../i18n";
 import {
@@ -145,6 +145,7 @@ export function Wallet({
             {account.address.substr(-3)}
           </span>
         </div>
+
         <div className="wallet__popup">
           <span className="address mb-2">
             {account.address.substr(0, 16)}...

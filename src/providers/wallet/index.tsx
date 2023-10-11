@@ -1,4 +1,8 @@
-import { AccountData, EncodeObject } from "@cosmjs/proto-signing";
+import {
+  AccountData,
+  EncodeObject,
+  coin,
+} from "@cosmjs/proto-signing";
 import {
   Coin,
   DeliverTxResponse,
@@ -13,7 +17,7 @@ import {
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { BigNumber } from "ethers";
-import { CHAIN_INFO, Denom, NETWORK } from "kujira.js";
+import { CHAIN_INFO, Denom, MAINNET, NETWORK } from "kujira.js";
 import {
   FC,
   PropsWithChildren,
@@ -101,12 +105,39 @@ const Context = createContext<IWallet>({
   adapter: null,
 });
 
+const toAdapter = (wallet: any) => {
+  return wallet instanceof Keplr
+    ? Adapter.Keplr
+    : wallet instanceof Leap
+    ? Adapter.Leap
+    : wallet instanceof LeapSnap
+    ? Adapter.LeapSnap
+    : wallet instanceof Xfi
+    ? Adapter.Xfi
+    : wallet instanceof Sonar
+    ? Adapter.Sonar
+    : wallet instanceof Station
+    ? Adapter.Station
+    : wallet instanceof ReadOnly
+    ? Adapter.ReadOnly
+    : wallet instanceof CW3Wallet
+    ? Adapter.CW3
+    : null;
+};
+
 export const WalletContext: FC<PropsWithChildren<{}>> = ({
   children,
 }) => {
   const [address, setAddress] = useLocalStorage("address", "");
   const [showAddress, setShowAddress] = useState(false);
-  const [showCW3, setShowCW3] = useState(false);
+  const [cw3Address, setCw3Address] = useLocalStorage("cw3", "");
+  const [cw3Modal, setCw3Modal] = useState<"address" | "proposal">();
+  const [cw3Title, setCw3Title] = useState<string>();
+  const [cw3Desc, setCw3Desc] = useState<string>();
+  const [cw3Resolve, setCw3Resolve] =
+    useState<(a: { title: string; description: string }) => void>();
+  const [cw3Reject, setCw3Reject] = useState<(a: Error) => void>();
+
   const [stored, setStored] = useLocalStorage("wallet", "");
   const [wallet, setWallet] = useState<
     | Sonar
@@ -119,6 +150,9 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
     | Xfi
     | null
   >(null);
+
+  const adapter = toAdapter(wallet);
+
   const [feeDenom, setFeeDenom] = useLocalStorage(
     "feeDenom",
     "ukuji"
@@ -254,14 +288,42 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
     memo?: string
   ): Promise<DeliverTxResponse> => {
     if (!wallet) throw new Error("No Wallet Connected");
-    const res = await wallet.signAndBroadcast(
-      rpc,
-      msgs,
-      feeDenom,
-      memo
-    );
-    assertIsDeliverTxSuccess(res);
-    return res;
+    if (adapter === Adapter.CW3) {
+      setCw3Modal("proposal");
+      return new Promise<{ title: string; description: string }>(
+        (resolve, reject) => {
+          setCw3Resolve(() => resolve);
+          setCw3Reject(() => reject);
+        }
+      ).then(({ title, description }) => {
+        return wallet.signAndBroadcast(
+          rpc,
+          msgs,
+          feeDenom,
+          memo,
+          title,
+          description,
+          coin(
+            "100000000",
+            "factory/kujira1r85reqy6h0lu02vyz0hnzhv5whsns55gdt4w0d7ft87utzk7u0wqr4ssll/uusk"
+          )
+        );
+      });
+    } else {
+      const res = await wallet.signAndBroadcast(
+        rpc,
+        msgs,
+        feeDenom,
+        memo
+      );
+      assertIsDeliverTxSuccess(res);
+      return res;
+    }
+  };
+
+  const submitCw3 = () => {
+    if (cw3Resolve && cw3Title && cw3Desc)
+      cw3Resolve({ title: cw3Title, description: cw3Desc });
   };
 
   const size = useWindowSize();
@@ -277,7 +339,9 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
     auto?: boolean
   ) => {
     const chainInfo: ChainInfo = {
-      ...CHAIN_INFO[chain || network],
+      ...CHAIN_INFO[MAINNET],
+      chainId: network,
+      chainName: "Kujira Kev",
     };
 
     switch (adapter) {
@@ -365,7 +429,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
         setShowAddress(true);
         break;
       case Adapter.CW3:
-        setShowCW3(true);
+        setCw3Modal("address");
     }
   };
 
@@ -374,29 +438,14 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
   }, [wallet]);
 
   const disconnect = () => {
-    setStored("");
-    setWallet(null);
-    wallet?.disconnect();
+    if (wallet instanceof CW3Wallet) {
+      setWallet(wallet.wallet);
+    } else {
+      setStored("");
+      setWallet(null);
+      wallet?.disconnect();
+    }
   };
-
-  const adapter =
-    wallet instanceof Keplr
-      ? Adapter.Keplr
-      : wallet instanceof Leap
-      ? Adapter.Leap
-      : wallet instanceof LeapSnap
-      ? Adapter.LeapSnap
-      : wallet instanceof Xfi
-      ? Adapter.Xfi
-      : wallet instanceof Sonar
-      ? Adapter.Sonar
-      : wallet instanceof Station
-      ? Adapter.Station
-      : wallet instanceof ReadOnly
-      ? Adapter.ReadOnly
-      : wallet instanceof CW3Wallet
-      ? Adapter.CW3
-      : null;
 
   return (
     <Context.Provider
@@ -500,28 +549,53 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
       </Modal>
 
       <Modal
-        show={showCW3}
-        close={() => setShowCW3(false)}
-        confirm={() =>
-          wallet &&
-          (wallet instanceof Sonar || wallet instanceof Keplr) &&
-          CW3Wallet.connect(address, wallet).then((w) => {
-            setStored(Adapter.CW3);
-            setWallet(w);
-            setShowCW3(false);
-          })
-        }
-        title="SQUAD Connection">
+        show={cw3Modal === "address"}
+        close={() => setCw3Modal(undefined)}
+        confirm={() => {
+          if (!wallet) return;
+          if (wallet instanceof ReadOnly) return;
+          if (wallet instanceof CW3Wallet) return;
+          setStored(Adapter.CW3);
+          setWallet(new CW3Wallet(address, wallet));
+          setCw3Modal(undefined);
+        }}
+        title="DAO Connection">
         <>
           <p className="fs-14 lh-16 color-white mb-2">
-            Enter a SQUAD address. You will be able to submit
-            proposals to the SQUAD where normally you would execute
+            Enter a CW3 DAO address. You will be able to submit
+            proposals to the DAO where normally you would execute
             those transactions with your own account.
           </p>
           <Input
             placeholder="kujira1..."
             value={address}
             onChange={(e) => setAddress(e.currentTarget.value)}
+          />
+        </>
+      </Modal>
+
+      <Modal
+        show={cw3Modal === "proposal"}
+        close={() => {
+          cw3Reject && cw3Reject(new Error("User Cancelled"));
+          setCw3Modal(undefined);
+        }}
+        confirm={submitCw3}
+        title="SQUAD Connection">
+        <>
+          <p className="fs-14 lh-16 color-white mb-2">
+            Enter proposal details that will be submitted to the DAO
+            with the transaction
+          </p>
+          <Input
+            placeholder="kujira1..."
+            value={cw3Title}
+            onChange={(e) => setCw3Title(e.currentTarget.value)}
+          />
+          <textarea
+            placeholder="kujira1..."
+            value={cw3Desc}
+            onChange={(e) => setCw3Desc(e.currentTarget.value)}
           />
         </>
       </Modal>

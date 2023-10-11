@@ -1,32 +1,39 @@
-import { AccountData, EncodeObject } from "@cosmjs/proto-signing";
+import {
+  AccountData,
+  Coin,
+  EncodeObject,
+} from "@cosmjs/proto-signing";
 import { DeliverTxResponse } from "@cosmjs/stargate";
-import { msg } from "kujira.js";
+import { msg, registry } from "kujira.js";
 import { Keplr } from "./keplr";
+import { Leap } from "./leap";
+import { LeapSnap } from "./leapSnap";
 import { Sonar } from "./sonar";
+import { Station } from "./station";
+import { Xfi } from "./xfi";
 
-type Signer = Keplr | Sonar;
-
-const toCosmosMsg = (encodeObject: EncodeObject): object => ({});
+const toCosmosMsg = (encodeObject: EncodeObject): object => {
+  const any = registry.encodeAsAny(encodeObject);
+  return {
+    stargate: {
+      type_url: any.typeUrl,
+      value: Buffer.from(any.value).toString("base64"),
+    },
+  };
+};
 
 export class CW3Wallet {
-  private constructor(
-    public account: AccountData,
-    public signer: Signer
-  ) {}
-
-  static connect = async (
-    contract: string,
-    signer: Signer
-  ): Promise<CW3Wallet> => {
-    return new CW3Wallet(
-      {
-        address: contract,
-        algo: "secp256k1",
-        pubkey: new Uint8Array(),
-      },
-      signer
-    );
-  };
+  public account: AccountData;
+  constructor(
+    public contract: string,
+    public wallet: Sonar | Keplr | Station | Leap | LeapSnap | Xfi
+  ) {
+    this.account = {
+      address: contract,
+      algo: "secp256k1",
+      pubkey: new Uint8Array(),
+    };
+  }
 
   public onChange = (fn: (k: CW3Wallet | null) => void) => {};
 
@@ -38,24 +45,29 @@ export class CW3Wallet {
     gas: string,
     memo?: string,
     title?: string,
-    description?: string
+    description?: string,
+    deposit?: Coin
   ): Promise<DeliverTxResponse> => {
+    console.log(encodeObjects);
+
+    const proposal = {
+      propose: {
+        title,
+        description,
+        msgs: encodeObjects.map(toCosmosMsg),
+      },
+    };
+
     const msgs = [
       msg.wasm.msgExecuteContract({
-        sender: this.signer.account.address,
-        contract: this.account.address,
-        msg: Buffer.from(
-          JSON.stringify({
-            propose: {
-              title,
-              description,
-              msgs: encodeObjects.map(toCosmosMsg),
-            },
-          })
-        ),
-        funds: [],
+        sender: this.wallet.account.address,
+        contract: this.contract,
+        msg: Buffer.from(JSON.stringify(proposal)),
+        funds: deposit ? [deposit] : [],
       }),
     ];
-    return this.signer.signAndBroadcast(rpc, msgs, gas, memo);
+    console.log(msgs);
+
+    return this.wallet.signAndBroadcast(rpc, msgs, gas, memo);
   };
 }
