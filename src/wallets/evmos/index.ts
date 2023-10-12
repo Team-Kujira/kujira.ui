@@ -11,15 +11,15 @@ import {
   coins,
   DeliverTxResponse,
   SigningStargateClient,
+  StargateClient,
 } from "@cosmjs/stargate";
 import { PubKey } from "cosmjs-types/cosmos/crypto/secp256k1/keys";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { ChainInfo } from "@keplr-wallet/types";
+import { aminoTypes, registry } from "kujira.js";
 import { EthAccount } from "./auth";
-import { kujiraQueryClient, registry, aminoTypes } from "kujira.js";
 
 export async function signAndBroadcast({
   rpc,
@@ -36,9 +36,10 @@ export async function signAndBroadcast({
 }): Promise<DeliverTxResponse> {
   if (!("signDirect" in signer))
     throw new Error("Ledger not supported for EVMOS Accounts");
-  const tm = await Tendermint34Client.connect(rpc);
-  const query = kujiraQueryClient({ client: tm });
-  const response = await query.auth.account(sourceAccount.address);
+  const query = await StargateClient.connect(rpc);
+  const response = await query["forceGetQueryClient"]().auth.account(
+    sourceAccount.address
+  );
   if (!response) throw new Error("EVMOS Account not found");
   const account = EthAccount.decode(response.value);
   if (!account.base_account)
