@@ -48,8 +48,6 @@ export class CW3Wallet {
     description?: string,
     deposit?: Coin
   ): Promise<DeliverTxResponse> => {
-    console.log(encodeObjects);
-
     const proposal = {
       propose: {
         title,
@@ -66,7 +64,6 @@ export class CW3Wallet {
         funds: deposit ? [deposit] : [],
       }),
     ];
-    console.log(msgs);
 
     return this.wallet.signAndBroadcast(rpc, msgs, gas, memo);
   };
