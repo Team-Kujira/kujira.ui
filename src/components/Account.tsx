@@ -30,7 +30,7 @@ import { useNetwork } from "../providers/network";
 import { Adapter, IWallet, useWallet } from "../providers/wallet";
 import { appLink, coinSort } from "../utils";
 import KadoModal from "./KadoModal";
-import { Plug } from "../icons/Icons";
+import { Chain, Plug } from "../icons/Icons";
 
 export function Account({
   adapter = useWallet,
@@ -307,7 +307,7 @@ const ConnectAnimation = () => {
     <motion.a
       className="kujira__header-connect"
       whileHover={{
-        width: 90,
+        width: 98,
         color: "#ffffff",
       }}
       onHoverStart={() => setShow(true)}
@@ -324,7 +324,7 @@ const ConnectAnimation = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      <Plug />
+      <Chain />
     </motion.a>
   );
 };
