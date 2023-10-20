@@ -5,7 +5,7 @@ export * as i18n from "./i18n";
 export * as icons from "./icons";
 export * as providers from "./providers";
 export * from "./utils";
-
+export * from "./wallets";
 Number.prototype.toLocaleDecimal = function (decimals = 0) {
   return this.toLocaleString(undefined, {
     maximumFractionDigits: decimals,

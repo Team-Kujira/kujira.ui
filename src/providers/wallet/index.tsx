@@ -29,16 +29,6 @@ import {
 import { toast } from "react-hot-toast";
 //import QRCode from "react-qr-code";
 import { PageRequest } from "cosmjs-types/cosmos/base/query/v1beta1/pagination";
-import {
-  CW3Wallet,
-  Keplr,
-  Leap,
-  LeapSnap,
-  ReadOnly,
-  Sonar,
-  Station,
-  Xfi,
-} from "kujira.js";
 import { QR } from "react-qr-rounded";
 import Input from "../../components/Input";
 import { Modal } from "../../components/Modal";
@@ -46,6 +36,16 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { IconAngleRight, IconSonar } from "../../icons";
 import { appLink } from "../../utils";
+import {
+  Keplr,
+  Leap,
+  LeapSnap,
+  ReadOnly,
+  Sonar,
+  Station,
+  Xfi,
+} from "../../wallets";
+import { CW3Wallet } from "../../wallets/cw3";
 import { useNetwork } from "../network";
 import Logo from "./../../assets/sonar.png";
 
