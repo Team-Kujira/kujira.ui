@@ -1,36 +1,22 @@
 import { getSnaps } from "@leapwallet/cosmos-snap-provider";
-import clsx from "clsx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
-import { Denom, LOCALNET, TESTNET } from "kujira.js";
+import { AnimatePresence, motion } from "framer-motion";
+import { Denom } from "kujira.js";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import ReactTooltip from "react-tooltip";
-import { useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import IconMetamask from "../assets/metamask.png";
-import IconMetamaskDisabled from "../assets/metamask_disabled.png";
 import IconMetamaskConnected from "../assets/metamask_connected.png";
 import { useLocalStorage } from "../hooks";
 import * as i18n from "../i18n";
-import {
-  IconAngleRight,
-  IconDenom,
-  IconSonar,
-  IconStation,
-  IconXDefi,
-} from "../icons";
+import { IconAngleRight, IconDenom } from "../icons";
 import { IconCopy } from "../icons/IconCopy";
 import { IconKado } from "../icons/IconKado";
-import { IconKeplr } from "../icons/IconKeplr";
-import { IconLeap } from "../icons/IconLeap";
 import { IconManta } from "../icons/IconManta";
-import { IconWallet } from "../icons/IconWallet";
-import { IconWarning } from "../icons/IconWarning";
+import { Chain } from "../icons/Icons";
 import { useNetwork } from "../providers/network";
 import { Adapter, IWallet, useWallet } from "../providers/wallet";
 import { appLink, coinSort } from "../utils";
 import KadoModal from "./KadoModal";
-import { Chain, Plug } from "../icons/Icons";
 
 export function Account({
   adapter = useWallet,

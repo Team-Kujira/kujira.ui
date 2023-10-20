@@ -1,4 +1,4 @@
-import { LOCALNET, MAINNET, NETWORKS, TESTNET } from "kujira.js";
+import { MAINNET, NETWORKS, POND, TESTNET } from "kujira.js";
 import { useEffect, useState } from "react";
 import { useNetwork } from "../providers/network";
 import { useChannel } from "../providers/realtime";
@@ -129,7 +129,7 @@ export const Network = () => {
 const names = {
   [TESTNET]: "testnet",
   [MAINNET]: "mainnet",
-  [LOCALNET]: "local",
+  [POND]: "pond",
 };
 
 const NetworkSelect = () => {
@@ -148,7 +148,7 @@ const NetworkSelect = () => {
           options={[
             { label: "Mainnet", value: MAINNET },
             { label: "Testnet", value: TESTNET },
-            { label: "Local", value: LOCALNET },
+            { label: "Pond", value: POND },
           ]}
         />
       )}

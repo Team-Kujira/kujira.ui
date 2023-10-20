@@ -1,8 +1,8 @@
-import { LOCALNET, MAINNET, NETWORK, TESTNET } from "kujira.js";
+import { MAINNET, NETWORK, POND, TESTNET } from "kujira.js";
 import { Channel, Socket } from "phoenix";
 import {
-  createContext,
   PropsWithChildren,
+  createContext,
   useContext,
   useEffect,
   useState,
@@ -38,7 +38,7 @@ export const RealtimeContext: React.FC<
 
   useEffect(() => {
     const endpoint = {
-      [LOCALNET]: "ws://localhost:4000",
+      [POND]: "ws://localhost:4000",
       [TESTNET]: "wss://api-harpoon.kujira.app",
       [MAINNET]: "wss://api.kujira.app",
     }[network];
