@@ -4,8 +4,8 @@ import { DeliverTxResponse, StargateClient } from "@cosmjs/stargate";
 import { ChainInfo } from "@keplr-wallet/types";
 import { Msg } from "@terra-money/feather.js";
 import {
-  ConnectedWallet,
   ConnectType,
+  ConnectedWallet,
   WalletController,
 } from "@terra-money/wallet-controller";
 import { registry } from "kujira.js";

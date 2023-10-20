@@ -20,7 +20,7 @@
     "@stripe/crypto": "^0.0.4",
     "@stripe/stripe-js": "^1.54.1",
     "@terra-money/feather.js": "^1.0.0-beta.11",
-    "@terra-money/wallet-controller": "4.0.0-beta.3",
+    "@terra-money/wallet-controller": "4.0.1",
     "@types/phoenix": "^1.6.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",

@@ -4,9 +4,9 @@ import {
   EncodeObject,
 } from "@cosmjs/proto-signing";
 import {
-  assertIsDeliverTxSuccess,
   DeliverTxResponse,
   StargateClient,
+  assertIsDeliverTxSuccess,
 } from "@cosmjs/stargate";
 import Client, { SignClient } from "@walletconnect/sign-client";
 import { SessionTypes } from "@walletconnect/types";
