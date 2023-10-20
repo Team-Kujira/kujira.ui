@@ -38,7 +38,7 @@ export const RealtimeContext: React.FC<
 
   useEffect(() => {
     const endpoint = {
-      [POND]: "ws://localhost:4000",
+      [POND]: "ws://127.0.0.1:4000",
       [TESTNET]: "wss://api-harpoon.kujira.app",
       [MAINNET]: "wss://api.kujira.app",
     }[network];
