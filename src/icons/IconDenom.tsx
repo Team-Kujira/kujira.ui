@@ -243,6 +243,15 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
 
     case "wsteth":
       return <IconWSTETH />;
+    case "tia":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/celestia/images/celestia.png"
+          alt="TIA"
+        />
+      );
+
     case "rio":
       return (
         <img
