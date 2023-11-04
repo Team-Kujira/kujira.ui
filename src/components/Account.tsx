@@ -1,14 +1,20 @@
 import { getSnaps } from "@leapwallet/cosmos-snap-provider";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, usePresence } from "framer-motion";
 import { Denom } from "kujira.js";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import ReactTooltip from "react-tooltip";
-import IconMetamaskConnected from "../assets/metamask_connected.png";
+import clsx from "clsx";
 import { useLocalStorage } from "../hooks";
 import * as i18n from "../i18n";
-import { IconAngleRight, IconDenom } from "../icons";
+import {
+  IconAngleRight,
+  IconDenom,
+  IconSonar,
+  IconStation,
+  IconXDefi,
+} from "../icons";
 import { IconCopy } from "../icons/IconCopy";
 import { IconKado } from "../icons/IconKado";
 import { IconManta } from "../icons/IconManta";
@@ -17,6 +23,11 @@ import { useNetwork } from "../providers/network";
 import { Adapter, IWallet, useWallet } from "../providers/wallet";
 import { appLink, coinSort } from "../utils";
 import KadoModal from "./KadoModal";
+import IconMetamask from "../assets/metamask.png";
+import IconMetamaskConnected from "../assets/metamask_connected.png";
+import IconMetamaskDisabled from "../assets/metamask_disabled.png";
+import { IconKeplr } from "../icons/IconKeplr";
+import { IconLeap } from "../icons/IconLeap";
 
 export function Account({
   adapter = useWallet,
@@ -63,7 +74,24 @@ export function Account({
   if (account) {
     return (
       <>
-        {a !== Adapter.Sonar && (
+        <MyAccount>
+          <div
+            className="action flex ai-c"
+            onClick={() => {
+              navigator.clipboard.writeText(account.address || "");
+              toast.success(i18n.t("Copied address to clipboard"));
+            }}>
+            <div className="fs-12 fw-500">
+              {account.address.substring(0, 14)}...
+              {account.address.slice(-14)}
+            </div>
+            <div className="ml-a mr-0">
+              <IconCopy />
+            </div>
+          </div>
+        </MyAccount>
+
+        {/* {a !== Adapter.Sonar && (
           <a
             className="wallet__sonar"
             onClick={() => {
@@ -187,23 +215,15 @@ export function Account({
               </i18n.button>
             </>
           )}
-        </div>
+        </div> */}
         {showKado && <KadoModal onClose={() => setShowKado(false)} />}
       </>
     );
   }
   return (
     <>
-      <ConnectAnimation />
-      {/* <button
-        id="connect-wallet"
-        onClick={() => setShowWalletSelect(!showWalletSelect)}
-        className="md-button md-button--grey md-button--nowrap">
-        <IconWallet />
-        <i18n.span>Connect Wallet</i18n.span>
-      </button>
-      {showWalletSelect && (
-        <div className="wallet__connections ai-c">
+      <ConnectAnimation>
+        <div className="kujira__header-wallets">
           <button
             className="transparent block pointer sonar"
             onClick={() => {
@@ -273,45 +293,122 @@ export function Account({
           </div>
 
           <hr className="hr my-q3" />
-          <button
+          {/* <button
             className="transparent block pointer color-grey fw-600 fs-12 p-2 text-center mt-1"
             onClick={() => {
               connect && connect(Adapter.ReadOnly);
             }}>
             Read Only Connect
-          </button>
+          </button> */}
+          <a href="http://blue.kujira.network/wallet">
+            Need help deciding?
+          </a>
         </div>
+      </ConnectAnimation>
+      {/* <button
+        id="connect-wallet"
+        onClick={() => setShowWalletSelect(!showWalletSelect)}
+        className="md-button md-button--grey md-button--nowrap">
+        <IconWallet />
+        <i18n.span>Connect Wallet</i18n.span>
+      </button>
+      {showWalletSelect && (
+        ...
       )} */}
     </>
   );
 }
 
-const ConnectAnimation = () => {
+const MyAccount = ({ children }: { children: React.ReactNode }) => {
   const [show, setShow] = useState(false);
-
   return (
-    <motion.a
-      className="kujira__header-connect"
-      whileHover={{
-        width: 98,
-        color: "#ffffff",
-      }}
-      onHoverStart={() => setShow(true)}
-      onHoverEnd={() => setShow(false)}>
+    <div
+      className="relative py-q1"
+      onMouseOver={() => setShow(true)}
+      onMouseOut={() => setShow(false)}>
+      <div
+        className="kujira__header-pfp"
+        style={{
+          backgroundImage:
+            "url(https://res.cloudinary.com/stargaze/image/upload/w_700/mqkrxm3h8jsgecbum08y.jpg)",
+        }}></div>
       {/* @ts-ignore */}
       <AnimatePresence>
         {show && (
           <motion.div
-            className="fs-14 fw-500 condensed"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}>
-            {i18n.t("Connect")}
+            key="wallet-connection"
+            className="kujira__header-popup right condensed w-28"
+            initial={{ opacity: 0, marginTop: -4 }}
+            animate={{ opacity: 1, marginTop: 0 }}
+            exit={{ opacity: 0, marginTop: -4 }}>
+            {children}
           </motion.div>
         )}
       </AnimatePresence>
-      <Chain />
-    </motion.a>
+    </div>
+  );
+};
+
+const ConnectAnimation = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const [show, setShow] = useState(false);
+
+  return (
+    <div
+      className="relative py-q1"
+      onMouseOver={() => setShow(true)}
+      onMouseOut={() => setShow(false)}>
+      <motion.a
+        className="kujira__header-connect"
+        whileHover={{
+          width: 98,
+          color: "#ffffff",
+        }}>
+        {/* @ts-ignore */}
+        <AnimatePresence>
+          {show && (
+            <motion.div
+              className="fs-14 fw-500 condensed"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}>
+              {i18n.t("Connect")}
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <Chain />
+      </motion.a>
+      {/* @ts-ignore */}
+      <AnimatePresence>
+        {show && <DropDown>{children}</DropDown>}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const DropDown = ({ children }: { children: React.ReactNode }) => {
+  const [isPresent, safeToRemove] = usePresence();
+
+  useEffect(() => {
+    !isPresent && setTimeout(safeToRemove, 250);
+  }, [isPresent]);
+
+  return (
+    <motion.div
+      key="wallet-connection"
+      className="kujira__header-popup right condensed w-24"
+      initial={{ opacity: 0, marginTop: -4 }}
+      animate={{ opacity: 1, marginTop: 0 }}
+      exit={{ opacity: 0, marginTop: -4 }}>
+      <i18n.p>Connect Your Wallet</i18n.p>
+      <i18n.small className="color-grey mb-1">
+        Select your preferred wallet
+      </i18n.small>
+      {children}
+    </motion.div>
   );
 };
 
