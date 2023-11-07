@@ -252,6 +252,15 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
         />
       );
 
+    case "dydx":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/dydx/images/dydx.png"
+          alt="DYDX"
+        />
+      );
+
     case "rio":
       return (
         <img
