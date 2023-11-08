@@ -19,6 +19,7 @@ import { IconFRNZ } from "./IconFRNZ";
 import { IconLink } from "./IconLink";
 import { IconLunc } from "./IconLunc";
 import { IconPAXG } from "./IconPAXG";
+import { IconQCKUJI } from "./IconQCKUJI";
 import { IconRATOM } from "./IconRATOM";
 import { IconSAvax } from "./IconSAvax";
 import { IconSPERM } from "./IconSPERM";
@@ -29,6 +30,7 @@ import { IconSTSCRT } from "./IconSTSCRT";
 import { IconSWTH } from "./IconSWTH";
 import { IconWHALE } from "./IconWHALE";
 import { IconWSTETH } from "./IconWSTETH";
+import { IconQCMNTA } from "./IconqcMNTA";
 import mnta from "./MNTA.png";
 import neok from "./NEOK.png";
 import wink from "./WINK.png";
@@ -233,6 +235,11 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <IconTORI />;
     case "arch":
       return <IconARCH />;
+    case "qcmnta":
+      return <IconQCMNTA />;
+
+    case "qckuji":
+      return <IconQCKUJI />;
 
     case "mnta":
       return <img className="icon-denom" src={mnta} alt="MNTA" />;
