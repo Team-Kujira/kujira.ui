@@ -2077,6 +2077,7 @@ const IconFUZN = () => (
 
 const IconRFUZN = () => (
   <svg
+    className="icon-denom"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 182.528 181.19">
     <path
