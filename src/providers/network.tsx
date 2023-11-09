@@ -24,17 +24,20 @@ import {
 } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
+interface RPCConnection {
+  endpoint: string;
+  latency: number;
+  latestBlockTime: Date;
+  connectedTime: Date;
+}
+
 export type NetworkContext = {
   network: NETWORK;
   setNetwork: (n: NETWORK) => void;
   tmClient: Tendermint37Client | null;
   query: KujiraQueryClient | null;
   rpc: string;
-  rpcs: {
-    endpoint: string;
-    latency: number;
-    latestBlockTime: Date;
-  }[];
+  rpcs: RPCConnection[];
   setRpc: (val: string) => void;
   preferred: string | null;
   unlock: () => void;
@@ -57,9 +60,7 @@ const Context = createContext<NetworkContext>({
 const toClient = async (
   endpoint: string,
   setLatencies?: Dispatch<
-    SetStateAction<
-      Record<string, { latency: number; latestBlockTime: Date }>
-    >
+    SetStateAction<Record<string, RPCConnection>>
   >
 ): Promise<[Tendermint37Client, string]> => {
   const start = new Date().getTime();
@@ -76,7 +77,9 @@ const toClient = async (
     setLatencies((prev) => ({
       ...prev,
       [endpoint]: {
+        endpoint,
         latency: new Date().getTime() - start,
+        connectedTime: new Date(),
         latestBlockTime: new Date(
           status.syncInfo.latestBlockTime.toISOString()
         ),
@@ -96,7 +99,7 @@ export const NetworkContext: React.FC<
     null | [Tendermint37Client, string]
   >();
   const [latencies, setLatencies] = useState<
-    Record<string, { latency: number; latestBlockTime: Date }>
+    Record<string, RPCConnection>
   >({});
 
   const tmClient = tm && tm[0];
@@ -123,7 +126,6 @@ export const NetworkContext: React.FC<
   const setRpc = (val: string) => {
     toClient(val)
       .then((client) => {
-        setPreferred(val);
         setTmClient(client);
       })
       .catch((err) => (onError ? onError(err) : console.error(err)));
@@ -159,12 +161,7 @@ export const NetworkContext: React.FC<
             tmClient: tmClient || null,
             query,
             rpc: tm[1],
-            rpcs: Object.entries(latencies).map(
-              ([endpoint, data]) => ({
-                endpoint,
-                ...data,
-              })
-            ),
+            rpcs: Object.values(latencies),
             setRpc,
             unlock,
             lock,
@@ -204,11 +201,7 @@ export const useNetwork = (): [
     tmClient: Tendermint37Client | null;
     query: KujiraQueryClient | null;
     rpc: string;
-    rpcs: {
-      endpoint: string;
-      latency: number;
-      latestBlockTime: Date;
-    }[];
+    rpcs: RPCConnection[];
     setRpc: (val: string) => void;
     preferred: null | string;
     unlock: () => void;
