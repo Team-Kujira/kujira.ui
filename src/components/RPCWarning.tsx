@@ -8,7 +8,7 @@ export const RPCWarning = () => {
   const { latestBlockTime, connectedTime } = connected;
   const diff = connectedTime.getTime() - latestBlockTime.getTime();
 
-  if (diff < 15000) return;
+  if (diff < 30000) return;
   return (
     <div className="rpc-warning">
       <svg
