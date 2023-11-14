@@ -1,3 +1,4 @@
+import { Decimal, ResolveLink, usePrices } from "kujira-core";
 import { getSnaps } from "@leapwallet/cosmos-snap-provider";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { AnimatePresence, motion, usePresence } from "framer-motion";
@@ -15,10 +16,9 @@ import {
   IconStation,
   IconXDefi,
 } from "../icons";
-import { IconCopy } from "../icons/IconCopy";
 import { IconKado } from "../icons/IconKado";
 import { IconManta } from "../icons/IconManta";
-import { Chain } from "../icons/Icons";
+import { Chain, Copy, Disconnect, GearHead } from "../icons/Icons";
 import { useNetwork } from "../providers/network";
 import { Adapter, IWallet, useWallet } from "../providers/wallet";
 import { appLink, coinSort } from "../utils";
@@ -34,29 +34,34 @@ export function Account({
 }: {
   adapter?: () => Pick<
     IWallet,
+    | "account"
     | "adapter"
     | "balance"
-    | "account"
-    | "connect"
-    | "disconnect"
     | "balances"
     | "chainInfo"
+    | "connect"
+    | "delegations"
+    | "disconnect"
   >;
 }) {
   const {
     adapter: a,
     account,
-    connect,
-    disconnect,
     balances,
+    connect,
+    delegations,
+    disconnect,
   } = adapter();
   const [showKado, setShowKado] = useState(false);
   const [showWalletSelect, setShowWalletSelect] = useState(false);
+  const [hoverBalance, setHoverBalance] = useState(false);
   const [{ chainInfo }] = useNetwork();
   const [snapsSupported, setSnapsSupported] = useLocalStorage(
     "snaps",
     ""
   );
+  const { price, fetchPrices } = usePrices();
+
   useEffect(() => {
     getSnaps()
       .then(() => {
@@ -68,10 +73,30 @@ export function Account({
   }, []);
 
   useEffect(() => {
+    if (account && balances.length > 0) {
+      fetchPrices(balances.map((b) => b.denom || ""));
+    }
+  }, [balances]);
+
+  useEffect(() => {
     ReactTooltip.rebuild();
   }, [showWalletSelect]);
 
   if (account) {
+    const totalUSD = balances.reduce((a, b) => {
+      const total =
+        price(b.denom || "") *
+        (parseInt(b.amount || "0") /
+          10 ** Denom.from(b.denom || "").decimals);
+      return a + total;
+    }, 0);
+
+    const delegated = delegations?.reduce(
+      (a, v) =>
+        v.balance?.amount ? parseInt(v.balance.amount) + a : a,
+      0
+    );
+
     return (
       <>
         <MyAccount>
@@ -86,8 +111,45 @@ export function Account({
               {account.address.slice(-14)}
             </div>
             <div className="ml-a mr-0">
-              <IconCopy />
+              <Copy />
             </div>
+          </div>
+          <ResolveLink
+            onMouseOver={() => setHoverBalance(true)}
+            onMouseOut={() => setHoverBalance(false)}
+            app="blue"
+            path="/wallet"
+            className="balance mt-2 text-center">
+            <Decimal
+              labelLeft={true}
+              label="~$"
+              amount={totalUSD + price("ukuji") * (delegated || 0)}
+              round={2}
+              decimals={0}
+              className="fs-28 mono fw-400"
+            />
+            <span className="fs-11 fw-500 condensed mt-q1 msg">
+              {!hoverBalance
+                ? i18n.t("Approximate value")
+                : i18n.t("View all tokens")}
+            </span>
+          </ResolveLink>
+
+          <ResolveLink
+            className="btn flex ai-c mt-1"
+            app=""
+            path="/settings">
+            <div className="w-q5">
+              <GearHead className="mx-a" />
+            </div>
+            <div className="fs-14 ml-1 fw-500">Manage Account...</div>
+          </ResolveLink>
+
+          <div className="btn flex ai-c" onClick={() => disconnect()}>
+            <div className="w-q5">
+              <Disconnect className="mx-a" />
+            </div>
+            <div className="fs-14 ml-1 fw-500">Disconnect Wallet</div>
           </div>
         </MyAccount>
 
@@ -300,9 +362,9 @@ export function Account({
             }}>
             Read Only Connect
           </button> */}
-          <a href="http://blue.kujira.network/wallet">
+          <ResolveLink app="" path="/wallet">
             Need help deciding?
-          </a>
+          </ResolveLink>
         </div>
       </ConnectAnimation>
       {/* <button
@@ -320,12 +382,12 @@ export function Account({
 }
 
 const MyAccount = ({ children }: { children: React.ReactNode }) => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   return (
     <div
       className="relative py-q1"
       onMouseOver={() => setShow(true)}
-      onMouseOut={() => setShow(false)}>
+      onMouseOut={() => setShow(true)}>
       <div
         className="kujira__header-pfp"
         style={{
