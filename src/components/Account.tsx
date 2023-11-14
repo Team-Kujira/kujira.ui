@@ -382,12 +382,12 @@ export function Account({
 }
 
 const MyAccount = ({ children }: { children: React.ReactNode }) => {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   return (
     <div
       className="relative py-q1"
       onMouseOver={() => setShow(true)}
-      onMouseOut={() => setShow(true)}>
+      onMouseOut={() => setShow(false)}>
       <div
         className="kujira__header-pfp"
         style={{
