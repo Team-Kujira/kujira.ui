@@ -46,7 +46,7 @@ export const RealtimeContext: React.FC<
     if (socket?.endPointURL() === endpoint) return;
     socket?.disconnect();
     setChannels({});
-    const s = new Socket(`${endpoint}/socket`);
+    const s = new Socket(`${endpoint}/socket2`, {});
 
     s.connect();
     setSocket(s);
