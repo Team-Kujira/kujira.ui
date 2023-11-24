@@ -33,6 +33,7 @@ import { IconWSTETH } from "./IconWSTETH";
 import mnta from "./MNTA.png";
 import neok from "./NEOK.png";
 import plnk from "./PLNK.png";
+import sol from "./SOL.png";
 import wink from "./WINK.png";
 
 const makeID = (length: number) => {
@@ -243,6 +244,10 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <IconFUZN />;
     case "rfuzn":
       return <IconRFUZN />;
+    case "sol":
+    case "whsol":
+      return <img className="icon-denom" src={sol} alt="SOL" />;
+
     case "mnta":
       return <img className="icon-denom" src={mnta} alt="MNTA" />;
     case "wink":

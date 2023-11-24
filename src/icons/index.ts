@@ -38,7 +38,6 @@ export * from "./IconSAvax";
 export * from "./IconSKuji";
 export * from "./IconSave";
 export * from "./IconSearch";
-export * from "./IconSolana";
 export * from "./IconSonar";
 export * from "./IconSort";
 export * from "./IconSortAsc";
