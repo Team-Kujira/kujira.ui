@@ -33,6 +33,7 @@ import { IconWSTETH } from "./IconWSTETH";
 import mnta from "./MNTA.png";
 import neok from "./NEOK.png";
 import plnk from "./PLNK.png";
+import rac from "./RAC.png";
 import sol from "./SOL.png";
 import wink from "./WINK.png";
 
@@ -466,13 +467,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       );
 
     case "rac":
-      return (
-        <img
-          className="icon-denom"
-          src="https://raw.githubusercontent.com/cosmorama/wynd-assets-list/main/images/RAC.png"
-          alt="FURY"
-        />
-      );
+      return <img className="icon-denom" src={rac} alt="RAC" />;
 
     case "cmdx":
       return (
