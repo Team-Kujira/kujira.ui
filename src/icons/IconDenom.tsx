@@ -466,6 +466,15 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
         />
       );
 
+    case "sayve":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/terra/images/sayve.png"
+          alt="SAYVE"
+        />
+      );
+
     case "rac":
       return <img className="icon-denom" src={rac} alt="RAC" />;
 
