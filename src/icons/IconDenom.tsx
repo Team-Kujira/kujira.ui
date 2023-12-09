@@ -12,6 +12,7 @@ import {
   IconWarning,
 } from ".";
 import { i18n } from "..";
+import { IconAQLA } from "./IconAQLA";
 import { IconWBNB } from "./IconBNB";
 import { IconCNTO } from "./IconCNTO";
 import { IconFIS } from "./IconFIS";
@@ -118,6 +119,9 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
   switch (token) {
     case "aqua":
       return <IconAQUA />;
+    case "aqla":
+      return <IconAQLA />;
+
     case "atom":
       return <IconAtom />;
     case "btc":
