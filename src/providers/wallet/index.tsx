@@ -488,7 +488,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
               height={256}
               color="#ffffff"
               backgroundColor="transparent"
-              rounding={150}
+              rounding={50}
               cutout
               cutoutElement={
                 <img
