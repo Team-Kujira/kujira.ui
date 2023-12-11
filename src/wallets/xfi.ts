@@ -115,7 +115,7 @@ export class Xfi {
     return await client.signAndBroadcast(
       this.account.address,
       msgs,
-      1.5
+      1.7
     );
   };
 }
