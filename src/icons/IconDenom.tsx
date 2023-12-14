@@ -60,6 +60,8 @@ export const IconDenom: React.FC<{ denom: Denom | string }> = ({
     typeof denom !== "string" &&
     denom.trace &&
     denom.trace.path.split("/").length > 2 &&
+    denom.reference !==
+      "ibc/D5F668AA43F9DE1F5E8A443EC5F9DD2D71AB3F3DC42CCD374F8751615A13B70B" &&
     i18n.t("Indirect IBC token. Possibly spoofed");
 
   return warning ? (
