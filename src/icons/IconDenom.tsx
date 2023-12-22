@@ -1296,7 +1296,7 @@ const IconAQUA = () => (
         r="214"
         fill="#262728"
         stroke="#27B8DA"
-        stroke-width="18"
+        strokeWidth="18"
       />
       <path
         fill="#27B8DA"
