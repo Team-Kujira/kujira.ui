@@ -277,7 +277,14 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
           alt="TIA"
         />
       );
-
+    case "newt":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/neutron/images/newt.png"
+          alt="NEWT"
+        />
+      );
     case "tia":
       return (
         <img
