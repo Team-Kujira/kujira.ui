@@ -435,10 +435,17 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
 
   useEffect(() => {
     wallet && wallet.onChange(setWallet);
+    if (cw3Address && wallet) {
+      if (wallet instanceof ReadOnly) return;
+      if (wallet instanceof CW3Wallet) return;
+
+      setWallet(new CW3Wallet(cw3Address, wallet));
+    }
   }, [wallet]);
 
   const disconnect = () => {
     if (wallet instanceof CW3Wallet) {
+      setCw3Address("");
       setWallet(wallet.wallet);
     } else {
       setStored("");
@@ -551,27 +558,32 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
       <Modal
         show={cw3Modal === "address"}
         close={() => setCw3Modal(undefined)}
-        confirm={() => {
-          if (!wallet) return;
-          if (wallet instanceof ReadOnly) return;
-          if (wallet instanceof CW3Wallet) return;
-          setStored(Adapter.CW3);
-          setWallet(new CW3Wallet(address, wallet));
-          setCw3Modal(undefined);
-        }}
+        confirm={
+          wallet
+            ? () => {
+                if (wallet instanceof ReadOnly) return;
+                if (wallet instanceof CW3Wallet) return;
+                setWallet(new CW3Wallet(cw3Address, wallet));
+                setCw3Modal(undefined);
+              }
+            : undefined
+        }
         title="DAO Connection">
-        <>
-          <p className="fs-14 lh-18 color-white mb-2">
-            Enter a CW3 DAO address. You will be able to submit
-            proposals to the DAO where normally you would execute
-            those transactions with your own account.
+        <p className="fs-14 lh-18 color-white mb-2">
+          Enter a CW3 DAO address. You will be able to submit
+          proposals to the DAO where normally you would execute those
+          transactions with your own account.
+        </p>
+        <Input
+          placeholder="kujira1..."
+          value={cw3Address}
+          onChange={(e) => setCw3Address(e.currentTarget.value)}
+        />
+        {!wallet && (
+          <p className="fs-14 lh-18 color-red mb-2">
+            No wallet connected
           </p>
-          <Input
-            placeholder="kujira1..."
-            value={address}
-            onChange={(e) => setAddress(e.currentTarget.value)}
-          />
-        </>
+        )}
       </Modal>
 
       <Modal

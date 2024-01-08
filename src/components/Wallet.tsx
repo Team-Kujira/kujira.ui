@@ -222,7 +222,7 @@ export function Wallet({
               onClick={() => {
                 disconnect();
               }}>
-              Disconnect from SQUAD
+              Disconnect from DAO
             </i18n.button>
           ) : (
             <>
