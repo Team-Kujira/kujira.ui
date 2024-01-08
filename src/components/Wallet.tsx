@@ -21,7 +21,6 @@ import { IconCopy } from "../icons/IconCopy";
 import { IconKado } from "../icons/IconKado";
 import { IconKeplr } from "../icons/IconKeplr";
 import { IconLeap } from "../icons/IconLeap";
-import { IconManta } from "../icons/IconManta";
 import { IconWallet } from "../icons/IconWallet";
 import { IconWarning } from "../icons/IconWarning";
 import { useNetwork } from "../providers/network";
@@ -58,6 +57,30 @@ export const NetworkWarning = () => {
     </>
   );
 };
+
+const IconManta = ({ className }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    className={className}>
+    <defs>
+      <linearGradient
+        id="mnta_grad"
+        x1="0%"
+        x2="100%"
+        y1="15.682%"
+        y2="15.682%">
+        <stop offset="0%" stop-color="#C900FE" />
+        <stop offset="100%" stop-color="#02FCBA" />
+      </linearGradient>
+    </defs>
+    <path
+      fill="url(#mnta_grad)"
+      fill-rule="evenodd"
+      d="M9.935 2.008c.51.118-.987 1.037-.868 1.364.12.327.58.665.963.62.383-.044 1.127-1.38 1.335-.888.262.622-1.09 3.587.239 4.625 1.291 1.01 3.324 1.108 5.257.937 2.498-.222 4.897-1.832 6.51-2.073.855-.128 1.063 3.322-.83 5.439-.985 1.103-2.215 2.388-3.477 3.429-1.575 1.297-2.67 1.676-3.085 3.014-.533 1.721 1.018 1.934 2.538 1.61 1.496-.32 2.947-1.157 3.159-.953.287.276-1.133 1.278-3.655 1.79-3.481.707-8.972.335-13.81-5.261C.95 11.89-.28 6.025.051 4.54c.438-1.958 3.327 1.532 5.262.6.812-.392 1.491-.789 2.119-1.575.855-1.072 2.139-1.642 2.502-1.558Z"
+    />
+  </svg>
+);
 
 export function Wallet({
   adapter = useWallet,
@@ -193,30 +216,9 @@ export function Wallet({
             </tbody>
           </table>
 
-          <div className="md-flex jc-e mb-1 pr-1">
-            <button
-              className="transparent md-flex ai-c jc-e mr-0 ml-a pointer"
-              onClick={() => setShowKado(true)}>
-              <IconKado />
-              <span className="fs-12 color-white ml-1 fw-600">
-                Fund with Kado
-              </span>
-            </button>
-          </div>
-
-          <div className="md-flex jc-e mb-1 pr-1">
-            <a
-              className="transparent md-flex ai-c jc-e mr-0 ml-a pointer"
-              href="https://app.localmoney.io/">
-              <IconDenom denom={"local"} />
-              <span className="fs-12 color-white ml-1 fw-600">
-                Fund with Local Money
-              </span>
-            </a>
-          </div>
           {a === Adapter.CW3 ? (
             <i18n.button
-              className="md-button md-button--grey md-button--outline disconnect"
+              className="md-button md-button--grey md-button--outline md-button--full disconnect"
               onClick={() => {
                 disconnect();
               }}>
@@ -225,22 +227,72 @@ export function Wallet({
           ) : (
             <>
               <i18n.button
-                className="md-button md-button--grey md-button--outline disconnect"
+                className="md-button md-button--grey md-button--outline md-button--full disconnect"
                 onClick={() => {
                   disconnect();
                 }}>
                 Disconnect Wallet
               </i18n.button>
-              {/* <br />
+            </>
+          )}
+
+          <div className="md-row mt-2 pad-tight wrap">
+            <div className="col-4">
               <button
-                className="md-button md-button--outline"
+                className="md-flex dir-c pointer transparent ai-c"
+                onClick={() => setShowKado(true)}>
+                <IconKado />
+                <span className="fs-11 color-white fw-600 text-center mt-q1">
+                  Fund with Kado
+                </span>
+              </button>
+            </div>
+            <div className="col-4">
+              <a
+                className="md-flex dir-c pointer ai-c"
+                href="https://app.localmoney.io/"
+                target="_blank">
+                <IconDenom denom={"local"} />
+                <span className="fs-11 color-white fw-600 text-center mt-q1">
+                  Fund with Local
+                </span>
+              </a>
+            </div>
+            <div className="col-4">
+              <button
+                className="md-flex dir-c pointer transparent ai-c"
                 onClick={() => {
                   connect && connect(Adapter.CW3);
                 }}>
-                <IconManta />
-              </button> */}
-            </>
-          )}
+                <IconManta className="w-3 block" />
+                <span className="fs-11 color-white fw-600 text-center mt-q1">
+                  Connect DAO
+                </span>
+              </button>
+            </div>
+          </div>
+
+          {/* <div className="md-flex jc-e mb-1 pr-1">
+            <button
+              className="transparent md-flex ai-c jc-e mr-0 ml-a pointer"
+              onClick={() => setShowKado(true)}>
+              <IconKado />
+              <span className="fs-12 color-white ml-1 fw-600">
+                Fund with Kado
+              </span>
+            </button>
+          </div> */}
+
+          {/* <div className="md-flex jc-e mb-1 pr-1">
+            <a
+              className="transparent md-flex ai-c jc-e mr-0 ml-a pointer"
+              href="https://app.localmoney.io/">
+              <IconDenom denom={"local"} />
+              <span className="fs-12 color-white ml-1 fw-600">
+                Fund with Local Money
+              </span>
+            </a>
+          </div> */}
         </div>
         {showKado && <KadoModal onClose={() => setShowKado(false)} />}
       </>

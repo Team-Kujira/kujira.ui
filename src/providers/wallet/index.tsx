@@ -561,7 +561,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
         }}
         title="DAO Connection">
         <>
-          <p className="fs-14 lh-16 color-white mb-2">
+          <p className="fs-14 lh-18 color-white mb-2">
             Enter a CW3 DAO address. You will be able to submit
             proposals to the DAO where normally you would execute
             those transactions with your own account.
