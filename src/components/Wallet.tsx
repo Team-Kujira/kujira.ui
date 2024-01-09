@@ -260,10 +260,13 @@ export function Wallet({
             </div>
             <div className="col-4">
               <button
+                disabled
+                data-tip="Coming Soon..."
                 className="md-flex dir-c pointer transparent ai-c"
-                onClick={() => {
-                  connect && connect(Adapter.CW3);
-                }}>
+                // onClick={() => {
+                //   connect && connect(Adapter.CW3);
+                // }}
+              >
                 <IconManta className="w-3 block" />
                 <span className="fs-11 color-white fw-600 text-center mt-q1">
                   Connect DAO
