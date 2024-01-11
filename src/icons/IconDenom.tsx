@@ -285,6 +285,15 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
           alt="NEWT"
         />
       );
+    case "cheq":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/cheqd/images/cheq.svg"
+          alt="CHEQ"
+        />
+      );
+
     case "tia":
       return (
         <img
