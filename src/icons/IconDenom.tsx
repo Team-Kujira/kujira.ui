@@ -277,6 +277,15 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
           alt="TIA"
         />
       );
+    case "ophir":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/migaloo/images/ophir.png"
+          alt="OPHIR"
+        />
+      );
+
     case "newt":
       return (
         <img
