@@ -1,71 +1,117 @@
-import { fromBech32, toBech32 } from "@cosmjs/encoding";
+import { Decimal } from "@cosmjs/math";
 import { AccountData, EncodeObject } from "@cosmjs/proto-signing";
-import { DeliverTxResponse, StargateClient } from "@cosmjs/stargate";
-import { ChainInfo } from "@keplr-wallet/types";
-import { Msg } from "@terra-money/feather.js";
 import {
-  ConnectType,
-  ConnectedWallet,
-  WalletController,
-} from "@terra-money/wallet-controller";
-import { registry } from "kujira.js";
+  DeliverTxResponse,
+  GasPrice,
+  SigningStargateClient,
+} from "@cosmjs/stargate";
+import { ChainInfo, Keplr } from "@keplr-wallet/types";
+import { accountParser, aminoTypes, registry } from "kujira.js";
+import * as evmos from "./evmos";
+
+declare global {
+  interface Window {
+    station: { keplr: Keplr };
+  }
+}
+
+type Options = { feeDenom: string };
 
 export class Station {
   private constructor(
-    private controller: WalletController,
-    private wallet: ConnectedWallet,
     public account: AccountData,
-    private config: ChainInfo
+    public config: ChainInfo,
+    private options?: Options
   ) {}
 
-  static connect = async (
+  static connect = (
     config: ChainInfo,
-    opts: { controller: WalletController }
+    opts?: { feeDenom: string }
   ): Promise<Station> => {
-    const { controller } = opts;
+    const station = window.station;
 
-    await controller.connect(ConnectType.EXTENSION);
-    const wallet: ConnectedWallet = await new Promise((r) =>
-      controller.connectedWallet().subscribe((next) => {
-        next && r(next);
-      })
-    );
+    if (!station) throw new Error("Station extension not available");
 
-    if (!wallet.addresses[config.chainId])
-      throw new Error(`${config.chainId} not available on Station`);
-
-    const account: AccountData = {
-      address: toBech32(
-        "kujira",
-        fromBech32(wallet.addresses[config.chainId]).data
-      ),
-      algo: "secp256k1",
-      pubkey: new Uint8Array(),
-    };
-    return new Station(controller, wallet, account, config);
+    return station.keplr
+      .experimentalSuggestChain(config)
+      .then(() => station.keplr.enable(config.chainId))
+      .then(() => station.keplr.getOfflineSignerAuto(config.chainId))
+      .then((signer) => signer.getAccounts())
+      .then((as) => {
+        if (as.length) {
+          return new Station(as[0], config, opts);
+        } else {
+          throw new Error("No Accounts");
+        }
+      });
   };
 
-  public disconnect = () => {
-    this.controller.disconnect();
+  public onChange = (fn: (k: Station) => void) => {
+    window.addEventListener("leap_keystorechange", () => {
+      const leap = window.leap;
+      if (!leap) return;
+
+      leap
+        .getOfflineSignerAuto(this.config.chainId)
+        .then((signer) => signer.getAccounts())
+        .then((as) => {
+          if (as.length) {
+            this.account = as[0];
+            fn(this);
+          }
+        });
+    });
   };
 
-  public onChange = (fn: (k: Station) => void) => {};
+  public disconnect = () => {};
 
   public signAndBroadcast = async (
     rpc: string,
     msgs: EncodeObject[]
+    // batch?: {
+    //   size: number;
+    //   cb: (total: number, remaining: number) => void;
+    // }
   ): Promise<DeliverTxResponse> => {
-    const terraMsgs = msgs.map((m) =>
-      Msg.fromProto({ typeUrl: m.typeUrl, value: registry.encode(m) })
+    if (!window.station) throw new Error("No Wallet Connected");
+
+    const signer = await window.station.keplr.getOfflineSignerAuto(
+      this.config.chainId
     );
 
-    const res = await this.controller.sign({
-      msgs: terraMsgs,
-      chainID: this.config.chainId,
-    });
+    if (this.config.chainName === "Evmos")
+      return evmos.signAndBroadcast({
+        rpc: this.config.rpc,
+        signer,
+        messages: msgs,
+        sourceAccount: this.account,
+        sourceChainData: this.config,
+      });
 
-    const stargate = await StargateClient.connect(rpc);
-    const result = await stargate.broadcastTx(res.result.toBytes());
-    return result;
+    const gasPrice = new GasPrice(
+      Decimal.fromUserInput("0.00125", 18),
+      this.options
+        ? this.options.feeDenom
+        : this.config.feeCurrencies[0].coinDenom
+    );
+
+    const client = await SigningStargateClient.connectWithSigner(
+      rpc,
+      signer,
+      {
+        registry,
+        gasPrice,
+        aminoTypes: aminoTypes(
+          this.config.bech32Config.bech32PrefixAccAddr
+        ),
+        accountParser,
+      }
+    );
+
+    return await client.signAndBroadcast(
+      this.account.address,
+      msgs,
+      1.7
+    );
   };
 }

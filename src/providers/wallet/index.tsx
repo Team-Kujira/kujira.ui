@@ -9,11 +9,6 @@ import {
   assertIsDeliverTxSuccess,
 } from "@cosmjs/stargate";
 import { ChainInfo } from "@keplr-wallet/types";
-import {
-  ConnectType,
-  WalletController,
-  getChainOptions,
-} from "@terra-money/wallet-controller";
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { BigNumber } from "ethers";
@@ -160,8 +155,6 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
   const [balances, setBalances] = useState<Record<string, BigNumber>>(
     {}
   );
-  const [stationController, setStationController] =
-    useState<WalletController | null>(null);
 
   const [kujiraBalances, setKujiraBalances] = useState<Coin[]>([]);
 
@@ -176,25 +169,6 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
   const [delegations, setDelegations] = useState<
     null | DelegationResponse[]
   >(null);
-
-  useEffect(() => {
-    getChainOptions().then((opts) =>
-      setStationController(new WalletController(opts))
-    );
-  }, []);
-
-  useEffect(() => {
-    if (!wallet && stored === Adapter.Station) {
-      stationController?.availableConnections().subscribe((next) => {
-        // https://github.com/terra-money/wallet-provider/blob/main/packages/src/%40terra-money/wallet-controller/controller.ts#L247-L259
-        // The extension isn't actually available when this is called
-        next.find((x) => x.type === ConnectType.EXTENSION) &&
-          setTimeout(() => {
-            connect(Adapter.Station);
-          }, 10);
-      });
-    }
-  }, [stationController]);
 
   useEffect(() => {
     if (!wallet && stored === Adapter.ReadOnly && address) {
@@ -408,22 +382,19 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
         });
         break;
       case Adapter.Station:
-        stationController &&
-          Station.connect(chainInfo, {
-            controller: stationController,
+        Station.connect(chainInfo)
+          .then((x) => {
+            setStored(adapter);
+            setWallet(x);
           })
-            .then((x) => {
-              setStored(adapter);
-              setWallet(x);
-            })
-            .catch((err) => {
-              setStored("");
-              toast.error(
-                err.message === "extension instance is not created!"
-                  ? "Station extension not available"
-                  : err.message
-              );
-            });
+          .catch((err) => {
+            setStored("");
+            toast.error(
+              err.message === "extension instance is not created!"
+                ? "Station extension not available"
+                : err.message
+            );
+          });
         break;
       case Adapter.ReadOnly:
         setShowAddress(true);
