@@ -47,11 +47,11 @@ export class Station {
   };
 
   public onChange = (fn: (k: Station) => void) => {
-    window.addEventListener("leap_keystorechange", () => {
-      const leap = window.leap;
-      if (!leap) return;
+    window.addEventListener("station_wallet_change", () => {
+      const station = window.station;
+      if (!station) return;
 
-      leap
+      station.keplr
         .getOfflineSignerAuto(this.config.chainId)
         .then((signer) => signer.getAccounts())
         .then((as) => {
