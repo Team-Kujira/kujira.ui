@@ -50,7 +50,7 @@ export class LeapSnap {
     const signer = new CosmjsOfflineSigner(this.config.chainId);
 
     const gasPrice = new GasPrice(
-      Decimal.fromUserInput("0.00125", 18),
+      Decimal.fromUserInput("0.034", 18),
       this.options
         ? this.options.feeDenom
         : this.config.feeCurrencies[0].coinDenom
