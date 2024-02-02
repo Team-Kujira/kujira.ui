@@ -1,5 +1,6 @@
 import {
   HttpBatchClient,
+  StatusResponse,
   Tendermint37Client,
 } from "@cosmjs/tendermint-rpc";
 import { ChainInfo } from "@keplr-wallet/types";
@@ -61,7 +62,8 @@ const toClient = async (
   endpoint: string,
   setLatencies?: Dispatch<
     SetStateAction<Record<string, RPCConnection>>
-  >
+  >,
+  statusCallback?: (res: StatusResponse) => void
 ): Promise<[Tendermint37Client, string]> => {
   const start = new Date().getTime();
 
@@ -72,6 +74,7 @@ const toClient = async (
     })
   );
   const status = await c.status();
+  statusCallback && statusCallback(status);
 
   setLatencies &&
     setLatencies((prev) => ({
