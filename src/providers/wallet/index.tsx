@@ -12,7 +12,7 @@ import { ChainInfo } from "@keplr-wallet/types";
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { BigNumber } from "ethers";
-import { CHAIN_INFO, Denom, MAINNET, NETWORK } from "kujira.js";
+import { CHAIN_INFO, Denom, NETWORK } from "kujira.js";
 import {
   FC,
   PropsWithChildren,
@@ -313,9 +313,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
     auto?: boolean
   ) => {
     const chainInfo: ChainInfo = {
-      ...CHAIN_INFO[MAINNET],
-      chainId: network,
-      chainName: "Kujira Kev",
+      ...CHAIN_INFO[chain || network],
     };
 
     switch (adapter) {
