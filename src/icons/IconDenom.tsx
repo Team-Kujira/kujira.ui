@@ -687,6 +687,15 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
           alt="ION"
         />
       );
+    case "stkatom":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/persistence/images/stkatom.svg"
+          alt="stkATOM"
+        />
+      );
+
     case "wbnb":
     case "bnb":
       return <IconWBNB />;
