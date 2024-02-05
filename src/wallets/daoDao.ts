@@ -11,6 +11,7 @@ import {
 } from "@cosmos-kit/core/esm/iframe";
 import { ChainInfo } from "@keplr-wallet/types";
 import { accountParser, aminoTypes, registry } from "kujira.js";
+import { toast } from "react-hot-toast";
 
 const iframeClient = new IframeClient(iframeWallet);
 
@@ -40,7 +41,11 @@ export class DaoDao {
                 opts
               )
           )
-      );
+      )
+      .catch((err) => {
+        toast.error(err.message);
+        throw err;
+      });
 
   public onChange = (fn: (k: DaoDao) => void) => {};
 
