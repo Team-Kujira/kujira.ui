@@ -43,7 +43,8 @@ export class DaoDao {
           )
       )
       .catch((err) => {
-        toast.error(err.message);
+        err.message?.includes("missing an account") &&
+          toast.error(err.message);
         throw err;
       });
 
