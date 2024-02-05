@@ -41,6 +41,7 @@ import {
   Xfi,
 } from "../../wallets";
 import { CW3Wallet } from "../../wallets/cw3";
+import { DaoDao } from "../../wallets/daoDao";
 import { useNetwork } from "../network";
 import Logo from "./../../assets/sonar.png";
 
@@ -53,12 +54,13 @@ export enum Adapter {
   Leap = "leap",
   LeapSnap = "leapSnap",
   Xfi = "xfi",
+  DaoDao = "daodao",
 }
 
 export type IWallet = {
   connect: null | ((adapter: Adapter, chain?: NETWORK) => void);
   disconnect: () => void;
-  account: AccountData | null;
+  account: (AccountData & { label?: string }) | null;
   kujiraAccount: Any | null;
   balances: Coin[];
   getBalance: (
@@ -143,6 +145,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
     | Leap
     | LeapSnap
     | Xfi
+    | DaoDao
     | null
   >(null);
 
@@ -177,6 +180,11 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
     }
 
     stored && connect(stored, network, true);
+
+    const chainInfo: ChainInfo = CHAIN_INFO[network];
+    DaoDao.connect(chainInfo)
+      .then(setWallet)
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -407,6 +415,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
     if (cw3Address && wallet) {
       if (wallet instanceof ReadOnly) return;
       if (wallet instanceof CW3Wallet) return;
+      if (wallet instanceof DaoDao) return;
 
       setWallet(new CW3Wallet(cw3Address, wallet));
     }
@@ -423,27 +432,29 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
     }
   };
 
+  const value: IWallet = {
+    adapter,
+    account: wallet?.account || null,
+    delegations,
+    connect,
+    disconnect,
+    kujiraAccount,
+    balances: kujiraBalances,
+    getBalance,
+    balance,
+    signAndBroadcast: (msgs, memo) =>
+      signAndBroadcast(rpc, msgs, memo),
+    refreshBalances,
+    refreshDelegations,
+    feeDenom,
+    setFeeDenom,
+    chainInfo,
+  };
+
   return (
     <Context.Provider
       key={network + wallet?.account.address}
-      value={{
-        adapter,
-        account: wallet?.account || null,
-        delegations,
-        connect,
-        disconnect,
-        kujiraAccount,
-        balances: kujiraBalances,
-        getBalance,
-        balance,
-        signAndBroadcast: (msgs, memo) =>
-          signAndBroadcast(rpc, msgs, memo),
-        refreshBalances,
-        refreshDelegations,
-        feeDenom,
-        setFeeDenom,
-        chainInfo,
-      }}>
+      value={value}>
       {children}
       <Modal
         show={modal}
@@ -532,6 +543,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
             ? () => {
                 if (wallet instanceof ReadOnly) return;
                 if (wallet instanceof CW3Wallet) return;
+                if (wallet instanceof DaoDao) return;
                 setWallet(new CW3Wallet(cw3Address, wallet));
                 setCw3Modal(undefined);
               }

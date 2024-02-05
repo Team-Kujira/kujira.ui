@@ -159,20 +159,43 @@ export function Wallet({
           {a === Adapter.Keplr && <Keplr />}
           {a === Adapter.CW3 && <IconManta />}
           {a === Adapter.ReadOnly && <ReadOnly />}
+
           <span className="desktop color-white">
-            {account.address.substr(0, 6)}...
-            {account.address.substr(-6)}
+            {account.label ? (
+              account.label
+            ) : (
+              <>
+                {account.address.substr(0, 6)}...
+                {account.address.substr(-6)}
+              </>
+            )}
           </span>
+
           <span className="mobile color-white">
-            {account.address.substr(0, 3)}...
-            {account.address.substr(-3)}
+            {account.label ? (
+              account.label
+            ) : (
+              <>
+                {account.address.substr(0, 3)}...
+                {account.address.substr(-3)}
+              </>
+            )}
           </span>
         </div>
 
         <div className="wallet__popup">
           <span className="address mb-2">
-            {account.address.substr(0, 16)}...
-            {account.address.substr(-16)}
+            {account.label ? (
+              <>
+                {account.label} {account.address.substr(0, 16)}...
+                {account.address.substr(-16)}
+              </>
+            ) : (
+              <>
+                {account.address.substr(0, 16)}...
+                {account.address.substr(-16)}
+              </>
+            )}
             <div
               className="copy"
               onClick={() => {
@@ -216,7 +239,7 @@ export function Wallet({
             </tbody>
           </table>
 
-          {a === Adapter.CW3 ? (
+          {a === Adapter.DaoDao ? null : a === Adapter.CW3 ? (
             <i18n.button
               className="md-button md-button--grey md-button--outline md-button--full disconnect"
               onClick={() => {
@@ -258,21 +281,23 @@ export function Wallet({
                 </span>
               </a>
             </div>
-            <div className="col-4">
-              <button
-                disabled
-                data-tip="Coming Soon..."
-                className="md-flex dir-c pointer transparent ai-c"
-                // onClick={() => {
-                //   connect && connect(Adapter.CW3);
-                // }}
-              >
-                <IconManta className="w-3 block" />
-                <span className="fs-11 color-white fw-600 text-center mt-q1">
-                  Connect DAO
-                </span>
-              </button>
-            </div>
+            {a !== Adapter.DaoDao && (
+              <div className="col-4">
+                <button
+                  disabled
+                  data-tip="Coming Soon..."
+                  className="md-flex dir-c pointer transparent ai-c"
+                  // onClick={() => {
+                  //   connect && connect(Adapter.CW3);
+                  // }}
+                >
+                  <IconManta className="w-3 block" />
+                  <span className="fs-11 color-white fw-600 text-center mt-q1">
+                    Connect DAO
+                  </span>
+                </button>
+              </div>
+            )}
           </div>
 
           {/* <div className="md-flex jc-e mb-1 pr-1">
