@@ -696,6 +696,15 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
         />
       );
 
+    case "dym":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/dymension/images/dymension-logo.svg"
+          alt="DYM"
+        />
+      );
+
     case "wbnb":
     case "bnb":
       return <IconWBNB />;
