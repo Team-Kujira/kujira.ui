@@ -705,6 +705,15 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
         />
       );
 
+    case "lvn":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/osmosis/images/levana.svg"
+          alt="LVN"
+        />
+      );
+
     case "wbnb":
     case "bnb":
       return <IconWBNB />;
