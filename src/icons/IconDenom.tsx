@@ -723,6 +723,15 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
         />
       );
 
+    case "qcfuzn":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/kujira/images/qcfuzn.svg"
+          alt="qcFUZN"
+        />
+      );
+
     case "wbnb":
     case "bnb":
       return <IconWBNB />;
