@@ -714,6 +714,15 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
         />
       );
 
+    case "odin":
+      return (
+        <img
+          className="icon-denom"
+          src="https://raw.githubusercontent.com/cosmos/chain-registry/master/odin/images/odin.svg"
+          alt="ODIN"
+        />
+      );
+
     case "wbnb":
     case "bnb":
       return <IconWBNB />;
