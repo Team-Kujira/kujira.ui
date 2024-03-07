@@ -20,6 +20,27 @@ const requiredNamespaces = {
   },
 };
 
+const getAccounts = async (
+  client: Client,
+  session: SessionTypes.Struct
+): Promise<AccountData[]> => {
+  const res = await client.request<string>({
+    topic: session.topic,
+    chainId: "cosmos:kaiyo-1",
+    request: {
+      method: "cosmos_getAccounts",
+      params: {},
+    },
+  });
+
+  const data = JSON.parse(res);
+  const accountData: AccountData = {
+    ...data,
+    pubkey: Buffer.from(data.pubkey, "base64"),
+  };
+  return [accountData];
+};
+
 // https://docs.walletconnect.com/2.0/javascript/sign/dapp-usage
 export class Sonar {
   public account: AccountData;
