@@ -1,6 +1,9 @@
 export function IconKuji() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 100 100"
+      className="icon-denom">
       <g fill="none" fillRule="evenodd">
         <circle cx="50" cy="50" r="49" fill="#22242F"></circle>
         <path
