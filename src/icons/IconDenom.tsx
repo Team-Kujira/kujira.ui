@@ -119,7 +119,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
     );
   }
 
-  switch (token.replace(/^axl/, "")) {
+  switch (token.split(".").at(0)) {
     case "aqua":
       return <IconAQUA />;
     case "aqla":
