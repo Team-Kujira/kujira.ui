@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { ReactElement, useEffect, useRef, useState } from "react";
 import { IconArrow } from "../icons/IconArrow";
 
-type OptionType<T> = {
+export type OptionType<T> = {
   label: string;
   value: T;
   status?: string;
