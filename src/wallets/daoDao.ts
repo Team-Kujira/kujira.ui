@@ -66,6 +66,7 @@ export class DaoDao {
 
     const client = await SigningStargateClient.connectWithSigner(
       rpc,
+      // @ts-expect-error TODO upgrade cosmjs types from 0.8.0 to 0.9.0. Long -> bigint
       signer,
       {
         registry,
