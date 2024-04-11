@@ -62,7 +62,7 @@ export async function signAndBroadcast({
     [
       {
         pubkey: pubk,
-        sequence: account.base_account.sequence.toNumber(),
+        sequence: Number(account.base_account.sequence),
       },
     ],
     coins(gasPrice * gasLimit, "aevmos"),
@@ -74,7 +74,7 @@ export async function signAndBroadcast({
     txBodyBytes,
     authInfoBytes,
     sourceChainData.chainId,
-    account.base_account.accountNumber.toNumber()
+    Number(account.base_account.accountNumber)
   );
   const { signature, signed } = await signer.signDirect(
     sourceAccount.address,

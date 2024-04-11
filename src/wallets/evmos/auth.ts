@@ -1,6 +1,6 @@
+import { BinaryReader, BinaryWriter } from "cosmjs-types/binary";
 import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
 import { DeepPartial } from "cosmjs-types/helpers";
-import { Reader, Writer } from "protobufjs/minimal";
 
 export const protobufPackage = "cosmos.auth.v1beta1";
 
@@ -24,8 +24,8 @@ const baseEthAccount: object = { code_hash: "" };
 export const EthAccount = {
   encode(
     message: EthAccount,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: BinaryWriter = BinaryWriter.create()
+  ): BinaryWriter {
     if (message.base_account !== undefined) {
       BaseAccount.encode(
         message.base_account,
@@ -39,9 +39,12 @@ export const EthAccount = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): EthAccount {
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number
+  ): EthAccount {
     const reader =
-      input instanceof Uint8Array ? new Reader(input) : input;
+      input instanceof Uint8Array ? new BinaryReader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseEthAccount } as EthAccount;
     while (reader.pos < end) {
@@ -104,7 +107,6 @@ export const EthAccount = {
       object.base_account !== null
     ) {
       message.base_account = BaseAccount.fromPartial(
-        // @ts-expect-error
         object.base_account
       );
     } else {
@@ -129,7 +131,10 @@ const baseParams: object = {
 };
 
 export const Params = {
-  encode(message: Params, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: Params,
+    writer: BinaryWriter = BinaryWriter.create()
+  ): BinaryWriter {
     if (message.max_memo_characters !== 0) {
       writer.uint32(8).uint64(message.max_memo_characters);
     }
@@ -148,36 +153,28 @@ export const Params = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Params {
+  decode(input: BinaryReader | Uint8Array, length?: number): Params {
     const reader =
-      input instanceof Uint8Array ? new Reader(input) : input;
+      input instanceof Uint8Array ? new BinaryReader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseParams } as Params;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.max_memo_characters = (
-            reader.uint64() as Long
-          ).toNumber();
+          message.max_memo_characters = Number(reader.uint64());
           break;
         case 2:
-          message.tx_sig_limit = (reader.uint64() as Long).toNumber();
+          message.tx_sig_limit = Number(reader.uint64());
           break;
         case 3:
-          message.tx_size_cost_per_byte = (
-            reader.uint64() as Long
-          ).toNumber();
+          message.tx_size_cost_per_byte = Number(reader.uint64());
           break;
         case 4:
-          message.sig_verify_cost_ed25519 = (
-            reader.uint64() as Long
-          ).toNumber();
+          message.sig_verify_cost_ed25519 = Number(reader.uint64());
           break;
         case 5:
-          message.sig_verify_cost_secp256k1 = (
-            reader.uint64() as Long
-          ).toNumber();
+          message.sig_verify_cost_secp256k1 = Number(reader.uint64());
           break;
         default:
           reader.skipType(tag & 7);

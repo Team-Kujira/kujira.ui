@@ -11,6 +11,7 @@ import {
 } from "@keplr-wallet/types";
 import { accountParser, aminoTypes, registry } from "kujira.js";
 import * as evmos from "./evmos";
+import { castSigner } from "./utils";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -92,7 +93,7 @@ export class Keplr {
     if (this.config.chainName === "Evmos")
       return evmos.signAndBroadcast({
         rpc: this.config.rpc,
-        signer,
+        signer: castSigner(signer),
         messages: msgs,
         sourceAccount: this.account,
         sourceChainData: this.config,
@@ -107,7 +108,7 @@ export class Keplr {
 
     const client = await SigningStargateClient.connectWithSigner(
       rpc,
-      signer,
+      castSigner(signer),
       {
         registry,
         gasPrice,
