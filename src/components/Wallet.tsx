@@ -157,7 +157,6 @@ export function Wallet({
           {a === Adapter.Xfi && <XDefi />}
           {a === Adapter.Station && <Station />}
           {a === Adapter.Keplr && <Keplr />}
-          {a === Adapter.CW3 && <IconManta />}
           {a === Adapter.ReadOnly && <ReadOnly />}
 
           <span className="desktop color-white">
@@ -239,7 +238,7 @@ export function Wallet({
             </tbody>
           </table>
 
-          {a === Adapter.DaoDao ? null : a === Adapter.CW3 ? (
+          {a === Adapter.DaoDao ? (
             <i18n.button
               className="md-button md-button--grey md-button--outline md-button--full disconnect"
               onClick={() => {
