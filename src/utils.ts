@@ -9,3 +9,10 @@ export const appLink = (app: string): string => {
   const domain = window.location.host.split(".").slice(-2).join(".");
   return "https://" + app + (app === "" ? "" : ".") + domain;
 };
+
+export const defaultReplacer = (key: string, value: any) => {
+  if (typeof value === "bigint") {
+    return value.toString();
+  }
+  return value;
+};
