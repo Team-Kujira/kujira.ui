@@ -8,7 +8,19 @@ import { ChainInfo } from "@keplr-wallet/types";
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { BigNumber } from "ethers";
-import { CHAIN_INFO, Denom, NETWORK, wallets } from "kujira.js";
+import {
+  CHAIN_INFO,
+  DaoDao,
+  Denom,
+  Keplr,
+  Leap,
+  LeapSnap,
+  NETWORK,
+  ReadOnly,
+  Sonar,
+  Station,
+  Xfi,
+} from "kujira.js";
 import {
   FC,
   PropsWithChildren,
@@ -29,16 +41,6 @@ import { IconAngleRight, IconSonar } from "../../icons";
 import { appLink } from "../../utils";
 import { useNetwork } from "../network";
 import Logo from "./../../assets/sonar.png";
-const {
-  Keplr,
-  Sonar,
-  Station,
-  ReadOnly,
-  Leap,
-  Xfi,
-  LeapSnap,
-  DaoDao,
-} = wallets;
 
 export enum Adapter {
   Sonar = "sonar",

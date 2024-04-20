@@ -743,6 +743,16 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
           alt="ROCK"
         />
       );
+
+    case "nami":
+      return (
+        <img
+          className="icon-denom"
+          src="https://jjxtjyuvpizsytjflbvr.supabase.co/storage/v1/object/public/brand_assets/NAMI_Token_Logo_High_Res.png"
+          alt="NAMI"
+        />
+      );
+
     case "wbnb":
     case "bnb":
       return <IconWBNB />;
