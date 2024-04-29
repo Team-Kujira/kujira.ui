@@ -177,6 +177,23 @@ export const Orca = ({ className = "" }: { className?: string }) => (
     />
   </svg>
 );
+
+export const PieChart = ({
+  className = "",
+}: {
+  className?: string;
+}) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 576 512"
+    className={className}>
+    <path
+      d="M511.3 208H336V32.7c93.3 7.7 167.6 82.1 175.3 175.3zM320 240H528.5c8.4 0 15.4-6.5 15.5-14.9l0-1.1C544 100.3 443.7 0 320 0l-1.1 0C310.5 0 304 7.1 304 15.5V224c0 8.8 7.2 16 16 16zm-86.6 70.6L375.3 452.6C344.9 470 309.6 480 272 480C157.1 480 64 386.9 64 272c0-98.3 68.3-180.8 160-202.4V288c0 8.5 3.4 16.6 9.4 22.6zM239 34.3C122.1 50.3 32 150.7 32 272c0 132.5 107.5 240 240 240c51.8 0 99.8-16.4 139-44.3c7.7-5.5 8.2-16.5 1.5-23.1L256 288V49.6c0-9.2-7.8-16.6-17-15.4zM489.6 412.3L397.3 320H538.4c-8.3 35-25.4 66.6-48.9 92.3zM573.8 305c1.3-9.2-6.1-17-15.4-17H358.6c-14.3 0-21.4 17.2-11.3 27.3L478.7 446.7c5.8 5.8 15.2 6.3 21.2 .7c39.3-36.7 66.2-86.5 73.9-142.3z"
+      fill="currentColor"
+    />
+  </svg>
+);
+
 export const Pilot = ({ className = "" }: { className?: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -329,6 +346,42 @@ export const Terminal = ({
   </svg>
 );
 
+export const TrendDown = ({
+  className = "",
+}: {
+  className?: string;
+}) => (
+  <svg
+    viewBox="0 0 576 512"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}>
+    <path
+      d="M368 400c0 8.8 7.2 16 16 16H560c8.8 0 16-7.2 16-16V224c0-8.8-7.2-16-16-16s-16 7.2-16 16V361.4L331.3 148.7c-6.2-6.2-16.4-6.2-22.6 0L192 265.4 27.3 100.7c-6.2-6.2-16.4-6.2-22.6 0s-6.2 16.4 0 22.6l176 176c6.2 6.2 16.4 6.2 22.6 0L320 182.6 521.4 384H384c-8.8 0-16 7.2-16 16z"
+      fill="currentColor"
+      fillRule="nonzero"
+    />
+  </svg>
+);
+
+export const TrendUp = ({
+  className = "",
+}: {
+  className?: string;
+}) => (
+  <svg
+    viewBox="0 0 576 512"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}>
+    <path
+      d="M368 112c0-8.8 7.2-16 16-16H560c8.8 0 16 7.2 16 16V288c0 8.8-7.2 16-16 16s-16-7.2-16-16V150.6L331.3 363.3c-6.2 6.2-16.4 6.2-22.6 0L192 246.6 27.3 411.3c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l176-176c6.2-6.2 16.4-6.2 22.6 0L320 329.4 521.4 128H384c-8.8 0-16-7.2-16-16z"
+      fill="currentColor"
+      fillRule="nonzero"
+    />
+  </svg>
+);
+
 export const USK = ({ className = "" }: { className?: string }) => (
   <svg
     viewBox="0 0 512 512"
@@ -342,6 +395,24 @@ export const USK = ({ className = "" }: { className?: string }) => (
     />
     <path
       d="M256 0c141.385 0 256 114.615 256 256S397.385 512 256 512 0 397.385 0 256 114.615 0 256 0Zm0 32C132.288 32 32 132.288 32 256s100.288 224 224 224 224-100.288 224-224S379.712 32 256 32Z"
+      fill="currentColor"
+      fillRule="nonzero"
+    />
+  </svg>
+);
+
+export const Window = ({
+  className = "",
+}: {
+  className?: string;
+}) => (
+  <svg
+    viewBox="0 0 512 512"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}>
+    <path
+      d="M432 32H208c-26.5 0-48 21.5-48 48V96H128V80c0-44.2 35.8-80 80-80H432c44.2 0 80 35.8 80 80V304c0 44.2-35.8 80-80 80H416V352h16c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zM320 160H64c-17.7 0-32 14.3-32 32v64H352V192c0-17.7-14.3-32-32-32zM32 448c0 17.7 14.3 32 32 32H320c17.7 0 32-14.3 32-32V288H32V448zM64 128H320c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V192c0-35.3 28.7-64 64-64z"
       fill="currentColor"
       fillRule="nonzero"
     />
