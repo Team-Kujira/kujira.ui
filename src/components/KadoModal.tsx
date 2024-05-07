@@ -29,6 +29,7 @@ export default function ({ onClose }: { onClose: () => void }) {
         width="500"
         height="800"
         style={{ border: 0 }}
+        allow="clipboard-write; payment; accelerometer; gyroscope; camera; geolocation; autoplay; fullscreen;"
       />
     </Modal>
   );
