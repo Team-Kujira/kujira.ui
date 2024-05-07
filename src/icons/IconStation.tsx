@@ -1,7 +1,14 @@
-export const IconStation = ({ style }: { style?: object }) => (
+export const IconStation = ({
+  style,
+  className,
+}: {
+  style?: object;
+  className?: string;
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 100 91"
+    className={className}
     style={style}>
     <g fill="none" fillRule="nonzero">
       {/* <g fill="#FFF">
