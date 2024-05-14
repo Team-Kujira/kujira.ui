@@ -128,7 +128,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
   const [showAddress, setShowAddress] = useState(false);
   const [stored, setStored] = useLocalStorage("wallet", "");
   const [wallet, setWallet] = useState<WalletI | null>(null);
-  const { signer } = usePasskeys();
+  const { signer, selectSigner } = usePasskeys();
 
   const adapter = toAdapter(wallet);
 
@@ -382,6 +382,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
   }, [wallet]);
 
   const disconnect = () => {
+    stored === Adapter.Passkey && selectSigner("");
     setStored("");
     setWallet(null);
     wallet?.disconnect();

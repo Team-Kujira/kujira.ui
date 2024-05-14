@@ -1,4 +1,3 @@
-import { GasPrice } from "@cosmjs/stargate";
 import { useLocalStorage } from "kujira-core";
 import {
   AuthnClient,
@@ -91,12 +90,13 @@ export const PasskeyContext: FC<PropsWithChildren> = ({
   };
 
   const selectSigner = (id: string) => {
-    if (!tmClient) throw new Error(`No Network`);
-    const stored = signers[id];
-    if (!stored) throw new Error(`No Passkey for ID ${id}`);
-    AuthnClient.createWithSigner(tmClient, stored, {
-      gasPrice: GasPrice.fromString("0.034ukuji"),
-    });
+    setSelected(id);
+    // if (!tmClient) throw new Error(`No Network`);
+    // const stored = signers[id];
+    // if (!stored) throw new Error(`No Passkey for ID ${id}`);
+    // AuthnClient.createWithSigner(tmClient, stored, {
+    //   gasPrice: GasPrice.fromString("0.034ukuji"),
+    // });
   };
   return (
     <context.Provider
