@@ -40,10 +40,13 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { IconAngleRight, IconSonar } from "../../icons";
 import { appLink } from "../../utils";
 import { useNetwork } from "../network";
+import { usePasskeys } from "../passkey";
 import Logo from "./../../assets/sonar.png";
+import { Passkey } from "./passkey";
 
 export enum Adapter {
   Sonar = "sonar",
+  Passkey = "passkey",
   Keplr = "keplr",
   Station = "station",
   ReadOnly = "readOnly",
@@ -109,6 +112,8 @@ const toAdapter = (wallet: any) => {
     ? Adapter.Xfi
     : wallet instanceof Sonar
     ? Adapter.Sonar
+    : wallet instanceof Passkey
+    ? Adapter.Passkey
     : wallet instanceof Station
     ? Adapter.Station
     : wallet instanceof ReadOnly
@@ -123,6 +128,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
   const [showAddress, setShowAddress] = useState(false);
   const [stored, setStored] = useLocalStorage("wallet", "");
   const [wallet, setWallet] = useState<WalletI | null>(null);
+  const { signer } = usePasskeys();
 
   const adapter = toAdapter(wallet);
 
@@ -273,6 +279,21 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
     };
 
     switch (adapter) {
+      case Adapter.Passkey:
+        if (!signer) {
+          toast.error("No Signer Available");
+          return;
+        }
+        Passkey.connect({ ...chainInfo, rpc }, signer)
+          .then((passkey) => {
+            setStored(adapter);
+            setWallet(passkey);
+          })
+          .catch((err) => {
+            setStored("");
+            toast.error(err.message);
+          });
+        break;
       case Adapter.Keplr:
         Keplr.connect({ ...chainInfo, rpc }, { feeDenom })
           .then((x) => {

@@ -72,8 +72,8 @@ export const PasskeyContext: FC<PropsWithChildren> = ({
   );
   const [{ tmClient }] = useNetwork();
 
-  const createSigner = (name: string) =>
-    AuthnWebSigner.create(
+  const createSigner = (name: string) => {
+    return AuthnWebSigner.create(
       {
         name: RP_NAME,
         id:
@@ -88,6 +88,7 @@ export const PasskeyContext: FC<PropsWithChildren> = ({
       setSelected(signer.id());
       return;
     });
+  };
 
   const selectSigner = (id: string) => {
     if (!tmClient) throw new Error(`No Network`);
