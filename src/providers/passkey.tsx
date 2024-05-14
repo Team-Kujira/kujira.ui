@@ -75,10 +75,10 @@ export const PasskeyContext: FC<PropsWithChildren> = ({
     return AuthnWebSigner.create(
       {
         name: RP_NAME,
-        id:
-          window.location.hostname === "localhost"
-            ? "localhost"
-            : "kujira.network",
+        // id:
+        //   window.location.hostname === "localhost"
+        //     ? "localhost"
+        //     : "kujira.network",
       },
       name
     ).then((signer) => {

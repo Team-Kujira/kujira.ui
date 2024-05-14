@@ -1,4 +1,8 @@
-import { AccountData, EncodeObject } from "@cosmjs/proto-signing";
+import {
+  AccountData,
+  EncodeObject,
+  coins,
+} from "@cosmjs/proto-signing";
 import { DeliverTxResponse, GasPrice } from "@cosmjs/stargate";
 import { Tendermint37Client } from "@cosmjs/tendermint-rpc";
 import {
@@ -46,7 +50,6 @@ export class Passkey {
     //   cb: (total: number, remaining: number) => void;
     // }
   ): Promise<DeliverTxResponse> => {
-    if (!window.keplr) throw new Error("No Wallet Connected");
     const tmClient = await Tendermint37Client.connect(rpc);
     const client = await AuthnClient.createWithSigner(
       tmClient,
@@ -58,10 +61,9 @@ export class Passkey {
       }
     );
 
-    return await client.signAndBroadcast(
-      this.account.address,
-      msgs,
-      1.7
-    );
+    return await client.signAndBroadcast(this.account.address, msgs, {
+      amount: coins(12500, "ukuji"),
+      gas: "1000000",
+    });
   };
 }
