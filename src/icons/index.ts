@@ -52,3 +52,4 @@ export * from "./IconUpload";
 export * from "./IconWallet";
 export * from "./IconWarning";
 export * from "./IconXDefi";
+export * from "./Icons";
