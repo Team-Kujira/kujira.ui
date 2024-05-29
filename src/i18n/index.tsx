@@ -72,7 +72,7 @@ const comp =
   (props) =>
     createElement(
       tag,
-      { ...props, displayName: tag },
+      props,
       typeof props.children === "string"
         ? t(props.children)
         : props.children
