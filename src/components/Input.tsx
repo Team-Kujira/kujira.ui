@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 export type InputProps = {
   label?: string;
+  placeholder?: string;
   onSubmit?: () => void;
   icon?: React.ReactNode;
   readOnly?: Boolean;
@@ -11,6 +12,7 @@ export type InputProps = {
 export default function Input({
   id,
   label,
+  placeholder,
   value,
   className,
   onChange,
@@ -55,6 +57,7 @@ export default function Input({
           value={value}
           onChange={onChange}
           readOnly={!onChange}
+          placeholder={placeholder}
           step={step || 1}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
