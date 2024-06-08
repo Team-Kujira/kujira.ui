@@ -38,6 +38,7 @@ import plnk from "./PLNK.png";
 import rac from "./RAC.png";
 import sol from "./SOL.png";
 import wink from "./WINK.png";
+import kart from "./kart.png";
 
 const makeID = (length: number) => {
   let result = "";
@@ -264,6 +265,8 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <img className="icon-denom" src={mnta} alt="MNTA" />;
     case "wink":
       return <img className="icon-denom" src={wink} alt="WINK" />;
+    case "kart":
+      return <img className="icon-denom" src={kart} alt="KART" />;
     case "neok":
       return <img className="icon-denom" src={neok} alt="NEOK" />;
 
