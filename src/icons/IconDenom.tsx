@@ -31,7 +31,7 @@ import { IconSTSCRT } from "./IconSTSCRT";
 import { IconSWTH } from "./IconSWTH";
 import { IconWHALE } from "./IconWHALE";
 import { IconWSTETH } from "./IconWSTETH";
-import { IconYUM } from "./IconYUM";
+import yum from "./YUM.png";
 import mnta from "./MNTA.png";
 import neok from "./NEOK.png";
 import plnk from "./PLNK.png";
@@ -772,7 +772,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
     case "uni":
       return <IconUNI />;
     case "yum":
-      return <IconYUM />;
+      return <img className="icon-denom" src={yum} alt="YUM" />;
     default:
       return <IconCoinDefault />;
   }
