@@ -32,6 +32,7 @@ export * from "./IconLuna";
 export * from "./IconMars";
 export * from "./IconMinus";
 export * from "./IconMirror";
+export * from "./IconNetwork";
 export * from "./IconPencil";
 export * from "./IconPlus";
 export * from "./IconSAvax";
