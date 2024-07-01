@@ -33,6 +33,8 @@ import { toast } from "react-hot-toast";
 //import QRCode from "react-qr-code";
 import { PageRequest } from "cosmjs-types/cosmos/base/query/v1beta1/pagination";
 import { WalletI } from "kujira.js/lib/cjs/wallets/interface";
+import { GradientButton, useUnified } from "kujira-core";
+import { i18n } from "kujira.ui";
 import { QR } from "react-qr-rounded";
 import Input from "../../components/Input";
 import { Modal } from "../../components/Modal";
@@ -131,6 +133,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
   const { signer, selectSigner } = usePasskeys();
 
   const adapter = toAdapter(wallet);
+  const { unified } = useUnified();
 
   const [feeDenom, setFeeDenom] = useLocalStorage(
     "feeDenom",
@@ -431,8 +434,8 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
               height={256}
               color="#ffffff"
               backgroundColor="transparent"
-              rounding={50}
-              cutout
+              rounding={0}
+              /* cutout
               cutoutElement={
                 <img
                   src={Logo}
@@ -442,7 +445,7 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
                     height: "100%",
                   }}
                 />
-              }
+              } */
               errorCorrectionLevel="M">
               {link}
             </QR>
@@ -456,13 +459,24 @@ export const WalletContext: FC<PropsWithChildren<{}>> = ({
               }}
             />
             <h3>Scan this code using the Sonar Mobile App.</h3>
-            <a
-              href={appLink("sonar")}
-              target="_blank"
-              className="md-button mt-2 md-button--icon-right">
-              Download Sonar
-              <IconAngleRight />
-            </a>
+            {}
+            {unified ? (
+              <GradientButton
+                href="https://sonar.kujira.network"
+                target="_blank"
+                className="md-button--icon-right mt-2">
+                <i18n.span>Download Sonar</i18n.span>
+                <IconAngleRight />
+              </GradientButton>
+            ) : (
+              <a
+                href={appLink("sonar")}
+                target="_blank"
+                className="md-button mt-2 md-button--icon-right">
+                <span>Download Sonar</span>
+                <IconAngleRight />
+              </a>
+            )}
           </div>
         </div>
       </Modal>
