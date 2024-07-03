@@ -39,6 +39,9 @@ import rac from "./RAC.png";
 import sol from "./SOL.png";
 import wink from "./WINK.png";
 import kart from "./kart.png";
+import bld from "./BLD.png";
+import core from "./core.png";
+import kava from "./kava.png";
 
 const makeID = (length: number) => {
   let result = "";
@@ -272,6 +275,12 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
 
     case "plnk":
       return <img className="icon-denom" src={plnk} alt="PLNK" />;
+    case "bld":
+      return <img className="icon-denom" src={bld} alt="BLD" />;
+    case "core":
+      return <img className="icon-denom" src={core} alt="Coreum" />;
+    case "kava":
+      return <img className="icon-denom" src={kava} alt="KAVA" />;
 
     case "wsteth":
       return <IconWSTETH />;
