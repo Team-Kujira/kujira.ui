@@ -46,7 +46,7 @@ const MEXC = ({ className }: { className?: string }) => (
         x2="85.155%"
         y1="40.493%"
         y2="68.056%">
-        <stop offset="0%" stopColor="#003087" stop-opacity="0" />
+        <stop offset="0%" stopColor="#003087" stopOpacity="0" />
         <stop offset="100%" stopColor="#003087" />
       </linearGradient>
     </defs>
