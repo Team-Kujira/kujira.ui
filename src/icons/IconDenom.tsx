@@ -12,9 +12,11 @@ import {
   IconWarning,
 } from ".";
 import { i18n } from "..";
+import bld from "./BLD.png";
 import { IconAQLA } from "./IconAQLA";
 import { IconWBNB } from "./IconBNB";
 import { IconCNTO } from "./IconCNTO";
+import { IconCORAL } from "./IconCORAL";
 import { IconFIS } from "./IconFIS";
 import { IconFRNZ } from "./IconFRNZ";
 import { IconLink } from "./IconLink";
@@ -31,16 +33,15 @@ import { IconSTSCRT } from "./IconSTSCRT";
 import { IconSWTH } from "./IconSWTH";
 import { IconWHALE } from "./IconWHALE";
 import { IconWSTETH } from "./IconWSTETH";
-import yum from "./YUM.png";
 import mnta from "./MNTA.png";
 import neok from "./NEOK.png";
 import plnk from "./PLNK.png";
 import rac from "./RAC.png";
 import sol from "./SOL.png";
 import wink from "./WINK.png";
-import kart from "./kart.png";
-import bld from "./BLD.png";
+import yum from "./YUM.png";
 import core from "./core.png";
+import kart from "./kart.png";
 import kava from "./kava.png";
 
 const makeID = (length: number) => {
@@ -782,6 +783,8 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <IconUNI />;
     case "yum":
       return <img className="icon-denom" src={yum} alt="YUM" />;
+    case "coral":
+      return <IconCORAL />;
     default:
       return <IconCoinDefault />;
   }
