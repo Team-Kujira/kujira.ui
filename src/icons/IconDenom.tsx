@@ -43,6 +43,7 @@ import yum from "./YUM.png";
 import core from "./core.png";
 import kart from "./kart.png";
 import kava from "./kava.png";
+import auto from "./auto.png";
 
 const makeID = (length: number) => {
   let result = "";
@@ -282,6 +283,10 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <img className="icon-denom" src={core} alt="Coreum" />;
     case "kava":
       return <img className="icon-denom" src={kava} alt="KAVA" />;
+    case "auto":
+      return (
+        <img className="icon-denom" src={auto} alt="Auto Kujira" />
+      );
 
     case "wsteth":
       return <IconWSTETH />;
