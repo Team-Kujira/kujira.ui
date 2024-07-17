@@ -22,7 +22,12 @@ import { IconFRNZ } from "./IconFRNZ";
 import { IconLink } from "./IconLink";
 import { IconLunc } from "./IconLunc";
 import { IconPAXG } from "./IconPAXG";
-import { IconQCKUJI, IconQCMNTA } from "./IconQuark";
+import {
+  IconQCAQLA,
+  IconQCATOM,
+  IconQCKUJI,
+  IconQCMNTA,
+} from "./IconQuark";
 import { IconRATOM } from "./IconRATOM";
 import { IconSAvax } from "./IconSAvax";
 import { IconSPERM } from "./IconSPERM";
@@ -40,10 +45,10 @@ import rac from "./RAC.png";
 import sol from "./SOL.png";
 import wink from "./WINK.png";
 import yum from "./YUM.png";
+import auto from "./auto.png";
 import core from "./core.png";
 import kart from "./kart.png";
 import kava from "./kava.png";
-import auto from "./auto.png";
 
 const makeID = (length: number) => {
   let result = "";
@@ -256,6 +261,11 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <IconQCMNTA />;
     case "qckuji":
       return <IconQCKUJI />;
+    case "qcatom":
+      return <IconQCATOM />;
+    case "qcaqla":
+      return <IconQCAQLA />;
+
     case "fuzn":
       return <IconFUZN />;
     case "rfuzn":
