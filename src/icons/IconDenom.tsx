@@ -22,7 +22,13 @@ import { IconFRNZ } from "./IconFRNZ";
 import { IconLink } from "./IconLink";
 import { IconLunc } from "./IconLunc";
 import { IconPAXG } from "./IconPAXG";
-import { IconQCKUJI, IconQCMNTA } from "./IconQuark";
+import {
+  IconQCAQLA,
+  IconQCATOM,
+  IconQCFUZN,
+  IconQCKUJI,
+  IconQCMNTA,
+} from "./IconQuark";
 import { IconRATOM } from "./IconRATOM";
 import { IconSAvax } from "./IconSAvax";
 import { IconSPERM } from "./IconSPERM";
@@ -254,8 +260,14 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <IconARCH />;
     case "qcmnta":
       return <IconQCMNTA />;
+    case "qcatom":
+      return <IconQCATOM />;
     case "qckuji":
       return <IconQCKUJI />;
+    case "qcfuzn":
+      return <IconQCFUZN />;
+    case "qcaqla":
+      return <IconQCAQLA />;
     case "fuzn":
       return <IconFUZN />;
     case "rfuzn":
