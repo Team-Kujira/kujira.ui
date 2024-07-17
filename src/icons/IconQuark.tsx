@@ -49,6 +49,7 @@ export const IconQCATOM: FC<JSX.IntrinsicElements["svg"]> = (
   props
 ) => (
   <svg
+    className="icon-denom"
     height="100%"
     width="100%"
     viewBox="0 0 1024 1024"
@@ -109,6 +110,7 @@ export const IconQCAQLA: FC<JSX.IntrinsicElements["svg"]> = (
   props
 ) => (
   <svg
+    className="icon-denom"
     viewBox="415 362 295 295"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
