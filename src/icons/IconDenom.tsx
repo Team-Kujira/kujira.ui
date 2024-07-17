@@ -46,10 +46,10 @@ import rac from "./RAC.png";
 import sol from "./SOL.png";
 import wink from "./WINK.png";
 import yum from "./YUM.png";
+import auto from "./auto.png";
 import core from "./core.png";
 import kart from "./kart.png";
 import kava from "./kava.png";
-import auto from "./auto.png";
 
 const makeID = (length: number) => {
   let result = "";
