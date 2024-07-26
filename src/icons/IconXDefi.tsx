@@ -1,15 +1,10 @@
-export const IconXDefi = ({
-  style,
-  className,
-}: {
-  style?: object;
-  className?: string;
-}) => (
+export const IconXDefi: React.FC<JSX.IntrinsicElements["svg"]> = (
+  props
+) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 1000 1000"
-    style={style}
-    className={className}>
+    {...props}>
     <g clipPath="url(#clip0_7247_74081)">
       <path
         d="M0 204C0 91.3339 91.3339 0 204 0H796C908.666 0 1000 91.3339 1000 204V796C1000 908.666 908.666 1000 796 1000H204C91.3339 1000 0 908.666 0 796V204Z"
