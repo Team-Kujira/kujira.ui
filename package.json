@@ -12,9 +12,9 @@
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json"
   },
   "dependencies": {
-    "@cosmjs/proto-signing": "^0.32.3",
-    "@cosmjs/stargate": "^0.32.3",
-    "@cosmjs/tendermint-rpc": "^0.32.3",
+    "@cosmjs/proto-signing": "^0.32.4",
+    "@cosmjs/stargate": "^0.32.4",
+    "@cosmjs/tendermint-rpc": "^0.32.4",
     "@cosmos-kit/core": "^2.8.9",
     "@keplr-wallet/types": "^0.12.79",
     "@leapwallet/cosmos-snap-provider": "^0.1.18",
