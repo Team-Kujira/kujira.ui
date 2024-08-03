@@ -166,6 +166,8 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <IconAmpKUJI />;
     case "kuji":
       return <IconKuji />;
+    case "rkuji":
+      return <IconRKUJI />;
     case "skuji":
       return <IconSKuji />;
     case "usk":
@@ -806,6 +808,25 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <IconCoinDefault />;
   }
 };
+
+const IconRKUJI = () => (
+  <svg
+    className="icon-denom"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 100 100">
+    <defs>
+      <linearGradient id="rkiki" x1="50%" x2="50%" y1="0%" y2="100%">
+        <stop offset=".036%" stopColor="#E81891" />
+        <stop offset="100%" stopColor="#5D3C8F" />
+      </linearGradient>
+    </defs>
+    <path
+      fill="url(#rkiki)"
+      fillRule="evenodd"
+      d="M50 0c27.614 0 50 22.386 50 50s-22.386 50-50 50S0 77.614 0 50 22.386 0 50 0Zm29.078 35.958H53.934V57.35l10.058-.001v17.617h-6.286V80h11.315l-.001-22.651h10.058V35.959Zm-2.985 25.167-4.558 2.127 6.907 14.826L83 75.95l-6.907-14.826Zm-49.817 5.033h-5.029v11.325h5.029V66.158Zm7.543 0H28.79v11.325h5.03V66.158Zm7.543 0h-5.028v11.325h5.028V66.158Zm14.84-5.033L51.42 71.389l4.558 2.127 4.782-10.264-4.558-2.127Zm-7.296 5.033h-5.03v5.034h5.03v-5.034ZM30.143 18 15 39.646l4.12 2.887 2.127-3.042v22.892h27.659V35.958l-8.932-.001 2.64-3.775.006-5.032-12.739-.001 4.381-6.262L30.143 18Zm2.419 33.058v6.291h-6.286v-6.291h6.286Zm11.314 0v6.291H37.59v-6.291h6.286Zm30.173-10.067v11.325H58.963V40.991h15.086Zm-41.487 0v6.292h-6.286v-6.292h6.286Zm11.314 0v6.292H37.59v-6.292h6.286Zm-7.401-8.809-2.641 3.775H23.719l2.641-3.775h10.115Zm25.676-12.951-3.556 3.56 4.355 4.358h-9.016v5.034h25.144V27.15l-9.016-.001-7.911-7.918Z"
+    />
+  </svg>
+);
 
 const IconARB = () => (
   <svg
