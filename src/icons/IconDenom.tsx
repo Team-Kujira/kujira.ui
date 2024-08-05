@@ -809,7 +809,7 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
   }
 };
 
-const IconRKUJI = () => (
+export const IconRKUJI = () => (
   <svg
     className="icon-denom"
     xmlns="http://www.w3.org/2000/svg"
