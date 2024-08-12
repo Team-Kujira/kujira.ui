@@ -1,7 +1,7 @@
 import clsx from "clsx";
-import { FC, useEffect, useRef, useState } from "react";
 import { GradientButton } from "kujira-core/src/components";
 import { AngleLeft, Ellipsis } from "kujira.ui/src/icons/Icons";
+import { FC, useEffect, useRef, useState } from "react";
 
 function getParentOffset(el: HTMLElement) {
   const rect = el.getBoundingClientRect();
@@ -32,33 +32,6 @@ export const Popout: FC<{
         nav.style.right =
           p.right + node.current.offsetWidth + 4 + "px";
       }
-      /* const nav = node.current?.querySelector("nav");
-      if (nav) {
-        const p = nav.offsetParent;
-        if (p) {
-          console.log(getComputedStyle(p).position);
-        }
-      } */
-      //const rect = node.current?.getBoundingClientRect();
-
-      /* if (nav) {
-        const top = getTopOffset(nav);
-        console.log(top);
-        nav.style.bottom = top + "px";
-        // nav.style.right = rect?.left + "px";
-      } */
-
-      /* const ref = drop.current;
-      if (ref) {
-        const box = ref.getBoundingClientRect();
-        if (
-          box.bottom >
-          (window.innerHeight ||
-            document.documentElement.clientHeight)
-        ) {
-          setTop(true);
-        }
-      } */
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
     }
