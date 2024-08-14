@@ -49,7 +49,7 @@ export const Modal: FC<ModalProps> = ({
                 )}
                 {children}
                 {confirm && (
-                  <div className="modal__footer text-right mt-4">
+                  <div className="modal__footer text-right mt-4 px-3 py-2">
                     <button
                       className="md-button md-button--grey"
                       onClick={close}>
