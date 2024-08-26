@@ -50,6 +50,7 @@ import auto from "./auto.png";
 import core from "./core.png";
 import kart from "./kart.png";
 import kava from "./kava.png";
+import kune from "./kune.png";
 
 const makeID = (length: number) => {
   let result = "";
@@ -301,6 +302,8 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return (
         <img className="icon-denom" src={auto} alt="Auto Kujira" />
       );
+    case "kune":
+      return <img className="icon-denom" src={kune} alt="KUNE" />;
 
     case "wsteth":
       return <IconWSTETH />;
