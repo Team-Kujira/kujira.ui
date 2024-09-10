@@ -6,6 +6,8 @@ import {
   IconKuji,
   IconLoopToken,
   IconLuna,
+  IconNami,
+  IconNAUSD,
   IconSKuji,
   IconTORI,
   IconUSK,
@@ -771,13 +773,9 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       );
 
     case "nami":
-      return (
-        <img
-          className="icon-denom"
-          src="https://jjxtjyuvpizsytjflbvr.supabase.co/storage/v1/object/public/brand_assets/NAMI_Token_Logo_High_Res.png"
-          alt="NAMI"
-        />
-      );
+      return <IconNami />
+    case "nausd":
+      return <IconNAUSD />
 
     case "wbnb":
     case "bnb":
