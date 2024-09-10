@@ -4,6 +4,7 @@ export function IconNami() {
 			version="1.1"
 			id="svg1"
 			viewBox="0 0 256 256"
+			className="icon-denom"
 			xmlnsXlink="http://www.w3.org/1999/xlink"
 			xmlns="http://www.w3.org/2000/svg">
 			<defs

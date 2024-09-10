@@ -7,6 +7,7 @@ export function IconNAUSD() {
 		viewBox="0 0 512 512"
 		version="1.1"
 		id="svg1"
+		className="icon-denom"
 		sodipodi:docname="nausd.svg"
 		inkscape:version="1.3.2 (091e20e, 2023-11-25)"
 		xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
