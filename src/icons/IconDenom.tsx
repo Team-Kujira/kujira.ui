@@ -14,7 +14,9 @@ import {
   IconWarning,
 } from ".";
 import { i18n } from "..";
+import auto from "./auto.png";
 import bld from "./BLD.png";
+import core from "./core.png";
 import { IconAQLA } from "./IconAQLA";
 import { IconWBNB } from "./IconBNB";
 import { IconCNTO } from "./IconCNTO";
@@ -41,6 +43,8 @@ import { IconSTSCRT } from "./IconSTSCRT";
 import { IconSWTH } from "./IconSWTH";
 import { IconWHALE } from "./IconWHALE";
 import { IconWSTETH } from "./IconWSTETH";
+import kart from "./kart.png";
+import kava from "./kava.png";
 import mnta from "./MNTA.png";
 import neok from "./NEOK.png";
 import plnk from "./PLNK.png";
@@ -48,11 +52,6 @@ import rac from "./RAC.png";
 import sol from "./SOL.png";
 import wink from "./WINK.png";
 import yum from "./YUM.png";
-import auto from "./auto.png";
-import core from "./core.png";
-import kart from "./kart.png";
-import kava from "./kava.png";
-import kune from "./kune.png";
 
 const makeID = (length: number) => {
   let result = "";
@@ -304,8 +303,8 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return (
         <img className="icon-denom" src={auto} alt="Auto Kujira" />
       );
-    case "kune":
-      return <img className="icon-denom" src={kune} alt="KUNE" />;
+    // case "kune":
+    //   return <img className="icon-denom" src={kune} alt="KUNE" />;
 
     case "wsteth":
       return <IconWSTETH />;
@@ -773,9 +772,9 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       );
 
     case "nami":
-      return <IconNami />
+      return <IconNami />;
     case "nausd":
-      return <IconNAUSD />
+      return <IconNAUSD />;
 
     case "wbnb":
     case "bnb":
