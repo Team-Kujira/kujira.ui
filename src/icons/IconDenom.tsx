@@ -52,6 +52,7 @@ import rac from "./RAC.png";
 import sol from "./SOL.png";
 import wink from "./WINK.png";
 import yum from "./YUM.png";
+import boon from "./boon.png";
 
 const makeID = (length: number) => {
   let result = "";
@@ -305,6 +306,8 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       );
     // case "kune":
     //   return <img className="icon-denom" src={kune} alt="KUNE" />;
+    case "boon":
+      return <img className="icon-denom" src={boon} alt="BOON" />;
 
     case "wsteth":
       return <IconWSTETH />;
