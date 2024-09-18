@@ -16,7 +16,9 @@ import {
 import { i18n } from "..";
 import auto from "./auto.png";
 import bld from "./BLD.png";
+import boon from "./boon.png";
 import core from "./core.png";
+import eure from "./eure.png";
 import { IconAQLA } from "./IconAQLA";
 import { IconWBNB } from "./IconBNB";
 import { IconCNTO } from "./IconCNTO";
@@ -52,7 +54,6 @@ import rac from "./RAC.png";
 import sol from "./SOL.png";
 import wink from "./WINK.png";
 import yum from "./YUM.png";
-import boon from "./boon.png";
 
 const makeID = (length: number) => {
   let result = "";
@@ -300,6 +301,8 @@ const IconDenomInner: React.FC<{ denom: Denom | string }> = ({
       return <img className="icon-denom" src={core} alt="Coreum" />;
     case "kava":
       return <img className="icon-denom" src={kava} alt="KAVA" />;
+    case "eure":
+      return <img className="icon-denom" src={eure} alt="EURe" />;
     case "auto":
       return (
         <img className="icon-denom" src={auto} alt="Auto Kujira" />
